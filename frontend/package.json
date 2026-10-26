@@ -23,7 +23,7 @@
     "format": "prettier --write .",
     "format-check": "prettier --check .",
     "type-check": "next typegen && tsc --pretty --noEmit",
-    "prepare": "husky install || true",
+    "prepare": "cd .. && husky install frontend/.husky || true",
     "test": "jest",
     "test:ci": "jest --ci",
     "test:database-contract": "jest --ci --runInBand src/lib/server/databaseContract.test.ts",
