@@ -1,0 +1,22 @@
+# Local credentials
+.env
+
+# Python/cache artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# macOS/editor artifacts
+.DS_Store
+.vscode/
+
+# Local runtime data
+/matches/
+/vouchers/
+/Archive/
+
+# Local virtualenv
+.venv/
