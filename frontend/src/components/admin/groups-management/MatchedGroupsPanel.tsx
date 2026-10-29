@@ -236,7 +236,7 @@ export default function MatchedGroupsPanel() {
 
                       return (
                         <span
-                          className="bg-rose-50 text-rose-950 ring-rose-200 max-w-[20rem] rounded-full px-2.5 py-0.5 text-xs font-medium ring-1"
+                          className="max-w-[20rem] rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-medium text-rose-950 ring-1 ring-rose-200"
                           title={`${flaggedCount} rider(s) in this group were reported missing on ASPC Ready. ${distinctReporterCount} distinct rider(s) filed those reports. Red/orange flags on names = delay log status.`}
                         >
                           {flaggedCount} rider{flaggedCount === 1 ? '' : 's'}{' '}

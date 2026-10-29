@@ -10,7 +10,7 @@ const FOOTER_LINKS = [
 export default function PickupFooter() {
   return (
     <footer className="border-t border-line bg-paper">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p className="text-sm text-stone">
           <span className="font-semibold tracking-[0.06em] text-navy">
             PICKUP

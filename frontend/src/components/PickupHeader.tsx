@@ -62,7 +62,7 @@ export default function PickupHeader() {
   return (
     <>
       <header className="sticky top-0 z-40 bg-navy text-white">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6">
           <Link
             href="/"
             className="group flex shrink-0 items-center gap-3 rounded-md"

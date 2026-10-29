@@ -389,14 +389,14 @@ export default function AddRider({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="mx-4 w-full max-w-2xl rounded-lg bg-white shadow-xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50">
+      <div className="mx-4 w-full max-w-2xl rounded-lg bg-card shadow-xl">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-          <h2 className="text-xl font-semibold text-gray-900">Add New Rider</h2>
+        <div className="flex items-center justify-between border-b border-line px-6 py-4">
+          <h2 className="text-xl font-semibold text-ink">Add New Rider</h2>
           <button
             onClick={handleClose}
-            className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+            className="rounded p-1 text-stone-light hover:bg-sunken hover:text-stone"
           >
             <X className="h-5 w-5" />
           </button>
@@ -405,7 +405,7 @@ export default function AddRider({
         {/* Content */}
         <div className="max-h-[70vh] overflow-y-auto px-6 py-4">
           {error && step !== 'flight-info' && (
-            <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+            <div className="mb-4 rounded-lg border border-danger/30 bg-danger-tint px-4 py-3 text-sm text-danger">
               {error}
             </div>
           )}
@@ -413,15 +413,15 @@ export default function AddRider({
           {/* Step 1: Select School */}
           {step === 'select-school' && (
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-gray-700">
+              <div className="flex items-center gap-2 text-ink">
                 <User className="h-5 w-5" />
                 <h3 className="text-lg font-medium">Step 1: Select School</h3>
               </div>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-stone">
                 Choose the school to find users from
               </p>
               {loading ? (
-                <div className="py-8 text-center text-gray-500">
+                <div className="py-8 text-center text-stone">
                   Loading schools...
                 </div>
               ) : (
@@ -430,7 +430,7 @@ export default function AddRider({
                     <button
                       key={school}
                       onClick={() => handleSchoolSelect(school)}
-                      className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
+                      className="rounded-lg border border-line-strong bg-card px-4 py-3 text-sm font-medium text-ink transition-colors hover:border-navy-300 hover:bg-paper"
                     >
                       {school}
                     </button>
@@ -443,7 +443,7 @@ export default function AddRider({
           {/* Step 2: Select User */}
           {step === 'select-user' && (
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-gray-700">
+              <div className="flex items-center gap-2 text-ink">
                 <User className="h-5 w-5" />
                 <h3 className="text-lg font-medium">
                   Step 2: Select Person from {selectedSchool}
@@ -456,26 +456,26 @@ export default function AddRider({
                   setSearchInput('')
                   setSearchQuery('')
                 }}
-                className="text-sm text-gray-600 underline hover:text-gray-900"
+                className="text-sm text-stone underline hover:text-ink"
               >
                 ← Change school
               </button>
 
               {/* Search Bar */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-light" />
                 <input
                   type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   onKeyDown={handleSearchKeyDown}
                   placeholder='Search by email, name, or "First Last" (in quotes) - Press Enter'
-                  className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-10 text-sm text-gray-900 placeholder-gray-500 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  className="w-full rounded-lg border border-line-strong bg-card py-2 pl-10 pr-10 text-sm text-ink placeholder:text-stone-light focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 />
                 {searchInput && (
                   <button
                     onClick={handleClearSearch}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-0.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-0.5 text-stone-light hover:bg-sunken hover:text-stone"
                     title="Clear search"
                   >
                     <X className="h-4 w-4" />
@@ -484,15 +484,15 @@ export default function AddRider({
               </div>
 
               {loading ? (
-                <div className="py-8 text-center text-gray-500">
+                <div className="py-8 text-center text-stone">
                   Loading users...
                 </div>
               ) : users.length === 0 ? (
-                <div className="py-8 text-center text-gray-500">
+                <div className="py-8 text-center text-stone">
                   No users found for this school
                 </div>
               ) : filteredUsers.length === 0 ? (
-                <div className="py-8 text-center text-gray-500">
+                <div className="py-8 text-center text-stone">
                   No users match your search
                 </div>
               ) : (
@@ -501,19 +501,19 @@ export default function AddRider({
                     <button
                       key={user.user_id}
                       onClick={() => handleUserSelect(user)}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-left transition-colors hover:border-gray-400 hover:bg-gray-50"
+                      className="w-full rounded-lg border border-line-strong bg-card px-4 py-3 text-left transition-colors hover:border-navy-300 hover:bg-paper"
                     >
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-ink">
                         {user.firstname} {user.lastname}
                       </div>
-                      <div className="mt-1 text-sm text-gray-600">
+                      <div className="mt-1 text-sm text-stone">
                         {user.email}
                       </div>
                       {user.phonenumber && (
-                        <div className="mt-1 text-xs text-gray-500">
+                        <div className="mt-1 text-xs text-stone">
                           {user.phonenumber}
                           {user.sms_opt_in !== true && (
-                            <span className="text-red-600"> (SMS opt-out)</span>
+                            <span className="text-danger"> (SMS opt-out)</span>
                           )}
                         </div>
                       )}
@@ -527,7 +527,7 @@ export default function AddRider({
           {/* Step 3: Flight Information */}
           {step === 'flight-info' && selectedUser && (
             <div className="space-y-4">
-              <div className="flex items-center gap-2 text-gray-700">
+              <div className="flex items-center gap-2 text-ink">
                 <Plane className="h-5 w-5" />
                 <h3 className="text-lg font-medium">
                   Step 3: Flight Information for {selectedUser.firstname}{' '}
@@ -539,7 +539,7 @@ export default function AddRider({
                   setStep('select-user')
                   setSelectedUser(null)
                 }}
-                className="text-sm text-gray-600 underline hover:text-gray-900"
+                className="text-sm text-stone underline hover:text-ink"
               >
                 ← Change person
               </button>
@@ -547,8 +547,8 @@ export default function AddRider({
               <div className="space-y-4">
                 {/* Date - Required */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
-                    Date <span className="text-red-500">*</span>
+                  <label className="mb-2 block text-sm font-medium text-ink">
+                    Date <span className="text-danger">*</span>
                   </label>
                   <input
                     type="date"
@@ -557,15 +557,15 @@ export default function AddRider({
                     min={flightDateBounds.min}
                     max={flightDateBounds.max}
                     required
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   />
                 </div>
 
                 {/* Time Range - Required */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
+                  <label className="mb-2 block text-sm font-medium text-ink">
                     Time Range (HH:MM - HH:MM){' '}
-                    <span className="text-red-500">*</span>
+                    <span className="text-danger">*</span>
                   </label>
                   <input
                     type="text"
@@ -573,17 +573,17 @@ export default function AddRider({
                     onChange={(e) => setTimeRange(e.target.value)}
                     placeholder="09:00 - 12:00"
                     required
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   />
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-stone">
                     Format: HH:MM - HH:MM (24-hour format)
                   </p>
                 </div>
 
                 {/* Airline Code - Required */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
-                    Airline Code (IATA) <span className="text-red-500">*</span>
+                  <label className="mb-2 block text-sm font-medium text-ink">
+                    Airline Code (IATA) <span className="text-danger">*</span>
                   </label>
                   <input
                     type="text"
@@ -593,26 +593,26 @@ export default function AddRider({
                     }
                     maxLength={2}
                     required
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   />
                 </div>
 
                 {/* Flight Number */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
+                  <label className="mb-2 block text-sm font-medium text-ink">
                     Flight Number
                   </label>
                   <input
                     type="text"
                     value={flightNo}
                     onChange={(e) => setFlightNo(e.target.value)}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   />
                 </div>
 
                 {/* Airport */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
+                  <label className="mb-2 block text-sm font-medium text-ink">
                     Airport
                   </label>
                   <select
@@ -620,7 +620,7 @@ export default function AddRider({
                     onChange={(e) =>
                       setAirport(e.target.value as 'LAX' | 'ONT')
                     }
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   >
                     <option value="LAX">LAX</option>
                     <option value="ONT">ONT</option>
@@ -629,13 +629,13 @@ export default function AddRider({
 
                 {/* Direction - Optional */}
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
+                  <label className="mb-2 block text-sm font-medium text-ink">
                     Direction
                   </label>
                   <select
                     value={toAirport ? 'to' : 'from'}
                     onChange={(e) => setToAirport(e.target.value === 'to')}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   >
                     <option value="to">To Airport</option>
                     <option value="from">From Airport</option>
@@ -645,7 +645,7 @@ export default function AddRider({
                 {/* Bags */}
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                    <label className="mb-2 block text-sm font-medium text-ink">
                       Personal Items
                     </label>
                     <input
@@ -656,11 +656,11 @@ export default function AddRider({
                       onChange={(e) =>
                         setPersonalItems(parseInt(e.target.value) || 0)
                       }
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                      className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                     />
                   </div>
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                    <label className="mb-2 block text-sm font-medium text-ink">
                       Checked Bags
                     </label>
                     <input
@@ -671,11 +671,11 @@ export default function AddRider({
                       onChange={(e) =>
                         setCheckedBags(parseInt(e.target.value) || 0)
                       }
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                      className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                     />
                   </div>
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-gray-700">
+                    <label className="mb-2 block text-sm font-medium text-ink">
                       Carry-On Bags
                     </label>
                     <input
@@ -686,7 +686,7 @@ export default function AddRider({
                       onChange={(e) =>
                         setCarryOnBags(parseInt(e.target.value) || 0)
                       }
-                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                      className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                     />
                   </div>
                 </div>
@@ -696,9 +696,9 @@ export default function AddRider({
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col gap-3 border-t border-gray-200 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-line px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
           {step === 'flight-info' && error ? (
-            <p className="text-sm font-medium text-red-700" role="alert">
+            <p className="text-sm font-medium text-danger" role="alert">
               {error}
             </p>
           ) : (
@@ -708,7 +708,7 @@ export default function AddRider({
             <button
               onClick={handleClose}
               disabled={submitting}
-              className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+              className="rounded-lg border border-line-strong bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper disabled:opacity-50"
             >
               Cancel
             </button>
@@ -717,7 +717,7 @@ export default function AddRider({
                 type="button"
                 onClick={handleSubmit}
                 disabled={submitting || !date || !timeRange}
-                className="rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg bg-warning px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-warning disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {submitting ? 'Adding...' : 'Create Flight'}
               </button>

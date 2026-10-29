@@ -16,9 +16,6 @@ const DECORATION =
 
 // Files not yet migrated to the design system. Shrinks to empty.
 const LEGACY_FILES: string[] = [
-  'components/admin/AddRider.tsx',
-  'components/admin/AdminDashboard.tsx',
-  'components/admin/EmailComposerModal.tsx',
   'components/admin/groups-management/ChangeLogPanel.tsx',
   'components/admin/groups-management/ChangesPanel.tsx',
   'components/admin/groups-management/CorralPanel.tsx',
