@@ -3,7 +3,15 @@
 import { postJson, requestJson } from '@/utils/api'
 import { useEffect, useState, useCallback } from 'react'
 import { useAuth } from '@/hooks/useAuth'
-import EmptyState from '@/components/results/EmptyState'
+import { Inbox } from 'lucide-react'
+
+import { SignInPrompt } from '@/components/SignInPrompt'
+import { Button, ButtonLink } from '@/components/ui/Button'
+import { EmptyState } from '@/components/ui/EmptyState'
+import { PageContainer, PageHeader } from '@/components/ui/PageHeader'
+import { RideTicket } from '@/components/ui/RideTicket'
+import { Spinner } from '@/components/ui/Spinner'
+import { formatTime12Hour } from '@/utils/formatTime'
 
 type IncomingMatchRequest = {
   id: string
@@ -69,75 +77,95 @@ export default function MatchRequestsPage() {
     }
   }
 
+  const header = (
+    <PageHeader
+      eyebrow="Find a group"
+      title="Incoming match requests"
+      description="Students who want to share a ride with you."
+    />
+  )
+
   // Show loading state while checking authentication
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6 text-black">
-        <h1 className="mb-6 text-2xl font-bold">Incoming Match Requests</h1>
-        <div className="flex items-center justify-center py-10">
-          <div className="text-gray-500">Loading...</div>
+      <PageContainer width="narrow">
+        {header}
+        <div className="flex items-center justify-center gap-3 py-16 text-stone">
+          <Spinner />
+          <span className="text-[15px]">Loading...</span>
         </div>
-      </div>
+      </PageContainer>
     )
   }
 
   // Show login prompt for unauthenticated users
   if (!isAuthenticated || !user) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6 text-black">
-        <h1 className="mb-6 text-2xl font-bold">Incoming Match Requests</h1>
-        <EmptyState type="login" />
-      </div>
+      <PageContainer width="narrow">
+        {header}
+        <SignInPrompt />
+      </PageContainer>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 text-black">
-      <h1 className="mb-6 text-2xl font-bold">Incoming Match Requests</h1>
-
+    <PageContainer width="narrow">
+      {header}
       {requests.length === 0 ? (
-        <p className="text-gray-500">No new requests.</p>
+        <EmptyState
+          icon={Inbox}
+          title="No new requests."
+          action={
+            <ButtonLink href="/unmatched" variant="secondary">
+              Browse unmatched flights
+            </ButtonLink>
+          }
+        />
       ) : (
         <ul className="space-y-4">
           {requests.map((req) => (
-            <li key={req.id} className="rounded bg-white p-4 shadow">
-              <p className="text-lg font-semibold">
-                {req.sender_flight?.Users?.firstname}{' '}
-                {req.sender_flight?.Users?.lastname} wants to ride with you.
-              </p>
-              <p className="text-sm text-gray-700">
-                Flight Date: {req.sender_flight?.date}
-              </p>
-              <p className="text-sm text-gray-700">
-                Direction:{' '}
-                {req.sender_flight?.to_airport
-                  ? `School → ${req.sender_flight?.airport}`
-                  : `${req.sender_flight?.airport} → School`}
-              </p>
-              <p className="text-sm text-gray-700">
-                Earliest: {req.sender_flight?.earliest_time}
-              </p>
-              <p className="text-sm text-gray-700">
-                Latest: {req.sender_flight?.latest_time}
-              </p>
-              <div className="mt-3 flex gap-3">
-                <button
-                  className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
-                  onClick={() => handleAccept(req)}
-                >
-                  Accept
-                </button>
-                <button
-                  className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
-                  onClick={() => handleReject(req.id)}
-                >
-                  Reject
-                </button>
-              </div>
+            <li key={req.id}>
+              <RideTicket
+                date={req.sender_flight?.date ?? null}
+                time={null}
+                airport={req.sender_flight?.airport ?? ''}
+                toAirport={Boolean(req.sender_flight?.to_airport)}
+                status="waiting"
+                statusLabel="Request"
+                stub={
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant="accent"
+                      onClick={() => handleAccept(req)}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="danger-ghost"
+                      onClick={() => handleReject(req.id)}
+                    >
+                      Reject
+                    </Button>
+                  </div>
+                }
+              >
+                <p className="font-semibold text-navy">
+                  {req.sender_flight?.Users?.firstname}{' '}
+                  {req.sender_flight?.Users?.lastname} wants to ride with you.
+                </p>
+                <p className="mt-1 text-sm text-stone">
+                  Earliest{' '}
+                  {formatTime12Hour(req.sender_flight?.earliest_time ?? '')} ·
+                  Latest{' '}
+                  {formatTime12Hour(req.sender_flight?.latest_time ?? '')}
+                </p>
+              </RideTicket>
             </li>
           ))}
         </ul>
       )}
-    </div>
+    </PageContainer>
   )
 }
