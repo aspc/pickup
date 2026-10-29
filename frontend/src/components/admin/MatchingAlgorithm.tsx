@@ -219,7 +219,7 @@ export default function MatchingAlgorithm() {
         </div>
 
         <p className="mb-8 text-sm text-gray-600">
-          Match all the riders from {fromDescription} to {daysAhead} days.
+          Match all the riders from {fromDescription} to {daysAhead} days ago.
         </p>
 
         {status && !status.configured && (
@@ -246,8 +246,7 @@ export default function MatchingAlgorithm() {
           <div className="border-b border-cyan-300/90 bg-gradient-to-r from-teal-500 to-cyan-500 px-6 py-4">
             <h2 className="text-xl font-bold text-white">Match &amp; commit</h2>
             <p className="mt-1 text-sm text-teal-50">
-              This writes real ride groups and consumes vouchers — there is no
-              dry-run from here.
+              Run matching algorithm for all users between these two dates.
             </p>
           </div>
 
