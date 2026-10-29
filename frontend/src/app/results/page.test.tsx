@@ -42,22 +42,6 @@ jest.mock(
     },
 )
 
-jest.mock(
-  '@/components/results/EmptyState',
-  () =>
-    function MockEmptyState() {
-      return <div>empty</div>
-    },
-)
-
-jest.mock(
-  '@/components/buttons/RedirectButton',
-  () =>
-    function MockRedirectButton() {
-      return <button>redirect</button>
-    },
-)
-
 import Results from '@/app/results/page'
 
 const readyMatch = {
@@ -100,7 +84,7 @@ describe('Results readiness persistence', () => {
     expect(await screen.findByTestId('match-77')).toHaveTextContent(
       'match 77 ready true',
     )
-    expect(screen.queryByText('Loading Matches...')).not.toBeInTheDocument()
+    expect(screen.queryByText('Loading matches...')).not.toBeInTheDocument()
     await waitFor(() =>
       expect(postJsonMock).toHaveBeenCalledWith(
         '/api/matches/mark-group-ready',

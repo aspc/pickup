@@ -1,7 +1,12 @@
 'use client'
 import CommentSection from '@/components/results/CommentSection'
-import RedirectButton from '@/components/buttons/RedirectButton'
-import EmptyState from '@/components/results/EmptyState'
+import { CalendarClock, ChevronDown, History } from 'lucide-react'
+import { SignInPrompt } from '@/components/SignInPrompt'
+import { Button, ButtonLink } from '@/components/ui/Button'
+import { EmptyState } from '@/components/ui/EmptyState'
+import { PageContainer, PageHeader } from '@/components/ui/PageHeader'
+import { Spinner } from '@/components/ui/Spinner'
+import { cn } from '@/utils/tailwind'
 import MatchCard from '@/components/results/MatchCard'
 import { postJson, requestJson } from '@/utils/api'
 import { useResultsInitialData } from '@/providers/InitialPageDataProvider'
@@ -205,256 +210,127 @@ export default function Results() {
 
   if (!isAuthenticated) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
-          <div className="animate-float absolute left-1/4 top-20 h-16 w-16 rotate-12 rounded-2xl bg-gradient-to-br from-teal-400/20 to-teal-600/20"></div>
-          <div
-            className="animate-float absolute right-1/3 top-40 h-12 w-12 rounded-full bg-gradient-to-br from-blue-400/20 to-blue-600/20"
-            style={{ animationDelay: '1s' }}
-          ></div>
-        </div>
-
-        <div className="relative flex min-h-screen w-full flex-col items-center justify-center p-6">
-          <div className="mx-auto flex w-full max-w-2xl flex-col items-center text-center">
-            <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-yellow-100 shadow-lg">
-              <svg
-                className="h-10 w-10 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-            </div>
-            <h1 className="mb-6 text-4xl font-bold text-gray-900">
-              Your Matches
-            </h1>
-            <p className="mb-8 text-xl text-gray-600">
-              Sign in to view your travel matches and companions
-            </p>
-            <div className="rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm">
-              <EmptyState type="login" />
-              <div className="mt-6">
-                <RedirectButton label="Back to Home" route="/" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageContainer width="narrow">
+        <PageHeader
+          eyebrow="Your rides"
+          title="Your matches"
+          description="Sign in to view your travel matches and companions."
+        />
+        <SignInPrompt />
+      </PageContainer>
     )
   }
 
   if (loading)
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+      <PageContainer width="narrow">
+        <div className="flex items-center justify-center gap-3 py-24 text-stone">
+          <Spinner label="Loading matches" />
+          <span className="text-[15px]">Loading matches...</span>
         </div>
-        <div className="relative flex min-h-screen items-center justify-center p-4">
-          <div className="flex items-center space-x-4 rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-200 border-t-teal-500"></div>
-            <span className="text-lg font-medium text-gray-700">
-              Loading Matches...
-            </span>
-          </div>
-        </div>
-      </div>
+      </PageContainer>
     )
 
+  const groupedUpcoming = groupMatchesByRideId(
+    Object.values(matches.upcoming).flat(),
+  )
+  const groupedPrevious = groupMatchesByRideId(
+    Object.values(matches.previous).flat(),
+  )
+
   return (
-    <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
-        <div className="animate-float absolute left-1/4 top-20 h-16 w-16 rotate-12 rounded-2xl bg-gradient-to-br from-teal-400/20 to-teal-600/20"></div>
-        <div
-          className="animate-float absolute right-1/3 top-40 h-12 w-12 rounded-full bg-gradient-to-br from-blue-400/20 to-blue-600/20"
-          style={{ animationDelay: '1s' }}
-        ></div>
-        <div
-          className="animate-float absolute bottom-40 left-1/3 h-20 w-20 rotate-45 rounded-3xl bg-gradient-to-br from-indigo-400/20 to-indigo-600/20"
-          style={{ animationDelay: '2s' }}
-        ></div>
-      </div>
+    <PageContainer width="narrow">
+      <PageHeader
+        eyebrow="Your rides"
+        title="Your matches"
+        description="Connect with your travel companions and plan your journey together."
+      />
 
-      <div className="relative flex min-h-screen w-full flex-col">
-        {/* Header Section */}
-        <div className="relative px-6 pb-6 pt-8">
-          <div className="mx-auto max-w-6xl text-center">
-            <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-teal-500 to-yellow-100 shadow-lg">
-              <svg
-                className="h-8 w-8 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+      <section aria-labelledby="upcoming-heading">
+        <h2
+          id="upcoming-heading"
+          className="mb-4 text-lg font-semibold text-navy"
+        >
+          Upcoming matches
+        </h2>
+        {Object.keys(matches.upcoming).length > 0 ? (
+          <div className="space-y-8">
+            {Object.entries(groupedUpcoming).map(([rideId, matchesForRide]) => (
+              <div key={rideId} className="space-y-3">
+                <MatchCard
+                  matches={matchesForRide}
+                  upcoming={true}
+                  onDelete={deleteMatch}
+                  rideId={parseInt(rideId)}
+                  isGroupReady={
+                    rideReadiness[parseInt(rideId)]?.isReady ?? false
+                  }
                 />
-              </svg>
-            </div>
-            <h1 className="mb-4 text-4xl font-bold text-gray-900">
-              Your Matches
-            </h1>
-            <p className="text-xl text-gray-600">
-              Connect with your travel companions and plan your journey together
-            </p>
+                <CommentSection rideId={parseInt(rideId)} />
+              </div>
+            ))}
           </div>
-        </div>
+        ) : (
+          <EmptyState
+            icon={CalendarClock}
+            title="No upcoming matches found"
+            description="You don't have any upcoming matches. Create a new match to get started!"
+            action={<ButtonLink href="/matchForm">Request match</ButtonLink>}
+          />
+        )}
+      </section>
 
-        {/* Content Section */}
-        <div className="relative flex-1 px-6 pb-8">
-          <div className="mx-auto max-w-6xl">
-            {/* Upcoming Matches Section */}
-            <div className="mb-8">
-              <div className="mb-6 rounded-2xl bg-white/80 p-6 shadow-lg backdrop-blur-sm">
-                <h2 className="mb-4 flex items-center gap-3 text-2xl font-bold text-gray-800">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-teal-100 to-teal-200">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-teal-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </span>
-                  Upcoming Matches
-                </h2>
-                {Object.keys(matches.upcoming).length > 0 ? (
-                  (() => {
-                    const groupedUpcoming = groupMatchesByRideId(
-                      Object.values(matches.upcoming).flat(),
-                    )
-
-                    return Object.entries(groupedUpcoming).map(
-                      ([rideId, matchesForRide]) => (
-                        <div key={rideId} className="mb-8">
-                          <MatchCard
-                            matches={matchesForRide}
-                            upcoming={true}
-                            onDelete={deleteMatch}
-                            rideId={parseInt(rideId)}
-                            isGroupReady={
-                              rideReadiness[parseInt(rideId)]?.isReady ?? false
-                            }
-                          />
-                          <CommentSection rideId={parseInt(rideId)} />
-                        </div>
-                      ),
-                    )
-                  })()
-                ) : (
-                  <EmptyState type="upcoming" />
-                )}
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="mb-8 flex justify-center">
-              <RedirectButton
-                label="View Unmatched Flights"
-                route="/unmatched"
-                color="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
-                size="px-6 py-3 text-lg font-medium"
-              />
-            </div>
-
-            {/* Toggle Previous Matches Button */}
-            <div className="mb-8 flex justify-center">
-              <button
-                onClick={() => setShowPrevious(!showPrevious)}
-                className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white/80 px-6 py-3 font-semibold shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white hover:shadow-xl"
-              >
-                {showPrevious ? 'Hide' : 'Show'} Previous Matches
-                <svg
-                  className={`h-5 w-5 transform transition-transform ${
-                    showPrevious ? 'rotate-180' : ''
-                  }`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            {/* Previous Matches Section */}
-            {showPrevious && (
-              <div className="mb-8">
-                <div className="rounded-2xl bg-white/80 p-6 shadow-lg backdrop-blur-sm">
-                  <h2 className="mb-4 flex items-center gap-3 text-2xl font-bold text-gray-800">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-gray-100 to-gray-200">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-gray-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </span>
-                    Previous Matches
-                  </h2>
-                  {Object.keys(matches.previous).length > 0 ? (
-                    (() => {
-                      // Group the previous matches by ride_id
-                      const groupedPrevious = groupMatchesByRideId(
-                        Object.values(matches.previous).flat(),
-                      )
-
-                      // Render a MatchCard for each group of matches with the same ride_id
-                      return Object.entries(groupedPrevious).map(
-                        ([rideId, matchesForRide]) => (
-                          <MatchCard
-                            key={rideId}
-                            matches={matchesForRide}
-                            upcoming={false}
-                            rideId={parseInt(rideId)}
-                            isGroupReady={
-                              rideReadiness[parseInt(rideId)]?.isReady ?? false
-                            }
-                          />
-                        ),
-                      )
-                    })()
-                  ) : (
-                    <EmptyState type="previous" />
-                  )}
-                </div>
-              </div>
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6">
+        <ButtonLink href="/unmatched" variant="secondary">
+          View unmatched flights
+        </ButtonLink>
+        <Button
+          variant="ghost"
+          onClick={() => setShowPrevious(!showPrevious)}
+          aria-expanded={showPrevious}
+          aria-controls="previous-matches"
+        >
+          {showPrevious ? 'Hide' : 'Show'} previous matches
+          <ChevronDown
+            aria-hidden
+            className={cn(
+              'h-[18px] w-[18px] transition-transform duration-200',
+              showPrevious && 'rotate-180',
             )}
-          </div>
-        </div>
+          />
+        </Button>
       </div>
-    </div>
+
+      {showPrevious && (
+        <section id="previous-matches" className="mt-6">
+          <h2 className="mb-4 text-lg font-semibold text-navy">
+            Previous matches
+          </h2>
+          {Object.keys(matches.previous).length > 0 ? (
+            <div className="space-y-4">
+              {Object.entries(groupedPrevious).map(
+                ([rideId, matchesForRide]) => (
+                  <MatchCard
+                    key={rideId}
+                    matches={matchesForRide}
+                    upcoming={false}
+                    rideId={parseInt(rideId)}
+                    isGroupReady={
+                      rideReadiness[parseInt(rideId)]?.isReady ?? false
+                    }
+                  />
+                ),
+              )}
+            </div>
+          ) : (
+            <EmptyState
+              icon={History}
+              title="No previous matches found"
+              description="You haven't completed any rides yet."
+            />
+          )}
+        </section>
+      )}
+    </PageContainer>
   )
 }

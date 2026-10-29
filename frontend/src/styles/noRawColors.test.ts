@@ -27,7 +27,6 @@ const LEGACY_FILES: string[] = [
   'app/faq/page.tsx',
   'app/feedback/page.tsx',
   'app/MatchRequestsPage/page.tsx',
-  'app/results/page.tsx',
   'app/unmatched/page.tsx',
   'components/admin/AddRider.tsx',
   'components/admin/AdminDashboard.tsx',
@@ -49,10 +48,7 @@ const LEGACY_FILES: string[] = [
   'components/buttons/RedirectButton.tsx',
   'components/buttons/SimpleRedirectButton.tsx',
   'components/feedback/StarRating.tsx',
-  'components/results/CommentSection.tsx',
-  'components/results/ConfirmCancelMatch.tsx',
   'components/results/EmptyState.tsx',
-  'components/results/MatchCard.tsx',
 ]
 
 const listSourceFiles = (dir: string): string[] =>

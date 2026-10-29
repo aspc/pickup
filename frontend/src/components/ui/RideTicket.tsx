@@ -69,7 +69,18 @@ export function RideTicket({
       <div className="px-5 pb-5 pt-4 sm:px-6">
         <div className="flex items-center justify-between gap-3">
           <p className="text-sm font-medium text-stone">
-            {formatRideDate(date)}
+            <span className="whitespace-nowrap">{formatRideDate(date)}</span>
+            {time && (
+              <span className="whitespace-nowrap">
+                <span aria-hidden className="mx-1.5 text-line-strong">
+                  ·
+                </span>
+                {timeLabel}{' '}
+                <span className="font-semibold text-ink">
+                  {formatTime12Hour(time)}
+                </span>
+              </span>
+            )}
           </p>
           <StatusBadge status={status} label={statusLabel} />
         </div>
@@ -103,18 +114,7 @@ export function RideTicket({
             >
               {to.code}
             </p>
-            <p className="mt-1.5 truncate text-[13px] text-stone">
-              {time ? (
-                <>
-                  {timeLabel}{' '}
-                  <span className="font-medium text-ink">
-                    {formatTime12Hour(time)}
-                  </span>
-                </>
-              ) : (
-                to.name
-              )}
-            </p>
+            <p className="mt-1.5 truncate text-[13px] text-stone">{to.name}</p>
           </div>
         </div>
 

@@ -36,7 +36,7 @@ export const buttonClasses = ({
   fullWidth = false,
 }: ButtonStyleOptions = {}) =>
   cn(
-    'inline-flex select-none items-center justify-center whitespace-nowrap rounded-md font-medium',
+    'inline-flex select-none items-center justify-center whitespace-nowrap rounded-md font-medium [&_svg]:shrink-0',
     'transition-[background-color,border-color,color,transform] duration-150 ease-out active:scale-[0.97]',
     'disabled:pointer-events-none disabled:opacity-50',
     variants[variant],
