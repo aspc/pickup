@@ -30,7 +30,7 @@ interface ButtonStyleOptions {
   fullWidth?: boolean
 }
 
-export const buttonClasses = ({
+const buttonClasses = ({
   variant = 'primary',
   size = 'md',
   fullWidth = false,

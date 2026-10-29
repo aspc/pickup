@@ -1,4 +1,4 @@
-import type { ComponentProps, ElementType, ReactNode } from 'react'
+import type { ComponentProps, ElementType } from 'react'
 
 import { cn } from '@/utils/tailwind'
 
@@ -22,37 +22,6 @@ export function Card({
       )}
       {...props}
     />
-  )
-}
-
-interface CardHeaderProps {
-  title: ReactNode
-  description?: ReactNode
-  action?: ReactNode
-  className?: string
-}
-
-export function CardHeader({
-  title,
-  description,
-  action,
-  className,
-}: CardHeaderProps) {
-  return (
-    <div
-      className={cn(
-        'flex items-start justify-between gap-4 border-b border-line px-5 py-4 sm:px-6',
-        className,
-      )}
-    >
-      <div className="min-w-0">
-        <h2 className="text-base font-semibold text-navy">{title}</h2>
-        {description && (
-          <p className="mt-0.5 text-sm text-stone">{description}</p>
-        )}
-      </div>
-      {action && <div className="shrink-0">{action}</div>}
-    </div>
   )
 }
 

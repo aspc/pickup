@@ -122,7 +122,6 @@ export function DatePicker({
         <button
           id={id}
           type="button"
-          aria-invalid={invalid || undefined}
           aria-describedby={ariaDescribedBy}
           className={cn(
             'flex h-11 w-full items-center justify-between gap-3 rounded-md border bg-card px-3.5 text-left text-[15px] text-ink transition-[border-color,box-shadow] duration-150 ease-out focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0',

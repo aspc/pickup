@@ -14,11 +14,8 @@ const HEX_COLOR =
 const DECORATION =
   /\bbg-gradient-|\banimate-(?:float|gradient-x|pulse|bounce)\b/
 
-// Files not yet migrated to the design system. Shrinks to empty.
-const LEGACY_FILES: string[] = [
-  'components/buttons/RedirectButton.tsx',
-  'components/buttons/SimpleRedirectButton.tsx',
-]
+// Files exempt from the guard. Keep this empty; fix violations instead.
+const LEGACY_FILES: string[] = []
 
 const listSourceFiles = (dir: string): string[] =>
   fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -49,6 +46,10 @@ describe('design tokens', () => {
       .filter((file) => !LEGACY_FILES.includes(file))
       .flatMap(findViolations)
     expect(violations).toEqual([])
+  })
+
+  it('has no legacy exemptions left', () => {
+    expect(LEGACY_FILES).toEqual([])
   })
 
   it('only lists legacy files that still violate', () => {

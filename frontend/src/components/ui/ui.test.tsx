@@ -7,9 +7,9 @@ import { Alert } from './Alert'
 import { Button } from './Button'
 import { Field, Input } from './Field'
 import { Modal } from './Modal'
-import { rideStatusTone } from './StatusBadge'
+import { StatusBadge } from './StatusBadge'
 
-describe('rideStatusTone', () => {
+describe('StatusBadge', () => {
   it.each([
     ['matched', 'success'],
     ['ready', 'success'],
@@ -18,8 +18,9 @@ describe('rideStatusTone', () => {
     ['past', 'neutral'],
     ['cancelled', 'danger'],
     ['delayed', 'warning'],
-  ] as const)('maps %s to %s', (status, tone) => {
-    expect(rideStatusTone(status)).toBe(tone)
+  ] as const)('renders %s with the %s tone', (status, tone) => {
+    const { container } = render(<StatusBadge status={status} />)
+    expect(container.firstChild).toHaveAttribute('data-tone', tone)
   })
 })
 

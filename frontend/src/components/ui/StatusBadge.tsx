@@ -27,6 +27,7 @@ export function Badge({
 }: BadgeProps) {
   return (
     <span
+      data-tone={tone}
       className={cn(
         'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium',
         tones[tone].badge,
@@ -73,8 +74,7 @@ const statusLabels: Record<RideStatus, string> = {
   delayed: 'Delayed',
 }
 
-export const rideStatusTone = (status: RideStatus): BadgeTone =>
-  statusTones[status]
+const rideStatusTone = (status: RideStatus): BadgeTone => statusTones[status]
 
 interface StatusBadgeProps {
   status: RideStatus
