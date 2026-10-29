@@ -85,7 +85,16 @@ module.exports = withMT({
         overlay:
           '0 12px 32px -8px rgba(19, 41, 75, 0.18), 0 2px 6px rgba(19, 41, 75, 0.06)',
       },
+      transitionTimingFunction: {
+        out: 'cubic-bezier(0.23, 1, 0.32, 1)',
+        drawer: 'cubic-bezier(0.32, 0.72, 0, 1)',
+      },
       keyframes: {
+        'overlay-in': { from: { opacity: '0' }, to: { opacity: '1' } },
+        'dialog-in': {
+          from: { opacity: '0', transform: 'translateY(8px) scale(0.96)' },
+          to: { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
         'accordion-down': {
           from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
@@ -96,6 +105,8 @@ module.exports = withMT({
         },
       },
       animation: {
+        'overlay-in': 'overlay-in 200ms cubic-bezier(0.23, 1, 0.32, 1)',
+        'dialog-in': 'dialog-in 220ms cubic-bezier(0.23, 1, 0.32, 1)',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },

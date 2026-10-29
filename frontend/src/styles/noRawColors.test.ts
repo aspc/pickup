@@ -65,8 +65,6 @@ const LEGACY_FILES: string[] = [
   'components/results/EmptyState.tsx',
   'components/results/MatchCard.tsx',
   'components/SignInModal.tsx',
-  'components/ui/date-picker.tsx',
-  'components/ui/popover.tsx',
 ]
 
 const listSourceFiles = (dir: string): string[] =>

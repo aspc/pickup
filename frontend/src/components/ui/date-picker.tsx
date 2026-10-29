@@ -73,6 +73,9 @@ interface DatePickerProps {
   minDate?: string
   maxDate?: string
   placeholder?: string
+  id?: string
+  invalid?: boolean
+  'aria-describedby'?: string
 }
 
 export function DatePicker({
@@ -83,6 +86,9 @@ export function DatePicker({
   minDate,
   maxDate,
   placeholder = 'Select date',
+  id,
+  invalid = false,
+  'aria-describedby': ariaDescribedBy,
 }: DatePickerProps) {
   const [open, setOpen] = useState(false)
   const selected = useMemo(() => parseDateString(value), [value])
@@ -114,14 +120,23 @@ export function DatePicker({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button
+          id={id}
           type="button"
+          aria-invalid={invalid || undefined}
+          aria-describedby={ariaDescribedBy}
           className={cn(
-            'flex w-full items-center justify-between gap-3 rounded-lg border-2 border-gray-300 bg-white p-3 text-left text-black transition-colors hover:border-gray-400 focus:border-teal-500 focus:outline-none',
-            !selected && 'text-gray-500',
+            'flex h-11 w-full items-center justify-between gap-3 rounded-md border bg-card px-3.5 text-left text-[15px] text-ink transition-[border-color,box-shadow] duration-150 ease-out focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0',
+            invalid
+              ? 'border-danger'
+              : 'border-line-strong hover:border-navy-300',
+            !selected && 'text-stone-light',
           )}
         >
           <span>{selected ? formatDisplayDate(value) : placeholder}</span>
-          <Calendar className="h-5 w-5 shrink-0 text-gray-500" />
+          <Calendar
+            aria-hidden
+            className="h-[18px] w-[18px] shrink-0 text-stone"
+          />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-3">
@@ -140,27 +155,29 @@ export function DatePicker({
             [UI.Months]: 'flex',
             [UI.Month]: 'space-y-4',
             [UI.MonthCaption]:
-              'flex h-9 items-center justify-center text-sm font-semibold',
+              'flex h-9 items-center justify-center text-sm font-semibold text-navy',
             [UI.CaptionLabel]: 'text-sm font-semibold',
             [UI.Nav]:
               'absolute left-3 right-3 top-3 flex items-center justify-between',
             [UI.PreviousMonthButton]:
-              'inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-40',
+              'inline-flex h-8 w-8 items-center justify-center rounded-md border border-line bg-card text-navy transition-colors hover:bg-sunken disabled:pointer-events-none disabled:opacity-40',
             [UI.NextMonthButton]:
-              'inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-40',
+              'inline-flex h-8 w-8 items-center justify-center rounded-md border border-line bg-card text-navy transition-colors hover:bg-sunken disabled:pointer-events-none disabled:opacity-40',
             [UI.MonthGrid]: 'w-full border-collapse space-y-1',
             [UI.Weekdays]: 'flex',
             [UI.Weekday]:
-              'flex h-8 w-9 items-center justify-center text-xs font-medium text-gray-500',
+              'flex h-8 w-9 items-center justify-center text-xs font-medium text-stone',
             [UI.Week]: 'mt-1 flex w-full',
             [UI.Day]: 'h-9 w-9 p-0 text-center text-sm',
             [UI.DayButton]:
-              'h-9 w-9 rounded-md text-sm transition-colors hover:bg-teal-50 focus:bg-teal-50 focus:outline-none',
+              'h-9 w-9 rounded-md text-sm text-ink transition-colors hover:bg-sunken focus:outline-none focus-visible:ring-2 focus-visible:ring-sage',
             [SelectionState.selected]:
-              'bg-teal-600 text-white hover:bg-teal-600 focus:bg-teal-600',
-            [DayFlag.today]: 'font-bold text-teal-700',
-            [DayFlag.outside]: 'text-gray-400 opacity-60',
-            [DayFlag.disabled]: 'pointer-events-none text-gray-300 opacity-50',
+              '[&>button]:bg-navy [&>button]:text-white [&>button]:hover:bg-navy',
+            [DayFlag.today]:
+              '[&>button]:font-semibold [&>button]:text-sage [&>button]:ring-1 [&>button]:ring-inset [&>button]:ring-sage/40',
+            [DayFlag.outside]: '[&>button]:text-stone-light',
+            [DayFlag.disabled]:
+              'pointer-events-none [&>button]:text-stone-light [&>button]:opacity-40',
           }}
         />
       </PopoverContent>
