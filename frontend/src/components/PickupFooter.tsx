@@ -1,15 +1,29 @@
-import SimpleRedirectButton from './buttons/SimpleRedirectButton'
+import { NavLink } from '@/components/NavLink'
+
+const FOOTER_LINKS = [
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/faq', label: 'FAQ' },
+  { href: '/aspc-info', label: 'ASPC Info' },
+]
 
 export default function PickupFooter() {
   return (
-    <footer className="w-full border-t-foreground/60 bg-gradient-to-r from-teal-500 to-yellow-100 p-4 text-white sm:p-6 lg:p-8">
-      <div className="container mx-auto flex flex-col items-center justify-between md:flex-row">
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-          <SimpleRedirectButton label="About" route="/about" />
-          <SimpleRedirectButton label="Contact" route="/contact" />
-          <SimpleRedirectButton label="FAQ" route="/faq" />
-          <SimpleRedirectButton label="ASPC Info" route="/aspc-info" />
-        </div>
+    <footer className="border-t border-line bg-paper">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <p className="text-sm text-stone">
+          <span className="font-semibold tracking-[0.06em] text-navy">
+            PICKUP
+          </span>{' '}
+          is a service of the Associated Students of Pomona College.
+        </p>
+        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2">
+          {FOOTER_LINKS.map((link) => (
+            <NavLink key={link.href} href={link.href} variant="footer">
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
       </div>
     </footer>
   )

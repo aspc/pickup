@@ -55,8 +55,6 @@ const LEGACY_FILES: string[] = [
   'components/buttons/SimpleRedirectButton.tsx',
   'components/feedback/StarRating.tsx',
   'components/forms/FlightForm.tsx',
-  'components/PickupFooter.tsx',
-  'components/PickupHeader.tsx',
   'components/questionnaires/ConfirmCancel.tsx',
   'components/questionnaires/ManyBagsNotice.tsx',
   'components/questionnaires/SubmitSuccess.tsx',
@@ -64,7 +62,6 @@ const LEGACY_FILES: string[] = [
   'components/results/ConfirmCancelMatch.tsx',
   'components/results/EmptyState.tsx',
   'components/results/MatchCard.tsx',
-  'components/SignInModal.tsx',
 ]
 
 const listSourceFiles = (dir: string): string[] =>
