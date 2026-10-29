@@ -1,197 +1,130 @@
-'use client'
+import { Lightbulb } from 'lucide-react'
+import Link from 'next/link'
 
-import { useRouter } from 'next/navigation'
-import { SERVICE_PERIODS } from '@/config/servicePeriods'
+import { Alert } from '@/components/ui/Alert'
+import { Card } from '@/components/ui/Card'
+import { PageContainer, PageHeader } from '@/components/ui/PageHeader'
 import {
   formatDeadlineForDisplay,
   formatSubsidizedWindowsForDisplay,
 } from '@/config/servicePeriodHelpers'
+import { SERVICE_PERIODS } from '@/config/servicePeriods'
+
+const textLink =
+  'font-medium text-navy underline underline-offset-2 hover:text-sage'
 
 export default function ASPCPolicy() {
-  const router = useRouter()
   const activePeriod = SERVICE_PERIODS[SERVICE_PERIODS.length - 1]
 
   return (
-    <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
-        <div className="animate-float absolute left-1/4 top-20 h-16 w-16 rotate-12 rounded-2xl bg-gradient-to-br from-teal-400/20 to-teal-600/20"></div>
-        <div
-          className="animate-float absolute right-1/3 top-40 h-12 w-12 rounded-full bg-gradient-to-br from-blue-400/20 to-blue-600/20"
-          style={{ animationDelay: '1s' }}
-        ></div>
-        <div
-          className="animate-float absolute bottom-40 left-1/3 h-20 w-20 rotate-45 rounded-3xl bg-gradient-to-br from-indigo-400/20 to-indigo-600/20"
-          style={{ animationDelay: '2s' }}
-        ></div>
-      </div>
+    <PageContainer width="prose">
+      <PageHeader
+        eyebrow="ASPC RideLink"
+        title="ASPC RideLink policy"
+        description="2025-2026 Operational Guidelines"
+      />
 
-      <div className="relative flex min-h-screen w-full items-center justify-center p-4">
-        <div className="w-full max-w-4xl">
-          {/* Header Section */}
-          <div className="mb-8 text-center">
-            <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-yellow-100 shadow-lg">
-              <svg
-                className="h-10 w-10 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <h1 className="mb-4 text-4xl font-bold text-gray-900">
-              ASPC RideLink Policy
-            </h1>
-            <p className="text-xl text-gray-600">
-              2025-2026 Operational Guidelines
-            </p>
-          </div>
+      <Alert tone="info">
+        <strong>Questions?</strong> Contact{' '}
+        <a href="mailto:ridelink@aspc.pomona.edu" className={textLink}>
+          ridelink@aspc.pomona.edu
+        </a>
+        . View{' '}
+        <Link href="/aspc-fees" className={textLink}>
+          Cancellation & Change Fees
+        </Link>
+        .
+      </Alert>
 
-          {/* Policy Content */}
-          <div className="rounded-3xl bg-white/80 p-8 shadow-2xl backdrop-blur-sm">
-            {/* Contact Info */}
-            <div className="mb-8 rounded-xl bg-gradient-to-r from-teal-50 to-blue-50 p-6">
-              <p className="text-center text-gray-700">
-                <strong>Questions?</strong> Contact{' '}
-                <a
-                  href="mailto:ridelink@aspc.pomona.edu"
-                  className="font-semibold text-teal-700 hover:underline"
-                >
-                  ridelink@aspc.pomona.edu
-                </a>
-              </p>
-              <p className="mt-3 text-center text-sm text-gray-600">
-                📋 View{' '}
-                <button
-                  onClick={() => router.push('/aspc-fees')}
-                  className="font-semibold text-teal-700 hover:underline"
-                >
-                  Cancellation & Change Fees
-                </button>
-              </p>
-            </div>
-
-            {/* Operational Periods */}
-            <div className="mb-8">
-              <h2 className="mb-4 text-2xl font-bold text-gray-900">
-                📅 Operational Periods
-              </h2>
-
-              {activePeriod && (
-                <div className="mb-6 rounded-xl bg-gradient-to-r from-orange-50 to-amber-50 p-6">
-                  <h3 className="mb-3 text-xl font-semibold text-gray-800">
-                    {activePeriod.name}
-                  </h3>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-semibold text-gray-800">
-                        Deadline to request:
-                      </p>
-                      <p className="text-gray-700">
-                        {formatDeadlineForDisplay(activePeriod.deadline)}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800">
-                        Service Window:
-                      </p>
-                      <ul className="ml-5 list-disc space-y-1 text-gray-700">
-                        {formatSubsidizedWindowsForDisplay(activePeriod).map(
-                          (line) => (
-                            <li key={line}>{line}</li>
-                          ),
-                        )}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* How Matching Works */}
-            <div className="mb-8">
-              <h2 className="mb-4 text-2xl font-bold text-gray-900">
-                🤝 How Matching Works
-              </h2>
-              <div className="rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 p-6">
-                <p className="mb-4 text-gray-700">
-                  RideLink covers rides only when groups can be formed:{' '}
-                  <span className="font-bold">2+ riders to ONT</span> or{' '}
-                  <span className="font-bold">3+ riders to LAX</span>.
-                </p>
-                <div className="rounded-lg bg-white/70 p-4">
-                  <p className="mb-3 font-semibold text-gray-800">
-                    💡 Tips to Increase Your Matching Odds:
-                  </p>
-                  <ul className="space-y-2 text-gray-700">
-                    <li className="flex items-start">
-                      <span className="mr-2 text-teal-500">•</span>
-                      <span>
-                        <strong>Travel during common times:</strong> Daytime
-                        hours and within ±1 day of the start or end of the break
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-teal-500">•</span>
-                      <span>
-                        <strong>Be flexible:</strong> Provide a wide range of
-                        availability and be willing to arrive at the airport
-                        earlier than necessary
-                      </span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-teal-500">•</span>
-                      <span>
-                        <strong>Encourage friends:</strong> More riders = more
-                        matches! Get your friends to sign up
-                      </span>
-                    </li>
+      <section className="mt-10">
+        <h2 className="font-display text-2xl font-semibold text-navy">
+          Operational periods
+        </h2>
+        {activePeriod && (
+          <Card padded className="mt-4">
+            <h3 className="text-lg font-semibold text-navy">
+              {activePeriod.name}
+            </h3>
+            <dl className="mt-4 space-y-4 text-[15px]">
+              <div>
+                <dt className="font-medium text-ink">Deadline to request:</dt>
+                <dd className="mt-0.5 text-stone">
+                  {formatDeadlineForDisplay(activePeriod.deadline)}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-medium text-ink">Service window:</dt>
+                <dd>
+                  <ul className="mt-1 list-disc space-y-1 pl-5 text-stone marker:text-sage">
+                    {formatSubsidizedWindowsForDisplay(activePeriod).map(
+                      (line) => (
+                        <li key={line}>{line}</li>
+                      ),
+                    )}
                   </ul>
-                </div>
-                <p className="mt-4 text-sm text-gray-600">
-                  If a sufficient group cannot be formed, RideLink will be
-                  unable to cover the ride. However, you may still use PICKUP to
-                  coordinate non-subsidized carpools.
-                </p>
+                </dd>
               </div>
-            </div>
+            </dl>
+          </Card>
+        )}
+      </section>
 
-            {/* Important Notes */}
-            <div className="mb-8">
-              <h2 className="mb-4 text-2xl font-bold text-gray-900">
-                ⚠️ Important Notes
-              </h2>
-              <div className="rounded-xl bg-gradient-to-r from-purple-50 to-indigo-50 p-6">
-                <ul className="space-y-3 text-gray-700">
-                  <li className="flex items-start">
-                    <span className="mr-2 text-teal-500">•</span>
-                    <span>
-                      <strong>Ride Scheduling:</strong> Ride times are assigned
-                      to increase shared ridership and ensure efficient use of
-                      the program&apos;s budget.
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="mr-2 text-teal-500">•</span>
-                    <span>
-                      Your scheduled ride may depart earlier than the latest
-                      possible time you could leave for your flight. Students
-                      should plan accordingly when booking flights.
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+      <section className="mt-10">
+        <h2 className="font-display text-2xl font-semibold text-navy">
+          How matching works
+        </h2>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink">
+          RideLink covers rides only when groups can be formed:{' '}
+          <strong className="font-semibold">2+ riders to ONT</strong> or{' '}
+          <strong className="font-semibold">3+ riders to LAX</strong>.
+        </p>
+        <div className="mt-4 rounded-lg border border-line bg-card p-5">
+          <p className="flex items-center gap-2 font-semibold text-navy">
+            <Lightbulb aria-hidden className="h-5 w-5 text-sage" />
+            Tips to increase your matching odds
+          </p>
+          <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-relaxed text-ink marker:text-sage">
+            <li>
+              <strong className="font-semibold">
+                Travel during common times:
+              </strong>{' '}
+              Daytime hours and within ±1 day of the start or end of the break
+            </li>
+            <li>
+              <strong className="font-semibold">Be flexible:</strong> Provide a
+              wide range of availability and be willing to arrive at the airport
+              earlier than necessary
+            </li>
+            <li>
+              <strong className="font-semibold">Encourage friends:</strong> More
+              riders = more matches! Get your friends to sign up
+            </li>
+          </ul>
         </div>
-      </div>
-    </div>
+        <p className="mt-4 text-sm leading-relaxed text-stone">
+          If a sufficient group cannot be formed, RideLink will be unable to
+          cover the ride. However, you may still use PICKUP to coordinate
+          non-subsidized carpools.
+        </p>
+      </section>
+
+      <section className="mt-10">
+        <h2 className="font-display text-2xl font-semibold text-navy">
+          Important notes
+        </h2>
+        <ul className="mt-3 list-disc space-y-3 pl-5 text-[15px] leading-relaxed text-ink marker:text-sage">
+          <li>
+            <strong className="font-semibold">Ride Scheduling:</strong> Ride
+            times are assigned to increase shared ridership and ensure efficient
+            use of the program&apos;s budget.
+          </li>
+          <li>
+            Your scheduled ride may depart earlier than the latest possible time
+            you could leave for your flight. Students should plan accordingly
+            when booking flights.
+          </li>
+        </ul>
+      </section>
+    </PageContainer>
   )
 }

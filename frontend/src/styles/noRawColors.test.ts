@@ -16,12 +16,6 @@ const DECORATION =
 
 // Files not yet migrated to the design system. Shrinks to empty.
 const LEGACY_FILES: string[] = [
-  'app/about/page.tsx',
-  'app/aspc-fees/page.tsx',
-  'app/aspc-info/page.tsx',
-  'app/aspc-policy/page.tsx',
-  'app/contact/page.tsx',
-  'app/faq/page.tsx',
   'components/admin/AddRider.tsx',
   'components/admin/AdminDashboard.tsx',
   'components/admin/EmailComposerModal.tsx',

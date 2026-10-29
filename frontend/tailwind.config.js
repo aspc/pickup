@@ -1,4 +1,3 @@
-const withMT = require('@material-tailwind/react/utils/withMT')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 // PICKUP design tokens. Every color used in the app is named here; pages must
@@ -46,7 +45,7 @@ const palette = {
 }
 
 /** @type {import('tailwindcss').Config} */
-module.exports = withMT({
+module.exports = {
   content: ['./src/**/*.{ts,tsx}'],
   prefix: '',
   theme: {
@@ -113,4 +112,4 @@ module.exports = withMT({
     },
   },
   plugins: [require('tailwindcss-animate')],
-})
+}
