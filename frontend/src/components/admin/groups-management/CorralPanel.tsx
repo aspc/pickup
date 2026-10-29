@@ -225,7 +225,7 @@ export default function CorralPanel({
                                 : corralSelectionMode
                                   ? 'cursor-pointer border-sage/30 bg-sage-tint hover:bg-sage-tint'
                                   : 'border-line bg-paper'
-                            } ${isRecentlyAdded ? 'animate-pulse' : ''}`}
+                            } ${isRecentlyAdded ? 'ring-2 ring-sage/50' : ''}`}
                             draggable={!corralSelectionMode}
                             onDragStart={() => {
                               if (!corralSelectionMode) {

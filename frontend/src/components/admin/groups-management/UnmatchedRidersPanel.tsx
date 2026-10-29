@@ -63,7 +63,7 @@ export default function UnmatchedRidersPanel({
                   : !riderDatePassed
                     ? 'hover:bg-paper'
                     : ''
-              } ${isRecentlyAdded ? 'animate-pulse' : ''} ${
+              } ${isRecentlyAdded ? 'ring-2 ring-sage/50' : ''} ${
                 isPending ? 'cursor-wait opacity-70' : ''
               }`}
               draggable={!isPending}
