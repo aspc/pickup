@@ -384,6 +384,11 @@ export default function AdminDashboard() {
             route="/admin/groups"
             variant="cta"
           />
+          <SimpleRedirectButton
+            label="Run Matching Algorithm"
+            route="/admin/matching"
+            variant="cta"
+          />
         </div>
 
         {/* Match no-shows — warm orange–yellow banner (Cancellations keeps red–orange) */}
