@@ -22,7 +22,6 @@ const LEGACY_FILES: string[] = [
   'app/aspc-policy/page.tsx',
   'app/contact/page.tsx',
   'app/faq/page.tsx',
-  'app/feedback/page.tsx',
   'components/admin/AddRider.tsx',
   'components/admin/AdminDashboard.tsx',
   'components/admin/EmailComposerModal.tsx',
@@ -38,7 +37,6 @@ const LEGACY_FILES: string[] = [
   'components/admin/GroupsManagement.tsx',
   'components/buttons/RedirectButton.tsx',
   'components/buttons/SimpleRedirectButton.tsx',
-  'components/feedback/StarRating.tsx',
 ]
 
 const listSourceFiles = (dir: string): string[] =>
