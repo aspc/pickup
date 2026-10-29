@@ -3,9 +3,16 @@
 import { postJson } from '@/utils/api'
 import { createBrowserClient } from '@/utils/supabase'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Alert } from '@/components/ui/Alert'
+import { Button } from '@/components/ui/Button'
+import { Card, CardBody, CardFooter } from '@/components/ui/Card'
+import { Checkbox, Field, Input, Select } from '@/components/ui/Field'
+import { PageContainer, PageHeader } from '@/components/ui/PageHeader'
+import { Spinner } from '@/components/ui/Spinner'
+import { PRIVACY_URL } from '@/config/legalDocuments'
 import { useAuth } from '@/hooks/useAuth'
 
-export default function Questionnaire() {
+export default function ProfilePage() {
   const supabase = useMemo(() => createBrowserClient(), [])
   const {
     user,
@@ -164,9 +171,8 @@ export default function Questionnaire() {
 
     setMessage(
       hasProfile
-        ? '✅ Profile updated successfully!'
-        : //  \n Any profile picture changes will appear upon refresh.
-          '✅ Profile created successfully!',
+        ? 'Profile updated successfully.'
+        : 'Profile created successfully.',
     )
     setHasProfile(true)
     setPhotoUrl(updatedPhotoUrl)
@@ -177,403 +183,168 @@ export default function Questionnaire() {
     await refreshProfile()
   }
 
+  const [saving, setSaving] = useState(false)
+
+  const onSubmit = async (event: React.FormEvent) => {
+    setSaving(true)
+    try {
+      await handleSubmit(event)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const isSuccess = message.includes('successfully')
+
   return (
-    <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
-        <div className="animate-float absolute left-1/4 top-20 h-16 w-16 rotate-12 rounded-2xl bg-gradient-to-br from-teal-400/20 to-teal-600/20"></div>
-        <div
-          className="animate-float absolute right-1/3 top-40 h-12 w-12 rounded-full bg-gradient-to-br from-blue-400/20 to-blue-600/20"
-          style={{ animationDelay: '1s' }}
-        ></div>
-        <div
-          className="animate-float absolute bottom-40 left-1/3 h-20 w-20 rotate-45 rounded-3xl bg-gradient-to-br from-indigo-400/20 to-indigo-600/20"
-          style={{ animationDelay: '2s' }}
-        ></div>
-      </div>
+    <PageContainer width="narrow">
+      <PageHeader
+        eyebrow="Your profile"
+        title={
+          loading ? 'Profile' : hasProfile ? 'Update profile' : 'Create profile'
+        }
+        description="Your group sees your name and contact details once you are matched."
+      />
 
-      <div className="relative flex min-h-screen w-full items-center justify-center p-4">
-        <div className="w-full max-w-2xl">
-          {/* Header Section */}
-          <div className="mb-4 text-center md:mb-8">
-            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-yellow-100 shadow-lg md:mb-6 md:h-20 md:w-20">
-              <svg
-                className="h-8 w-8 text-white md:h-10 md:w-10"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+      {showUpdateReminder && (
+        <Alert tone="warning" className="mb-6">
+          Don&apos;t forget to save your changes!
+        </Alert>
+      )}
+
+      {loading ? (
+        <Card
+          padded
+          className="flex items-center justify-center gap-3 py-12 text-stone"
+        >
+          <Spinner label="Loading profile" />
+          <span className="text-[15px]">Loading profile...</span>
+        </Card>
+      ) : (
+        <Card as="form" onSubmit={onSubmit}>
+          <CardBody className="space-y-5">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field label="First name" htmlFor="firstname" required>
+                <Input
+                  id="firstname"
+                  autoComplete="given-name"
+                  value={firstname}
+                  onChange={(e) => {
+                    setFirstName(e.target.value)
+                    markUnsaved()
+                  }}
+                  placeholder="Enter your first name"
+                  required
                 />
-              </svg>
+              </Field>
+              <Field label="Last name" htmlFor="lastname" required>
+                <Input
+                  id="lastname"
+                  autoComplete="family-name"
+                  value={lastname}
+                  onChange={(e) => {
+                    setLastName(e.target.value)
+                    markUnsaved()
+                  }}
+                  placeholder="Enter your last name"
+                  required
+                />
+              </Field>
             </div>
-            <h1 className="mb-2 text-2xl font-bold text-gray-900 md:mb-4 md:text-4xl">
-              {loading ? '' : hasProfile ? 'Update Profile' : 'Create Profile'}
-            </h1>
-            {!loading && (
-              <p className="text-lg text-gray-600 md:text-xl">
-                Please fill out and save your personal information below.
-              </p>
+
+            <Field label="School" htmlFor="school" required>
+              <Select
+                id="school"
+                value={school}
+                onChange={(e) => {
+                  setSchool(e.target.value)
+                  markUnsaved()
+                }}
+                required
+              >
+                <option value="" disabled>
+                  Select your school
+                </option>
+                <option value="Pomona">Pomona College</option>
+                <option value="Claremont McKenna">
+                  Claremont McKenna College
+                </option>
+                <option value="Harvey Mudd">Harvey Mudd College</option>
+                <option value="Scripps">Scripps College</option>
+                <option value="Pitzer">Pitzer College</option>
+              </Select>
+            </Field>
+
+            <Field label="Best email to contact" htmlFor="email" required>
+              <Input
+                id="email"
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  markUnsaved()
+                }}
+                placeholder="your.email@example.com"
+                required
+              />
+            </Field>
+
+            <Field label="Phone number" htmlFor="phonenumber" required>
+              <Input
+                id="phonenumber"
+                type="tel"
+                autoComplete="tel"
+                inputMode="tel"
+                value={phonenumber}
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value)
+                  markUnsaved()
+                }}
+                placeholder="(123) 456-7890"
+                required
+              />
+            </Field>
+
+            <Checkbox
+              id="sms-opt-in"
+              label="Opt in to text messaging with ASPC"
+              checked={smsOptIn}
+              onChange={(e) => {
+                setSmsOptIn(e.target.checked)
+                markUnsaved()
+              }}
+            />
+
+            {message && (
+              <Alert tone={isSuccess ? 'success' : 'danger'}>{message}</Alert>
             )}
-            {showUpdateReminder && (
-              <p className="mt-2 text-base font-semibold text-red-600 md:text-lg">
-                Don&apos;t forget to save your changes!
-              </p>
-            )}
-          </div>
+          </CardBody>
 
-          {/* Form Container - Hidden on mobile, shown on desktop */}
-          {loading ? (
-            <div className="flex items-center justify-center rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm">
-              <div className="flex items-center space-x-4">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-200 border-t-teal-500"></div>
-                <span className="text-lg font-medium text-gray-700">
-                  Loading Profile...
-                </span>
-              </div>
-            </div>
-          ) : (
-            <>
-              {/* Desktop Form Container */}
-              <div className="hidden rounded-3xl bg-white/80 p-8 shadow-2xl backdrop-blur-sm md:block">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <label className="block">
-                      <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                        First Name
-                      </span>
-                      <input
-                        type="text"
-                        value={firstname}
-                        onChange={(e) => {
-                          setFirstName(e.target.value)
-                          markUnsaved()
-                        }}
-                        className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                        placeholder="Enter your first name"
-                        required
-                      />
-                    </label>
-
-                    <label className="block">
-                      <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                        Last Name
-                      </span>
-                      <input
-                        type="text"
-                        value={lastname}
-                        onChange={(e) => {
-                          setLastName(e.target.value)
-                          markUnsaved()
-                        }}
-                        className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                        placeholder="Enter your last name"
-                        required
-                      />
-                    </label>
-                  </div>
-
-                  <label className="block">
-                    <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                      School
-                    </span>
-                    <select
-                      value={school}
-                      onChange={(e) => {
-                        setSchool(e.target.value)
-                        markUnsaved()
-                      }}
-                      className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                      required
-                    >
-                      <option value="" disabled>
-                        Select your school
-                      </option>
-                      <option value="Pomona">Pomona College</option>
-                      <option value="Claremont McKenna">
-                        Claremont McKenna College
-                      </option>
-                      <option value="Harvey Mudd">Harvey Mudd College</option>
-                      <option value="Scripps">Scripps College</option>
-                      <option value="Pitzer">Pitzer College</option>
-                    </select>
-                  </label>
-
-                  <label className="block">
-                    <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                      Best Email to Contact
-                    </span>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value)
-                        markUnsaved()
-                      }}
-                      className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                      placeholder="your.email@example.com"
-                      required
-                    />
-                  </label>
-
-                  <label className="block">
-                    <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                      Phone Number
-                    </span>
-                    <input
-                      type="text"
-                      value={phonenumber}
-                      onChange={(e) => {
-                        setPhoneNumber(e.target.value)
-                        markUnsaved()
-                      }}
-                      className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                      placeholder="(123) 456-7890"
-                      required
-                    />
-                  </label>
-
-                  <label className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      checked={smsOptIn}
-                      onChange={(e) => {
-                        setSmsOptIn(e.target.checked)
-                        markUnsaved()
-                      }}
-                      className="mt-1 h-5 w-5 rounded border-gray-300 text-teal-600 transition-all duration-200 focus:ring-2 focus:ring-teal-500/20"
-                    />
-                    <span className="text-sm font-medium text-gray-700">
-                      OPT-IN to text messaging with ASPC?
-                    </span>
-                  </label>
-
-                  <div className="pt-4">
-                    <button
-                      type="submit"
-                      className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 p-4 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:from-teal-600 hover:to-teal-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-teal-500/50"
-                    >
-                      {loading ? (
-                        <div className="flex items-center justify-center space-x-2">
-                          <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
-                          <span>Processing...</span>
-                        </div>
-                      ) : hasProfile ? (
-                        'Update Profile'
-                      ) : (
-                        'Create Profile'
-                      )}
-                    </button>
-
-                    {/* SMS Disclaimer */}
-                    <p className="mt-4 text-xs leading-relaxed text-gray-600">
-                      By submitting this form and signing up for texts, I agree
-                      to receive conversational text messages from Associated
-                      Students of Pomona College (ASPC) using the contact
-                      information provided. For help, reply HELP. Opt out at any
-                      time by replying STOP. Message and data rates may apply.
-                      Message frequency varies. Please view our{' '}
-                      <a
-                        href="https://docs.google.com/document/d/e/2PACX-1vTUgsgoxR1HOkfnW4QYfki4DXLUSB-ELyyMqFNFfOSgxyshPE9ykZyBODVxTCip10ULXgeaqrBXGddA/pub"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-teal-600 underline hover:text-teal-700"
-                      >
-                        Privacy Policy
-                      </a>
-                      .
-                    </p>
-
-                    {message && (
-                      <div
-                        className={`mt-4 rounded-xl p-4 text-center ${
-                          message.includes('✅') ||
-                          message.includes('successfully')
-                            ? 'border border-green-200 bg-green-50 text-green-700'
-                            : 'border border-red-200 bg-red-50 text-red-700'
-                        }`}
-                      >
-                        <p className="font-medium">{message}</p>
-                      </div>
-                    )}
-                  </div>
-                </form>
-              </div>
-
-              {/* Mobile Form - No container, simpler */}
-              <div className="block md:hidden">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4">
-                    <label className="block">
-                      <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                        First Name
-                      </span>
-                      <input
-                        type="text"
-                        value={firstname}
-                        onChange={(e) => {
-                          setFirstName(e.target.value)
-                          markUnsaved()
-                        }}
-                        className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                        placeholder="Enter your first name"
-                        required
-                      />
-                    </label>
-
-                    <label className="block">
-                      <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                        Last Name
-                      </span>
-                      <input
-                        type="text"
-                        value={lastname}
-                        onChange={(e) => {
-                          setLastName(e.target.value)
-                          markUnsaved()
-                        }}
-                        className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                        placeholder="Enter your last name"
-                        required
-                      />
-                    </label>
-
-                    <label className="block">
-                      <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                        School
-                      </span>
-                      <select
-                        value={school}
-                        onChange={(e) => {
-                          setSchool(e.target.value)
-                          markUnsaved()
-                        }}
-                        className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                        required
-                      >
-                        <option value="" disabled>
-                          Select your school
-                        </option>
-                        <option value="Pomona">Pomona College</option>
-                        <option value="Claremont McKenna">
-                          Claremont McKenna College
-                        </option>
-                        <option value="Harvey Mudd">Harvey Mudd College</option>
-                        <option value="Scripps">Scripps College</option>
-                        <option value="Pitzer">Pitzer College</option>
-                      </select>
-                    </label>
-
-                    <label className="block">
-                      <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                        Best Email to Contact
-                      </span>
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value)
-                          markUnsaved()
-                        }}
-                        className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                        placeholder="your.email@example.com"
-                        required
-                      />
-                    </label>
-
-                    <label className="block">
-                      <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
-                        Phone Number
-                      </span>
-                      <input
-                        type="text"
-                        value={phonenumber}
-                        onChange={(e) => {
-                          setPhoneNumber(e.target.value)
-                          markUnsaved()
-                        }}
-                        className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition-all duration-200 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/20"
-                        placeholder="(123) 456-7890"
-                        required
-                      />
-                    </label>
-
-                    <label className="flex items-start gap-3">
-                      <input
-                        type="checkbox"
-                        checked={smsOptIn}
-                        onChange={(e) => {
-                          setSmsOptIn(e.target.checked)
-                          markUnsaved()
-                        }}
-                        className="mt-1 h-5 w-5 rounded border-gray-300 text-teal-600 transition-all duration-200 focus:ring-2 focus:ring-teal-500/20"
-                      />
-                      <span className="text-sm font-medium text-gray-700">
-                        OPT-IN to text messaging with ASPC?
-                      </span>
-                    </label>
-
-                    <div className="pt-4">
-                      <button
-                        type="submit"
-                        className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 p-4 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:from-teal-600 hover:to-teal-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-teal-500/50"
-                      >
-                        {loading ? (
-                          <div className="flex items-center justify-center space-x-2">
-                            <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
-                            <span>Processing...</span>
-                          </div>
-                        ) : hasProfile ? (
-                          'Update Profile'
-                        ) : (
-                          'Create Profile'
-                        )}
-                      </button>
-
-                      {/* SMS Disclaimer */}
-                      <p className="mt-4 text-xs leading-relaxed text-gray-600">
-                        By submitting this form and signing up for texts, I
-                        agree to receive conversational text messages from
-                        Associated Students of Pomona College (ASPC) using the
-                        contact information provided. For help, reply HELP. Opt
-                        out at any time by replying STOP. Message and data rates
-                        may apply. Message frequency varies. Please view our{' '}
-                        <a
-                          href="https://docs.google.com/document/d/e/2PACX-1vTUgsgoxR1HOkfnW4QYfki4DXLUSB-ELyyMqFNFfOSgxyshPE9ykZyBODVxTCip10ULXgeaqrBXGddA/pub"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-teal-600 underline hover:text-teal-700"
-                        >
-                          Privacy Policy
-                        </a>
-                        .
-                      </p>
-
-                      {message && (
-                        <div
-                          className={`mt-4 rounded-xl p-4 text-center ${
-                            message.includes('✅') ||
-                            message.includes('successfully')
-                              ? 'border border-green-200 bg-green-50 text-green-700'
-                              : 'border border-red-200 bg-red-50 text-red-700'
-                          }`}
-                        >
-                          <p className="font-medium">{message}</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
+          <CardFooter className="flex-col items-stretch gap-4 sm:items-stretch">
+            <Button type="submit" size="lg" fullWidth loading={saving}>
+              {hasProfile ? 'Update profile' : 'Create profile'}
+            </Button>
+            <p className="text-xs leading-relaxed text-stone">
+              By submitting this form and signing up for texts, I agree to
+              receive conversational text messages from Associated Students of
+              Pomona College (ASPC) using the contact information provided. For
+              help, reply HELP. Opt out at any time by replying STOP. Message
+              and data rates may apply. Message frequency varies. Please view
+              our{' '}
+              <a
+                href={PRIVACY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-navy underline underline-offset-2 hover:text-sage"
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </CardFooter>
+        </Card>
+      )}
+    </PageContainer>
   )
 }
