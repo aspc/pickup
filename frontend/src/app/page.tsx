@@ -137,7 +137,7 @@ export default function Index() {
           aria-hidden
           className="relative mx-auto w-full max-w-sm lg:max-w-md"
         >
-          <div className="absolute -inset-3 -z-10 rounded-[24px] bg-sage-tint sm:-inset-6 sm:rounded-[28px]" />
+          <div className="absolute -inset-x-2 -inset-y-3 -z-10 rounded-[24px] bg-sage-tint sm:-inset-6 sm:rounded-[28px]" />
           <RideTicket
             date="2026-12-12"
             time="06:40"

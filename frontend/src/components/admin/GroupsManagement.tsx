@@ -2696,7 +2696,7 @@ export default function GroupsManagement() {
       <div className="border-b border-line bg-card px-6 py-4">
         <div className="flex flex-col gap-4">
           {/* Desktop: Title (left) | Search (center) | Buttons (right) */}
-          <div className="hidden md:flex md:items-center md:gap-4">
+          <div className="hidden lg:flex lg:items-center lg:gap-4">
             {/* Title - Left */}
             <h1 className="flex-shrink-0 font-display text-2xl font-semibold text-navy sm:text-3xl">
               View & Manage Groups
@@ -2837,7 +2837,7 @@ export default function GroupsManagement() {
             </div>
           </div>
           {/* Mobile: Title and Buttons on first row, Create Group on second row, Search on third row */}
-          <div className="flex flex-col gap-4 md:hidden">
+          <div className="flex flex-col gap-4 lg:hidden">
             {/* First Row: Title and Buttons */}
             <div className="flex items-center justify-between gap-4">
               <h1 className="font-display text-2xl font-semibold text-navy">

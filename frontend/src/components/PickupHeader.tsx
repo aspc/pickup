@@ -89,7 +89,7 @@ export default function PickupHeader() {
 
           <nav
             aria-label="Main"
-            className="hidden flex-1 items-center justify-center gap-7 md:flex"
+            className="hidden flex-1 items-center justify-center gap-7 lg:flex"
           >
             {navItems.map((item) => (
               <NavLink key={item.href} href={item.href} variant="header">
@@ -127,7 +127,7 @@ export default function PickupHeader() {
                   variant="on-navy"
                   size="sm"
                   onClick={handleSignOut}
-                  className="hidden md:inline-flex"
+                  className="hidden lg:inline-flex"
                 >
                   Sign out
                 </Button>
@@ -148,7 +148,7 @@ export default function PickupHeader() {
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
               onClick={() => setIsMenuOpen((open) => !open)}
-              className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-navy-700 md:hidden"
+              className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-navy-700 lg:hidden"
             >
               {isMenuOpen ? (
                 <X aria-hidden className="h-6 w-6" />
@@ -163,7 +163,7 @@ export default function PickupHeader() {
       {isMenuOpen && (
         <div
           id="mobile-menu"
-          className="fixed inset-x-0 bottom-0 top-16 z-30 animate-overlay-in overflow-y-auto bg-paper md:hidden"
+          className="fixed inset-x-0 bottom-0 top-16 z-30 animate-overlay-in overflow-y-auto bg-paper lg:hidden"
         >
           <nav aria-label="Mobile" className="space-y-1 px-3 py-4">
             {navItems.map((item) => (
