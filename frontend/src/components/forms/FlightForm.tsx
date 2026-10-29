@@ -2083,7 +2083,7 @@ export default function FlightForm({
                           ? 'To Airport'
                           : tripType === false
                             ? 'To Campus'
-                            : '—'}
+                            : '-'}
                       </p>
                     </div>
                     <div>

@@ -7,7 +7,9 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import RedirectButton from '@/components/buttons/RedirectButton'
+import { ButtonLink } from '@/components/ui/Button'
+import { formatRideDate } from '@/components/ui/RideTicket'
+import { formatTime12Hour } from '@/utils/formatTime'
 import { isGroupReady } from '@/utils/groupReadiness'
 
 type MatchRow = {
@@ -195,18 +197,18 @@ function AspcReadyContent() {
 
   if (!isAuthenticated) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="relative flex min-h-screen flex-col items-center justify-center p-6">
-          <div className="mx-auto max-w-md rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm">
-            <h1 className="mb-4 text-2xl font-bold text-gray-800">
+      <div className="relative">
+        <div className="flex min-h-[60vh] flex-col items-center justify-center p-6">
+          <div className="mx-auto max-w-md rounded-lg border border-line bg-card p-8 text-center shadow-card">
+            <h1 className="mb-4 font-display text-3xl font-semibold text-navy">
               ASPC Ready for Pickup
             </h1>
-            <p className="mb-6 text-gray-600">
+            <p className="mb-6 text-stone">
               Sign in to confirm your group is ready for pickup.
             </p>
             <button
               onClick={() => void signInWithGoogle()}
-              className="w-full rounded-lg bg-teal-500 px-4 py-3 font-semibold text-white transition hover:bg-teal-600"
+              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-navy px-4 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
             >
               Sign in with Google
             </button>
@@ -218,21 +220,20 @@ function AspcReadyContent() {
 
   if (loading) {
     return (
-      <div className="from-slate-50 relative flex min-h-screen items-center justify-center bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-200 border-t-teal-500" />
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-[3px] border-sage border-r-transparent" />
       </div>
     )
   }
 
   if (!rideId && userRides.length > 0) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="relative mx-auto max-w-2xl px-4 py-6 sm:py-12">
-          <h1 className="mb-6 text-2xl font-bold text-gray-800 sm:text-3xl">
+      <div className="relative">
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:pt-12">
+          <h1 className="mb-6 font-display text-[32px] font-semibold leading-tight text-navy sm:text-[40px]">
             Ready for Pickup
           </h1>
-          <p className="mb-6 text-gray-600">
+          <p className="mb-6 text-stone">
             Select a ride to confirm your group is ready:
           </p>
           <div className="space-y-3">
@@ -240,14 +241,16 @@ function AspcReadyContent() {
               <a
                 key={r.ride_id}
                 href={`/aspc-ready?ride_id=${r.ride_id}`}
-                className="block min-h-[48px] rounded-xl border border-gray-200 bg-white p-4 shadow-md transition hover:border-teal-300 hover:shadow-lg"
+                className="block min-h-[48px] rounded-lg border border-line bg-card p-4 shadow-card transition-colors hover:border-navy-300"
               >
                 {r.label}
               </a>
             ))}
           </div>
           <div className="mt-8">
-            <RedirectButton label="Back to Results" route="/results" />
+            <ButtonLink href="/results" variant="secondary">
+              Back to Results
+            </ButtonLink>
           </div>
         </div>
       </div>
@@ -256,16 +259,18 @@ function AspcReadyContent() {
 
   if (!rideId && userRides.length === 0) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="relative mx-auto max-w-2xl px-4 py-12">
-          <h1 className="mb-6 text-3xl font-bold text-gray-800">
+      <div className="relative">
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:pt-12">
+          <h1 className="mb-6 font-display text-[32px] font-semibold leading-tight text-navy sm:text-[40px]">
             Ready for Pickup
           </h1>
-          <p className="mb-6 text-gray-600">
+          <p className="mb-6 text-stone">
             You don&apos;t have any upcoming rides. Go to the results page to
             view your matches.
           </p>
-          <RedirectButton label="Back to Results" route="/results" />
+          <ButtonLink href="/results" variant="secondary">
+            Back to Results
+          </ButtonLink>
         </div>
       </div>
     )
@@ -273,13 +278,15 @@ function AspcReadyContent() {
 
   if (error && matches.length === 0) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="relative mx-auto max-w-2xl px-4 py-12">
-          <h1 className="mb-6 text-3xl font-bold text-gray-800">
+      <div className="relative">
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:pt-12">
+          <h1 className="mb-6 font-display text-[32px] font-semibold leading-tight text-navy sm:text-[40px]">
             Ready for Pickup
           </h1>
-          <p className="mb-6 text-red-600">{error}</p>
-          <RedirectButton label="Back to Results" route="/results" />
+          <p className="mb-6 text-danger">{error}</p>
+          <ButtonLink href="/results" variant="secondary">
+            Back to Results
+          </ButtonLink>
         </div>
       </div>
     )
@@ -287,13 +294,12 @@ function AspcReadyContent() {
 
   if (groupReady) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="relative mx-auto max-w-2xl px-4 py-12">
-          <div className="rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm">
-            <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-green-100">
+      <div className="relative">
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:pt-12">
+          <div className="rounded-lg border border-line bg-card p-5 shadow-card sm:p-8">
+            <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-sage-tint">
               <svg
-                className="h-8 w-8 text-green-600"
+                className="h-8 w-8 text-sage"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -306,40 +312,39 @@ function AspcReadyContent() {
                 />
               </svg>
             </div>
-            <h1 className="mb-2 text-2xl font-bold text-gray-800">
+            <h1 className="mb-2 font-display text-3xl font-semibold text-navy">
               Your group is ready!
             </h1>
-            <p className="mb-6 text-gray-600">
+            <p className="mb-6 text-stone">
               Your voucher is available on the results page.
             </p>
-            <RedirectButton label="View Results" route="/results" />
+            <ButtonLink href="/results" variant="secondary">
+              View Results
+            </ButtonLink>
           </div>
         </div>
       </div>
     )
   }
 
-  const matchDate = firstMatch?.date
-    ? new Date(firstMatch.date + 'T00:00:00').toLocaleDateString()
-    : firstMatch?.Flights?.date
-      ? new Date(firstMatch.Flights.date + 'T00:00:00').toLocaleDateString()
-      : ''
+  const matchDate = formatRideDate(
+    firstMatch?.date ?? firstMatch?.Flights?.date ?? null,
+  )
 
-  const matchTime = firstMatch?.time ? firstMatch.time.slice(0, 5) : ''
+  const matchTime = firstMatch?.time ? formatTime12Hour(firstMatch.time) : ''
 
   return (
-    <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-      <div className="relative mx-auto max-w-2xl px-4 py-6 sm:py-12">
-        <div className="rounded-2xl bg-white/80 p-4 shadow-xl backdrop-blur-sm sm:p-8">
+    <div className="relative">
+      <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:pt-12">
+        <div className="rounded-lg border border-line bg-card p-5 shadow-card sm:p-8">
           {/* Delayed / Missing notice */}
           <Link
             href={`/aspc-delay/${rideId}`}
-            className="mb-6 flex w-full items-center gap-3 rounded-xl border-2 border-orange-200 bg-orange-50 p-4 transition hover:border-orange-300 hover:bg-orange-100"
+            className="mb-6 flex w-full items-center gap-3 rounded-md border border-warning/25 bg-warning-tint p-4 text-left transition-colors hover:border-warning/50"
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-200">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-card">
               <svg
-                className="h-5 w-5 text-orange-700"
+                className="h-5 w-5 text-warning"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -353,16 +358,14 @@ function AspcReadyContent() {
               </svg>
             </span>
             <div className="min-w-0 flex-1">
-              <p className="font-semibold text-orange-900">
-                Delayed or missing?
-              </p>
-              <p className="text-sm text-orange-800">
+              <p className="font-semibold text-ink">Delayed or missing?</p>
+              <p className="text-sm text-warning">
                 If you are delayed and will miss this ride, report it here and
                 get rematched or a contingency voucher.
               </p>
             </div>
             <svg
-              className="h-5 w-5 shrink-0 text-orange-600"
+              className="h-5 w-5 shrink-0 text-warning"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -376,30 +379,30 @@ function AspcReadyContent() {
             </svg>
           </Link>
 
-          <h1 className="mb-2 text-xl font-bold text-gray-800 sm:text-2xl">
+          <h1 className="mb-2 font-display text-2xl font-semibold text-navy sm:text-3xl">
             Confirm your group is ready to receive voucher
           </h1>
-          <p className="mb-6 text-gray-600">
+          <p className="mb-6 text-stone">
             {firstMatch?.Flights?.to_airport
-              ? `${firstMatch.Flights.airport} — School → Airport`
-              : `${firstMatch?.Flights?.airport} — Airport → School`}
+              ? `${firstMatch.Flights.airport} - School → Airport`
+              : `${firstMatch?.Flights?.airport} - Airport → School`}
           </p>
 
           <div
-            className={`mb-6 flex flex-col gap-3 rounded-lg border-2 px-4 py-4 sm:flex-row sm:items-center sm:justify-between ${
+            className={`mb-6 flex flex-col gap-3 rounded-md border px-4 py-4 sm:flex-row sm:items-center sm:justify-between ${
               everyoneAccountedFor
-                ? 'border-green-300 bg-green-50'
-                : 'border-orange-300 bg-orange-50'
+                ? 'border-sage/30 bg-sage-tint'
+                : 'border-warning/25 bg-warning-tint'
             }`}
           >
             <div className="min-w-0 flex-1">
               <p
-                className={`font-semibold ${everyoneAccountedFor ? 'text-green-800' : 'text-orange-800'}`}
+                className={`font-semibold ${everyoneAccountedFor ? 'text-sage-strong' : 'text-warning'}`}
               >
                 {confirmedCount} of {totalCount} group members have confirmed
               </p>
               {everyoneAccountedFor ? (
-                <p className="mt-1 text-sm text-green-700">
+                <p className="mt-1 text-sm text-sage-strong">
                   Everyone accounted for! You may return to the Results.
                   {rideVoucher && (
                     <span className="mt-2 block font-medium">
@@ -409,7 +412,7 @@ function AspcReadyContent() {
                           href={rideVoucher}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-green-800 underline hover:text-green-900"
+                          className="font-medium text-navy underline underline-offset-2 hover:text-sage"
                         >
                           {rideVoucher}
                         </a>
@@ -428,7 +431,7 @@ function AspcReadyContent() {
                             href={rideContingency}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-green-800 underline hover:text-green-900"
+                            className="font-medium text-navy underline underline-offset-2 hover:text-sage"
                           >
                             {rideContingency}
                           </a>
@@ -440,7 +443,7 @@ function AspcReadyContent() {
                   Your voucher will also appear on the results page.
                 </p>
               ) : (
-                <p className="mt-1 text-sm text-orange-700">
+                <p className="mt-1 text-sm text-warning">
                   Complete the form below and press Confirm. If some members are
                   missing, select them below.
                 </p>
@@ -450,21 +453,19 @@ function AspcReadyContent() {
               type="button"
               onClick={() => void fetchRideData()}
               className={`min-h-[44px] shrink-0 text-sm font-medium hover:underline sm:min-h-0 ${
-                everyoneAccountedFor ? 'text-green-600' : 'text-orange-600'
+                everyoneAccountedFor ? 'text-sage-strong' : 'text-warning'
               }`}
             >
               Refresh
             </button>
           </div>
 
-          <div className="mb-6 rounded-lg bg-gray-50 p-4">
-            <p className="text-sm font-medium text-gray-700">
+          <div className="mb-6 rounded-md bg-sunken p-4">
+            <p className="text-sm font-medium text-ink">
               {matchDate}
               {matchTime && ` at ${matchTime}`}
             </p>
-            <p className="mt-1 text-sm text-gray-600">
-              Pickup: {pickupLocation}
-            </p>
+            <p className="mt-1 text-sm text-stone">Pickup: {pickupLocation}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -474,9 +475,9 @@ function AspcReadyContent() {
                   type="checkbox"
                   checked={atPickupLocation}
                   onChange={(e) => setAtPickupLocation(e.target.checked)}
-                  className="mt-1 h-5 w-5 shrink-0 rounded border-gray-300 text-teal-600 sm:mt-0"
+                  className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-line-strong accent-sage sm:mt-0"
                 />
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-ink">
                   I&apos;m at the correct pickup location ({pickupLocation})
                 </span>
               </label>
@@ -485,9 +486,9 @@ function AspcReadyContent() {
                   type="checkbox"
                   checked={ackVehicleSize}
                   onChange={(e) => setAckVehicleSize(e.target.checked)}
-                  className="mt-1 h-5 w-5 shrink-0 rounded border-gray-300 text-teal-600 sm:mt-0"
+                  className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-line-strong accent-sage sm:mt-0"
                 />
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-ink">
                   I acknowledge the suggested vehicle size (Uber {uberType}). If
                   not all people or luggage will fit, you can order a larger
                   ride.
@@ -498,9 +499,9 @@ function AspcReadyContent() {
                   type="checkbox"
                   checked={ackWaitForGroup}
                   onChange={(e) => setAckWaitForGroup(e.target.checked)}
-                  className="mt-1 h-5 w-5 shrink-0 rounded border-gray-300 text-teal-600 sm:mt-0"
+                  className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-line-strong accent-sage sm:mt-0"
                 />
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-ink">
                   I acknowledge that I will wait for everyone in my group before
                   requesting the ride. If I know they are not showing up, are
                   delayed, or we have waited at least 15 minutes for them, I
@@ -510,7 +511,7 @@ function AspcReadyContent() {
             </div>
 
             <div>
-              <p className="mb-3 text-sm font-medium text-gray-700">
+              <p className="mb-3 text-sm font-medium text-ink">
                 Everyone in my group is:
               </p>
               <div className="space-y-3">
@@ -523,7 +524,7 @@ function AspcReadyContent() {
                       setEveryoneReady(true)
                       setMissingUserIds([])
                     }}
-                    className="h-5 w-5 border-gray-300 text-teal-600"
+                    className="h-5 w-5 cursor-pointer accent-sage"
                   />
                   <span>Here and ready</span>
                 </label>
@@ -533,15 +534,15 @@ function AspcReadyContent() {
                     name="readyStatus"
                     checked={!everyoneReady}
                     onChange={() => setEveryoneReady(false)}
-                    className="h-5 w-5 border-gray-300 text-teal-600"
+                    className="h-5 w-5 cursor-pointer accent-sage"
                   />
                   <span>Some people are missing</span>
                 </label>
               </div>
 
               {!everyoneReady && otherMembers.length > 0 && (
-                <div className="mt-4 rounded-lg border border-gray-200 p-4">
-                  <p className="mb-3 text-sm font-medium text-gray-700">
+                <div className="mt-4 rounded-md border border-line p-4">
+                  <p className="mb-3 text-sm font-medium text-ink">
                     Who is missing? (check all that apply)
                   </p>
                   <div className="space-y-3">
@@ -554,7 +555,7 @@ function AspcReadyContent() {
                           type="checkbox"
                           checked={missingUserIds.includes(m.user_id)}
                           onChange={() => toggleMissing(m.user_id)}
-                          className="h-5 w-5 rounded border-gray-300 text-teal-600"
+                          className="h-5 w-5 cursor-pointer rounded accent-sage"
                         />
                         <span>{m.Users?.firstname || 'Unknown'}</span>
                       </label>
@@ -564,20 +565,22 @@ function AspcReadyContent() {
               )}
             </div>
 
-            {error && <p className="text-sm text-red-600">{error}</p>}
-            {success && <p className="text-sm text-green-600">{success}</p>}
+            {error && <p className="text-sm text-danger">{error}</p>}
+            {success && <p className="text-sm text-sage">{success}</p>}
 
             <button
               type="submit"
               disabled={submitting}
-              className="min-h-[48px] w-full rounded-lg bg-teal-500 px-4 py-3 font-semibold text-white transition hover:bg-teal-600 disabled:opacity-50"
+              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-navy px-4 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
             >
               {submitting ? 'Saving...' : 'Confirm'}
             </button>
           </form>
 
           <div className="mt-8">
-            <RedirectButton label="Back to Results" route="/results" />
+            <ButtonLink href="/results" variant="secondary">
+              Back to Results
+            </ButtonLink>
           </div>
         </div>
       </div>
@@ -589,8 +592,8 @@ export default function AspcReadyPage() {
   return (
     <Suspense
       fallback={
-        <div className="from-slate-50 relative flex min-h-screen items-center justify-center bg-gradient-to-br via-blue-50 to-indigo-100">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-200 border-t-teal-500" />
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-[3px] border-sage border-r-transparent" />
         </div>
       }
     >

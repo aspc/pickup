@@ -17,12 +17,9 @@ const DECORATION =
 // Files not yet migrated to the design system. Shrinks to empty.
 const LEGACY_FILES: string[] = [
   'app/about/page.tsx',
-  'app/aspc-delay/[rideId]/page.tsx',
-  'app/aspc-delay/page.tsx',
   'app/aspc-fees/page.tsx',
   'app/aspc-info/page.tsx',
   'app/aspc-policy/page.tsx',
-  'app/aspc-ready/page.tsx',
   'app/contact/page.tsx',
   'app/faq/page.tsx',
   'app/feedback/page.tsx',
@@ -39,10 +36,6 @@ const LEGACY_FILES: string[] = [
   'components/admin/groups-management/UnmatchedRidersPanel.tsx',
   'components/admin/groups-management/utils/rules.ts',
   'components/admin/GroupsManagement.tsx',
-  'components/aspc-delay/DelayInfoStep.tsx',
-  'components/aspc-delay/FlightConfirmStep.tsx',
-  'components/aspc-delay/NewFlightStep.tsx',
-  'components/aspc-delay/ReasonForDelayStep.tsx',
   'components/buttons/RedirectButton.tsx',
   'components/buttons/SimpleRedirectButton.tsx',
   'components/feedback/StarRating.tsx',

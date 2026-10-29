@@ -8,11 +8,11 @@ const REASON_DESCRIPTIONS: Record<DelayReasonKey, string> = {
   airline_delay: 'Flight delayed by airline',
   missed_connection: 'Missed a connecting flight',
   baggage_delay: 'Waiting for luggage',
-  custom: 'Other — enter your reason below',
+  custom: 'Other - enter your reason below',
 }
 
 const ReasonIcon = ({ reason }: { reason: DelayReasonKey }) => {
-  const className = 'h-6 w-6 shrink-0 text-teal-600 sm:h-7 sm:w-7'
+  const className = 'h-5 w-5 shrink-0 text-sage sm:h-6 sm:w-6'
   switch (reason) {
     case 'airline_delay':
       return (
@@ -114,11 +114,9 @@ export default function ReasonForDelayStep({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
-        3. Reason for delay
-      </h2>
+      <h2 className="text-lg font-semibold text-navy">3. Reason for delay</h2>
 
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-stone">
         Select the reason that best describes your delay.
       </p>
 
@@ -135,20 +133,20 @@ export default function ReasonForDelayStep({
             key={key}
             type="button"
             onClick={() => handleSelect(key)}
-            className={`flex w-full flex-col gap-1 rounded-xl border-2 p-4 text-left transition sm:flex-row sm:items-center sm:gap-4 ${
+            className={`flex w-full flex-col gap-1 rounded-lg border p-4 text-left transition-[border-color,background-color,box-shadow] duration-150 sm:flex-row sm:items-center sm:gap-4 ${
               selectedReason === key
-                ? 'border-teal-500 bg-teal-50/80 shadow-md'
-                : 'border-gray-200 bg-white/60 hover:border-gray-300 hover:bg-white/80'
+                ? 'border-sage bg-sage-tint ring-1 ring-sage'
+                : 'border-line-strong bg-card hover:border-navy-300'
             }`}
           >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-100 sm:h-12 sm:w-12">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sage-tint">
               <ReasonIcon reason={key} />
             </span>
             <span className="flex flex-1 flex-col gap-0.5">
-              <span className="font-semibold text-gray-900">
+              <span className="font-semibold text-ink">
                 {REASON_FOR_DELAY_LABELS[key]}
               </span>
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-stone">
                 {REASON_DESCRIPTIONS[key]}
               </span>
             </span>
@@ -157,9 +155,9 @@ export default function ReasonForDelayStep({
       </div>
 
       {showCustomInput && (
-        <div className="rounded-xl border border-gray-200 bg-white/60 p-4">
+        <div className="rounded-md border border-line bg-paper p-4">
           <label className="block">
-            <span className="mb-2 block text-sm font-semibold text-gray-700">
+            <span className="mb-1.5 block text-sm font-medium text-ink">
               Custom reason
             </span>
             <textarea
@@ -167,7 +165,7 @@ export default function ReasonForDelayStep({
               onChange={(e) => onCustomTextChange(e.target.value)}
               placeholder="Describe your delay..."
               rows={3}
-              className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+              className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 placeholder:text-stone-light hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
             />
           </label>
         </div>
@@ -177,7 +175,7 @@ export default function ReasonForDelayStep({
         <button
           type="button"
           onClick={onContinue}
-          className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 px-4 py-3 font-semibold text-white shadow-md transition hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+          className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-navy px-4 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
         >
           Continue
         </button>

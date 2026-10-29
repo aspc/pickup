@@ -147,7 +147,7 @@ export default function Questionnaires() {
     return formDate >= today
   })
 
-  // Upcoming forms: submitted — batch matcher has not run yet
+  // Upcoming forms: submitted - batch matcher has not run yet
   const upcomingUnmatchedForms = upcomingForms.filter((form) =>
     isSubmitted(form.matching_status),
   )
