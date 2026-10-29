@@ -123,14 +123,14 @@ export function RideTicket({
 
       {stub && (
         <div className="relative border-t-2 border-dashed border-line bg-paper/70 px-5 py-3 text-sm text-stone sm:px-6">
-          {/* Perforation notches */}
+          {/* Perforation notches; set --ticket-notch to the surface behind the card */}
           <span
             aria-hidden
-            className="absolute -left-2 -top-2 h-4 w-4 rounded-full border border-line bg-paper"
+            className="absolute -left-2 -top-2 h-4 w-4 rounded-full border border-line bg-[var(--ticket-notch,theme(colors.paper))]"
           />
           <span
             aria-hidden
-            className="absolute -right-2 -top-2 h-4 w-4 rounded-full border border-line bg-paper"
+            className="absolute -right-2 -top-2 h-4 w-4 rounded-full border border-line bg-[var(--ticket-notch,theme(colors.paper))]"
           />
           {stub}
         </div>

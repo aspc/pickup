@@ -29,7 +29,6 @@ const LEGACY_FILES: string[] = [
   'app/feedback/page.tsx',
   'app/matchForm/page.tsx',
   'app/MatchRequestsPage/page.tsx',
-  'app/page.tsx',
   'app/profile/page.tsx',
   'app/questionnaires/page.tsx',
   'app/results/page.tsx',
