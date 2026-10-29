@@ -56,18 +56,12 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.1
-      geist:
-        specifier: ^1.8.2
-        version: 1.8.2(next@15.5.28(@babel/core@7.29.6)(@types/node@20.3.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       lucide-react:
         specifier: ^0.304.0
         version: 0.304.0(react@18.2.0)
       next:
         specifier: 15.5.28
         version: 15.5.28(@babel/core@7.29.6)(@types/node@20.3.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      next-themes:
-        specifier: ^0.4.6
-        version: 0.4.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       nextjs-toploader:
         specifier: ^1.6.4
         version: 1.6.12(next@15.5.28(@babel/core@7.29.6)(@types/node@20.3.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -2546,11 +2540,6 @@ packages:
   functions-have-names@1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
 
-  geist@1.8.2:
-    resolution: {integrity: sha512-fRF4sbJ9qcCxPb35cVtKBAwYlTt1IbU9nkbPi0a+xyZqPIjCJ2BY8ekGhx6/SGSZKrR7/UuL57r/eeDQ1Xy11g==}
-    peerDependencies:
-      next: '>=13.2.0'
-
   generator-function@2.0.1:
     resolution: {integrity: sha512-SFdFmIJi+ybC0vjlHN0ZGVGHc3lgE0DxPAT0djjVg+kjOnSqclqmj0KQ7ykTOLP6YxoqOvuAODGdcHJn+43q3g==}
     engines: {node: '>= 0.4'}
@@ -3280,12 +3269,6 @@ packages:
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
-
-  next-themes@0.4.6:
-    resolution: {integrity: sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==}
-    peerDependencies:
-      react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
-      react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
 
   next@15.5.28:
     resolution: {integrity: sha512-JjhLBBY1PNnuwPtcZ7t8yxVeJVYvD2Jyp633J+gRCNbzSt7N0E+xqCf6uQiff3+3qmUkwcF/ksfSsK1xsZ76Tw==}
@@ -6899,10 +6882,6 @@ snapshots:
 
   functions-have-names@1.2.3: {}
 
-  geist@1.8.2(next@15.5.28(@babel/core@7.29.6)(@types/node@20.3.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)):
-    dependencies:
-      next: 15.5.28(@babel/core@7.29.6)(@types/node@20.3.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-
   generator-function@2.0.1: {}
 
   gensync@1.0.0-beta.2: {}
@@ -7818,11 +7797,6 @@ snapshots:
   napi-postinstall@0.3.4: {}
 
   natural-compare@1.4.0: {}
-
-  next-themes@0.4.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
 
   next@15.5.28(@babel/core@7.29.6)(@types/node@20.3.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:

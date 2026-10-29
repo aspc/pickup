@@ -1,11 +1,23 @@
-import { GeistSans } from 'geist/font/sans'
-import ThemeProvider from '@/providers/ThemeProvider'
+import { Inter, Playfair_Display } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 import './globals.css'
 import PickupHeader from '@/components/PickupHeader'
 import PickupFooter from '@/components/PickupFooter'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { AuthProvider } from '@/providers/AuthProvider'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  variable: '--font-playfair',
+  display: 'swap',
+})
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -27,20 +39,22 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={GeistSans.className} suppressHydrationWarning>
-      <body className="min-h-screen bg-background text-foreground">
-        <NextTopLoader showSpinner={false} height={2} color="#2acf80" />
-        <ThemeProvider attribute="class" enableSystem disableTransitionOnChange>
-          <AuthProvider>
-            <TooltipProvider>
-              <div className="flex min-h-screen flex-col">
-                <PickupHeader />
-                <div className="flex-1">{children}</div>
-                <PickupFooter />
-              </div>
-            </TooltipProvider>
-          </AuthProvider>
-        </ThemeProvider>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <body className="min-h-screen">
+        <NextTopLoader
+          showSpinner={false}
+          height={2}
+          color="var(--color-sage)"
+        />
+        <AuthProvider>
+          <TooltipProvider>
+            <div className="flex min-h-screen flex-col">
+              <PickupHeader />
+              <div className="flex-1">{children}</div>
+              <PickupFooter />
+            </div>
+          </TooltipProvider>
+        </AuthProvider>
       </body>
     </html>
   )

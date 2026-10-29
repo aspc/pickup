@@ -110,11 +110,17 @@ start_local_db() {
 
 # Exports the local stack's URL and keys under the names each app expects.
 export_local_credentials() {
-  local status api_url anon_key service_key
-  status="$(supabase_cli status -o env 2>/dev/null || true)"
-  api_url="$(env_value <(printf '%s\n' "$status") API_URL)"
-  anon_key="$(env_value <(printf '%s\n' "$status") ANON_KEY)"
-  service_key="$(env_value <(printf '%s\n' "$status") SERVICE_ROLE_KEY)"
+  local status api_url anon_key service_key attempt
+  # Right after Docker Desktop starts, containers auto-restart and status fails
+  # until they are healthy, so give the stack a moment before giving up.
+  for attempt in $(seq 1 15); do
+    status="$(supabase_cli status -o env 2>/dev/null || true)"
+    api_url="$(env_value <(printf '%s\n' "$status") API_URL)"
+    anon_key="$(env_value <(printf '%s\n' "$status") ANON_KEY)"
+    service_key="$(env_value <(printf '%s\n' "$status") SERVICE_ROLE_KEY)"
+    [[ -n "$api_url" && -n "$anon_key" && -n "$service_key" ]] && break
+    [[ "$attempt" -lt 15 ]] && sleep 2
+  done
   [[ -n "$api_url" && -n "$anon_key" && -n "$service_key" ]] || die "Could not read local Supabase credentials. Run ./start.sh db:status to see which service is down, or ./start.sh db:stop and retry."
 
   # Process env takes precedence over frontend/.env and ML/.env, so production values there are ignored.
