@@ -9,11 +9,14 @@ jest.mock('@/utils/api', () => ({
   postJson: (...args: unknown[]) => postJsonMock(...args),
 }))
 
+let mockAuthState: Record<string, unknown> = {
+  user: authenticatedUser,
+  isAuthenticated: true,
+  isLoading: false,
+}
+
 jest.mock('@/hooks/useAuth', () => ({
-  useAuth: () => ({
-    user: authenticatedUser,
-    isAuthenticated: true,
-  }),
+  useAuth: () => mockAuthState,
 }))
 
 jest.mock(
@@ -105,5 +108,22 @@ describe('Results readiness persistence', () => {
     expect(screen.getByTestId('match-77')).toBeInTheDocument()
 
     errorSpy.mockRestore()
+  })
+})
+
+describe('Results while auth is resolving', () => {
+  afterEach(() => {
+    mockAuthState = {
+      user: authenticatedUser,
+      isAuthenticated: true,
+      isLoading: false,
+    }
+  })
+
+  it('shows a loading state instead of the sign-in prompt', () => {
+    mockAuthState = { user: null, isAuthenticated: false, isLoading: true }
+    render(<Results />)
+    expect(screen.queryByText('Please log in')).not.toBeInTheDocument()
+    expect(screen.getByText('Loading matches...')).toBeInTheDocument()
   })
 })

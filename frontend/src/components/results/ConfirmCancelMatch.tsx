@@ -23,6 +23,7 @@ export default function ConfirmCancelMatch({
     <Modal
       open={isOpen}
       onClose={onClose}
+      dismissible={!isDeleting}
       title="Cancel match"
       description="Are you sure you want to cancel this match? This will remove you from your ride group."
       footer={

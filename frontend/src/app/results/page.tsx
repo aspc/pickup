@@ -55,7 +55,7 @@ export default function Results() {
   const [showPrevious, setShowPrevious] = useState(false)
   const [loading, setLoading] = useState(true)
   const [pendingReadyRideIds, setPendingReadyRideIds] = useState<number[]>([])
-  const { user, isAuthenticated } = useAuth()
+  const { user, isAuthenticated, isLoading: authLoading } = useAuth()
 
   const fetchMatches = useCallback(async () => {
     try {
@@ -208,7 +208,7 @@ export default function Results() {
     }
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !authLoading) {
     return (
       <PageContainer width="narrow">
         <PageHeader
@@ -221,7 +221,7 @@ export default function Results() {
     )
   }
 
-  if (loading)
+  if (loading || authLoading)
     return (
       <PageContainer width="narrow">
         <div className="flex items-center justify-center gap-3 py-24 text-stone">

@@ -28,6 +28,8 @@ interface ModalProps {
   description?: ReactNode
   footer?: ReactNode
   size?: keyof typeof sizes
+  /** When false, only an explicit action inside the dialog can close it. */
+  dismissible?: boolean
   className?: string
   children?: ReactNode
 }
@@ -39,6 +41,7 @@ export function Modal({
   description,
   footer,
   size = 'md',
+  dismissible = true,
   className,
   children,
 }: ModalProps) {
@@ -70,7 +73,7 @@ export function Modal({
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Escape') {
       event.stopPropagation()
-      onCloseRef.current()
+      if (dismissible) onCloseRef.current()
       return
     }
     if (event.key !== 'Tab' || !dialogRef.current) return
@@ -99,7 +102,7 @@ export function Modal({
       <div
         aria-hidden
         className="absolute inset-0 animate-overlay-in bg-navy-900/40"
-        onClick={() => onCloseRef.current()}
+        onClick={() => dismissible && onCloseRef.current()}
       />
       <div
         ref={dialogRef}
@@ -125,14 +128,16 @@ export function Modal({
               </p>
             )}
           </div>
-          <button
-            type="button"
-            aria-label="Close"
-            onClick={() => onCloseRef.current()}
-            className="-mr-2 -mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-stone transition-colors hover:bg-sunken hover:text-navy"
-          >
-            <X className="h-5 w-5" />
-          </button>
+          {dismissible && (
+            <button
+              type="button"
+              aria-label="Close"
+              onClick={() => onCloseRef.current()}
+              className="-mr-2 -mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-stone transition-colors hover:bg-sunken hover:text-navy"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          )}
         </div>
         <div className="overflow-y-auto px-5 pb-5 pt-2 text-[15px] text-ink sm:px-6">
           {children}

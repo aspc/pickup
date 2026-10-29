@@ -27,6 +27,7 @@ export default function FeedbackForm() {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     const fetchRides = async () => {
@@ -62,6 +63,7 @@ export default function FeedbackForm() {
       return
     }
 
+    setSubmitting(true)
     try {
       await postJson('/api/feedback', {
         flightId: Number(selectedFlight),
@@ -80,6 +82,8 @@ export default function FeedbackForm() {
       setErrorMessage(
         `Error submitting feedback: ${error?.message || 'Unknown error'}`,
       )
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -111,9 +115,6 @@ export default function FeedbackForm() {
 
       <Card as="form" onSubmit={handleSubmit}>
         <CardBody className="space-y-6">
-          {errorMessage && <Alert tone="danger">{errorMessage}</Alert>}
-          {successMessage && <Alert tone="success">{successMessage}</Alert>}
-
           <Field label="Select match" htmlFor="feedback-match" required>
             <Select
               id="feedback-match"
@@ -169,8 +170,10 @@ export default function FeedbackForm() {
             />
           </Field>
         </CardBody>
-        <CardFooter>
-          <Button type="submit" size="lg" fullWidth>
+        <CardFooter className="flex-col items-stretch gap-3 sm:items-stretch">
+          {errorMessage && <Alert tone="danger">{errorMessage}</Alert>}
+          {successMessage && <Alert tone="success">{successMessage}</Alert>}
+          <Button type="submit" size="lg" fullWidth loading={submitting}>
             Submit feedback
           </Button>
         </CardFooter>

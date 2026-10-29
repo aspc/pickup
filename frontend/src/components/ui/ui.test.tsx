@@ -85,6 +85,23 @@ describe('Modal', () => {
   })
 })
 
+describe('Modal when not dismissible', () => {
+  it('ignores Escape and the backdrop and hides the close button', async () => {
+    const user = userEvent.setup()
+    const onClose = jest.fn()
+    render(
+      <Modal open onClose={onClose} title="Saved" dismissible={false}>
+        <button>Continue</button>
+      </Modal>,
+    )
+
+    await user.keyboard('{Escape}')
+    expect(onClose).not.toHaveBeenCalled()
+    expect(screen.queryByRole('button', { name: 'Close' })).toBeNull()
+    expect(screen.getByRole('dialog', { name: 'Saved' })).toBeInTheDocument()
+  })
+})
+
 describe('Accordion', () => {
   const items = [
     { id: 'a', title: 'First', content: 'First answer' },

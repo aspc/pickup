@@ -295,13 +295,32 @@ const MatchCard = ({
                       {match.Users.firstname} {match.Users.lastname}
                     </p>
                     {!isConnect && (
-                      <p className="truncate text-stone">
-                        {match.Users.email || 'No email provided'}
-                        <span aria-hidden className="mx-1.5 text-line-strong">
-                          |
-                        </span>
-                        {match.Users.phonenumber || 'No phone provided'}
-                      </p>
+                      <>
+                        <p className="break-all text-stone">
+                          {match.Users.email ? (
+                            <a
+                              href={`mailto:${match.Users.email}`}
+                              className="hover:text-navy hover:underline"
+                            >
+                              {match.Users.email}
+                            </a>
+                          ) : (
+                            'No email provided'
+                          )}
+                        </p>
+                        <p className="text-stone">
+                          {match.Users.phonenumber ? (
+                            <a
+                              href={`tel:${match.Users.phonenumber}`}
+                              className="hover:text-navy hover:underline"
+                            >
+                              {match.Users.phonenumber}
+                            </a>
+                          ) : (
+                            'No phone provided'
+                          )}
+                        </p>
+                      </>
                     )}
                   </div>
                 </li>

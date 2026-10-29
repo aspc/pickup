@@ -408,7 +408,7 @@ function ConfirmationModal({
         {myFlights.map((flight) => (
           <label
             key={flight.flight_id}
-            className="has-[:checked]:border-sage has-[:checked]:bg-sage-tint flex cursor-pointer items-center gap-3 rounded-md border border-line p-3 transition-colors hover:bg-paper"
+            className="flex cursor-pointer items-center gap-3 rounded-md border border-line p-3 transition-colors hover:bg-paper has-[:checked]:border-sage has-[:checked]:bg-sage-tint"
           >
             <input
               type="radio"

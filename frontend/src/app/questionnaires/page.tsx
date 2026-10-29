@@ -37,7 +37,7 @@ interface MatchForm {
 
 export default function Questionnaires() {
   const supabase = createBrowserClient()
-  const { user, isAuthenticated } = useAuth()
+  const { user, isAuthenticated, isLoading: authLoading } = useAuth()
   const router = useRouter()
   const [matchForms, setMatchForms] = useState<MatchForm[]>([])
   const [message, setMessage] = useState('')
@@ -157,7 +157,7 @@ export default function Questionnaires() {
     isUnmatched(form.matching_status),
   )
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !authLoading) {
     return (
       <PageContainer width="narrow">
         <PageHeader
@@ -170,7 +170,7 @@ export default function Questionnaires() {
     )
   }
 
-  if (loading)
+  if (loading || authLoading)
     return (
       <PageContainer width="narrow">
         <div className="flex items-center justify-center gap-3 py-24 text-stone">

@@ -3131,7 +3131,7 @@ export default function GroupsManagement() {
                     : 'View all unmatched riders - drag them to groups to assign'}
                 </p>
 
-                <div className="min-h-9 mb-4 flex flex-wrap items-center justify-between gap-3 border-y border-line py-2 text-sm text-stone">
+                <div className="mb-4 flex min-h-9 flex-wrap items-center justify-between gap-3 border-y border-line py-2 text-sm text-stone">
                   <span>
                     Page {page} of {totalPages} · {totalRecords} flight records
                   </span>

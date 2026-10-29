@@ -241,7 +241,7 @@ export default function AspcDelayPage() {
                   The pickup time you entered is <strong>earlier</strong> than
                   your original group&apos;s time. You can still make that ride,
                   so you&apos;ve been{' '}
-                  <strong>kept on your original group</strong>-nothing was
+                  <strong>kept on your original group</strong> - nothing was
                   changed.
                 </p>
                 <p className="mb-6 text-sm text-stone">

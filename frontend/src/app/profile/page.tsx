@@ -10,6 +10,7 @@ import { Checkbox, Field, Input, Select } from '@/components/ui/Field'
 import { PageContainer, PageHeader } from '@/components/ui/PageHeader'
 import { Spinner } from '@/components/ui/Spinner'
 import { PRIVACY_URL } from '@/config/legalDocuments'
+import { isProfileExitClick } from '@/utils/profileExitGuard'
 import { useAuth } from '@/hooks/useAuth'
 
 export default function ProfilePage() {
@@ -115,14 +116,7 @@ export default function ProfilePage() {
     const handleClickAway = (event: MouseEvent) => {
       if (!shouldBlockProfileExit()) return
 
-      const target = event.target as HTMLElement | null
-      const submitButton = target?.closest('button[type="submit"]')
-      if (submitButton) return
-
-      const clickableTarget = target?.closest(
-        'a[href], button, [role="button"], .cursor-pointer',
-      )
-      if (!clickableTarget) return
+      if (!isProfileExitClick(event.target as Element | null)) return
 
       event.preventDefault()
       event.stopPropagation()

@@ -181,7 +181,7 @@ export default function PickupHeader() {
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="min-h-12 flex items-center gap-2 text-base font-medium text-danger"
+                className="flex min-h-12 items-center gap-2 text-base font-medium text-danger"
               >
                 <LogOut aria-hidden className="h-5 w-5" />
                 Sign out

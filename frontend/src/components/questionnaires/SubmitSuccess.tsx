@@ -58,6 +58,7 @@ const SubmitSuccess: React.FC<SubmitSuccessProps> = ({
       <Modal
         open
         onClose={handleOkay}
+        dismissible={false}
         title="Ride request saved, one more step"
         footer={<Button onClick={handleOkay}>Continue to my forms</Button>}
       >
