@@ -36,8 +36,8 @@ export default function UnmatchedRidersPanel({
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {sortedUnmatchedRiders.length === 0 ? (
-        <div className="col-span-full rounded-lg border-2 border-dashed border-gray-300 bg-white p-12 text-center">
-          <p className="text-gray-500">No unmatched riders</p>
+        <div className="col-span-full rounded-lg border-2 border-dashed border-line-strong bg-card p-12 text-center">
+          <p className="text-stone">No unmatched riders</p>
         </div>
       ) : (
         sortedUnmatchedRiders.map((rider: any) => {
@@ -55,13 +55,13 @@ export default function UnmatchedRidersPanel({
               key={`${rider.user_id}-${rider.flight_id}`}
               className={`relative rounded-lg border p-4 shadow-sm transition-all duration-300 ${
                 riderDatePassed
-                  ? 'border border-red-300 bg-gray-200 hover:bg-gray-300'
-                  : 'border-gray-200 bg-white'
+                  ? 'border border-danger/30 bg-line hover:bg-line'
+                  : 'border-line bg-card'
               } ${
                 isSelectedForNewGroup || isRecentlyAdded
-                  ? 'border-gray-300 bg-gray-100 opacity-60'
+                  ? 'border-line-strong bg-sunken opacity-60'
                   : !riderDatePassed
-                    ? 'hover:bg-gray-50'
+                    ? 'hover:bg-paper'
                     : ''
               } ${isRecentlyAdded ? 'animate-pulse' : ''} ${
                 isPending ? 'cursor-wait opacity-70' : ''
@@ -77,61 +77,61 @@ export default function UnmatchedRidersPanel({
               }}
             >
               <div className="flex items-start gap-2">
-                <p className="flex flex-1 items-center gap-1.5 font-medium text-gray-900">
+                <p className="flex flex-1 items-center gap-1.5 font-medium text-ink">
                   {rider.name}
                   {rider.original_unmatched && (
                     <span title="Originally unmatched">
-                      <Flag className="h-3.5 w-3.5 flex-shrink-0 text-amber-500" />
+                      <Flag className="h-3.5 w-3.5 flex-shrink-0 text-warning" />
                     </span>
                   )}
                 </p>
                 {isPending && (
-                  <span className="flex items-center gap-1 text-xs font-medium text-teal-700">
+                  <span className="flex items-center gap-1 text-xs font-medium text-sage-strong">
                     <Loader2 className="h-3.5 w-3.5 animate-spin" />
                     Saving
                   </span>
                 )}
               </div>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-stone">
                 {rider.phone}
                 {rider.phone !== '[Hidden]' && rider.sms_opt_in !== true && (
-                  <span className="text-red-600"> (SMS opt-out)</span>
+                  <span className="text-danger"> (SMS opt-out)</span>
                 )}
               </p>
               {rider.airline_iata && rider.flight_no && (
                 <div className="group relative mt-1 flex items-center gap-1">
-                  <Plane className="h-4 w-4 text-gray-600" />
-                  <span className="text-sm text-gray-600">
+                  <Plane className="h-4 w-4 text-stone" />
+                  <span className="text-sm text-stone">
                     {rider.airline_iata} {rider.flight_no}
                   </span>
-                  <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white group-hover:block">
+                  <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-navy px-2 py-1 text-xs text-white group-hover:block">
                     Flight Number
-                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-navy"></div>
                   </div>
                 </div>
               )}
-              <div className="mt-2 flex items-center gap-3 text-sm text-gray-600">
+              <div className="mt-2 flex items-center gap-3 text-sm text-stone">
                 <div className="group relative flex items-center gap-1">
                   <Luggage className="h-4 w-4" />
                   <span>{rider.checked_bags}</span>
-                  <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white group-hover:block">
+                  <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-navy px-2 py-1 text-xs text-white group-hover:block">
                     Checked Bags (2 Units Each)
-                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-navy"></div>
                   </div>
                 </div>
                 <div className="group relative flex items-center gap-1">
                   <Briefcase className="h-4 w-4" />
                   <span>{rider.carry_on_bags}</span>
-                  <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white group-hover:block">
+                  <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-navy px-2 py-1 text-xs text-white group-hover:block">
                     Carry-On Bags (1 Unit Each)
-                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                    <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-navy"></div>
                   </div>
                 </div>
                 <span
                   className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
                     rider.to_airport
-                      ? 'bg-teal-100 text-teal-800'
-                      : 'bg-orange-100 text-orange-800'
+                      ? 'bg-navy-50 text-navy'
+                      : 'bg-navy-50 text-navy'
                   }`}
                 >
                   {rider.to_airport ? (
@@ -147,7 +147,7 @@ export default function UnmatchedRidersPanel({
                   )}
                 </span>
               </div>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-stone">
                 {rider.date} • {formatTimeRange(rider.time_range)}
               </p>
               <div className="mt-2 flex items-center gap-3">
@@ -157,7 +157,7 @@ export default function UnmatchedRidersPanel({
                     handleAddToCorral(rider)
                   }}
                   disabled={isPending}
-                  className="text-xs text-teal-600 underline hover:text-teal-800 disabled:cursor-wait disabled:text-gray-400"
+                  className="text-xs text-sage underline hover:text-sage-strong disabled:cursor-wait disabled:text-stone-light"
                 >
                   Add to corral
                 </button>
@@ -167,7 +167,7 @@ export default function UnmatchedRidersPanel({
                     addRiderToNewGroup(rider)
                   }}
                   disabled={isPending}
-                  className="text-xs text-purple-600 underline hover:text-purple-800 disabled:cursor-wait disabled:text-gray-400"
+                  className="text-xs text-navy underline hover:text-navy disabled:cursor-wait disabled:text-stone-light"
                 >
                   Add to new group
                 </button>
@@ -181,8 +181,8 @@ export default function UnmatchedRidersPanel({
                   disabled={riderDatePassed || isPending}
                   className={`rounded p-1 ${
                     riderDatePassed || isPending
-                      ? 'cursor-not-allowed text-gray-400'
-                      : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+                      ? 'cursor-not-allowed text-stone-light'
+                      : 'text-stone hover:bg-line hover:text-ink'
                   }`}
                   title="Edit rider details"
                 >

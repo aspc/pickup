@@ -390,7 +390,7 @@ export default function AddRider({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50">
-      <div className="mx-4 w-full max-w-2xl rounded-lg bg-card shadow-xl">
+      <div className="mx-4 w-full max-w-2xl rounded-lg bg-card shadow-overlay">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-line px-6 py-4">
           <h2 className="text-xl font-semibold text-ink">Add New Rider</h2>

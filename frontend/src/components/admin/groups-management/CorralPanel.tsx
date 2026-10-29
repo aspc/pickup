@@ -59,12 +59,12 @@ export default function CorralPanel({
 
   return (
     <div
-      className={`${corralCollapsed ? 'w-0 overflow-hidden md:w-12' : 'w-full md:w-80'} flex flex-col border-l border-gray-200 bg-white transition-all duration-300`}
+      className={`${corralCollapsed ? 'w-0 overflow-hidden md:w-12' : 'w-full md:w-80'} flex flex-col border-l border-line bg-card transition-all duration-300`}
     >
-      <div className="flex items-center gap-2 border-b border-gray-200 p-4">
+      <div className="flex items-center gap-2 border-b border-line p-4">
         <button
           onClick={handleCorralToggle}
-          className="rounded p-1.5 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+          className="rounded p-1.5 text-stone hover:bg-sunken hover:text-ink"
           title={corralCollapsed ? 'Expand corral' : 'Collapse corral'}
         >
           <svg
@@ -83,14 +83,14 @@ export default function CorralPanel({
         </button>
         {!corralCollapsed && (
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-gray-900">Corral</h2>
-            <span className="rounded-full bg-teal-100 px-2 py-1 text-xs font-semibold text-teal-800">
+            <h2 className="text-lg font-semibold text-ink">Corral</h2>
+            <span className="rounded-full bg-sage-tint px-2 py-1 text-xs font-semibold text-sage-strong">
               {corralRiders.length}
             </span>
           </div>
         )}
         {corralCollapsed && (
-          <span className="rounded-full bg-teal-100 px-2 py-1 text-xs font-semibold text-teal-800">
+          <span className="rounded-full bg-sage-tint px-2 py-1 text-xs font-semibold text-sage-strong">
             {corralRiders.length}
           </span>
         )}
@@ -98,14 +98,14 @@ export default function CorralPanel({
 
       {!corralCollapsed && (
         <div className="flex flex-1 flex-col overflow-hidden">
-          <div className="flex-shrink-0 border-b border-gray-200">
+          <div className="flex-shrink-0 border-b border-line">
             <div className="flex">
               <button
                 onClick={() => setCorralTab('riders')}
                 className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
                   corralTab === 'riders'
-                    ? 'border-b-2 border-teal-500 text-teal-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'border-b-2 border-sage/30 text-sage'
+                    : 'text-stone hover:text-ink'
                 }`}
               >
                 Riders ({corralRiders.length})
@@ -114,8 +114,8 @@ export default function CorralPanel({
                 onClick={() => setCorralTab('changes')}
                 className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
                   corralTab === 'changes'
-                    ? 'border-b-2 border-teal-500 text-teal-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'border-b-2 border-sage/30 text-sage'
+                    : 'text-stone hover:text-ink'
                 }`}
               >
                 Changes ({changedGroups.length + unmatchedIndividuals.length})
@@ -126,7 +126,7 @@ export default function CorralPanel({
           {corralTab === 'riders' && (
             <div className="flex flex-1 flex-col overflow-hidden">
               <div className="mb-4 flex-shrink-0 p-4 pb-2">
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-stone">
                   {corralSelectionMode
                     ? 'Select a rider to add to the group'
                     : 'Temporary holding area for removed/unmatched riders'}
@@ -134,7 +134,7 @@ export default function CorralPanel({
                 {corralSelectionMode && (
                   <button
                     onClick={() => setCorralSelectionMode(null)}
-                    className="mt-2 text-xs text-gray-500 underline hover:text-gray-700"
+                    className="mt-2 text-xs text-stone underline hover:text-ink"
                   >
                     Cancel selection
                   </button>
@@ -143,7 +143,7 @@ export default function CorralPanel({
 
               <div
                 className={`flex-1 overflow-y-auto px-4 pb-4 transition-colors ${
-                  isDraggingOverCorral ? 'bg-teal-50' : ''
+                  isDraggingOverCorral ? 'bg-sage-tint' : ''
                 }`}
                 onDragOver={(e) => {
                   e.preventDefault()
@@ -182,7 +182,7 @@ export default function CorralPanel({
               >
                 <div className="space-y-2">
                   {sortedCorralRiders.length === 0 ? (
-                    <p className="text-center text-sm text-gray-500">
+                    <p className="text-center text-sm text-stone">
                       Corral is empty
                     </p>
                   ) : (
@@ -214,17 +214,17 @@ export default function CorralPanel({
                           className="space-y-1"
                         >
                           {cardError && (
-                            <p className="px-1 text-xs text-red-600">
+                            <p className="px-1 text-xs text-danger">
                               {cardError}
                             </p>
                           )}
                           <div
                             className={`rounded-lg border p-3 transition-all duration-300 ${
                               isSelectedForNewGroup || isRecentlyAdded
-                                ? 'border-gray-300 bg-gray-100 opacity-60'
+                                ? 'border-line-strong bg-sunken opacity-60'
                                 : corralSelectionMode
-                                  ? 'cursor-pointer border-teal-400 bg-teal-50 hover:bg-teal-100'
-                                  : 'border-gray-200 bg-gray-50'
+                                  ? 'cursor-pointer border-sage/30 bg-sage-tint hover:bg-sage-tint'
+                                  : 'border-line bg-paper'
                             } ${isRecentlyAdded ? 'animate-pulse' : ''}`}
                             draggable={!corralSelectionMode}
                             onDragStart={() => {
@@ -244,19 +244,19 @@ export default function CorralPanel({
                           >
                             <div className="flex items-start justify-between gap-2">
                               <div className="min-w-0 flex-1">
-                                <p className="flex items-center gap-1.5 text-sm font-medium text-gray-900">
+                                <p className="flex items-center gap-1.5 text-sm font-medium text-ink">
                                   {rider.name}
                                   {rider.original_unmatched && (
                                     <span title="Originally unmatched">
-                                      <Flag className="h-3 w-3 flex-shrink-0 text-amber-500" />
+                                      <Flag className="h-3 w-3 flex-shrink-0 text-warning" />
                                     </span>
                                   )}
                                 </p>
-                                <p className="text-xs text-gray-600">
+                                <p className="text-xs text-stone">
                                   {rider.phone}
                                   {rider.phone !== '[Hidden]' &&
                                     rider.sms_opt_in !== true && (
-                                      <span className="text-red-600">
+                                      <span className="text-danger">
                                         {' '}
                                         (SMS opt-out)
                                       </span>
@@ -264,38 +264,38 @@ export default function CorralPanel({
                                 </p>
                                 {rider.airline_iata && rider.flight_no && (
                                   <div className="group relative mt-1 flex items-center gap-1">
-                                    <Plane className="h-3 w-3 text-gray-600" />
-                                    <span className="text-xs text-gray-600">
+                                    <Plane className="h-3 w-3 text-stone" />
+                                    <span className="text-xs text-stone">
                                       {rider.airline_iata} {rider.flight_no}
                                     </span>
-                                    <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white group-hover:block">
+                                    <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-navy px-2 py-1 text-xs text-white group-hover:block">
                                       Flight Number
-                                      <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                                      <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-navy"></div>
                                     </div>
                                   </div>
                                 )}
-                                <div className="mt-1 flex items-center gap-3 text-xs text-gray-500">
+                                <div className="mt-1 flex items-center gap-3 text-xs text-stone">
                                   <div className="group relative flex items-center gap-1">
                                     <Luggage className="h-3 w-3" />
                                     <span>{rider.checked_bags}</span>
-                                    <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white group-hover:block">
+                                    <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-navy px-2 py-1 text-xs text-white group-hover:block">
                                       Checked Bags (2 Units Each)
-                                      <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                                      <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-navy"></div>
                                     </div>
                                   </div>
                                   <div className="group relative flex items-center gap-1">
                                     <Briefcase className="h-3 w-3" />
                                     <span>{rider.carry_on_bags}</span>
-                                    <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white group-hover:block">
+                                    <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-navy px-2 py-1 text-xs text-white group-hover:block">
                                       Carry-On Bags (1 Unit Each)
-                                      <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                                      <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-navy"></div>
                                     </div>
                                   </div>
                                   <span
                                     className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
                                       rider.to_airport
-                                        ? 'bg-teal-100 text-teal-800'
-                                        : 'bg-orange-100 text-orange-800'
+                                        ? 'bg-navy-50 text-navy'
+                                        : 'bg-navy-50 text-navy'
                                     }`}
                                   >
                                     {rider.to_airport ? (
@@ -311,7 +311,7 @@ export default function CorralPanel({
                                     )}
                                   </span>
                                 </div>
-                                <p className="mt-1 text-xs text-gray-500">
+                                <p className="mt-1 text-xs text-stone">
                                   {rider.date} •{' '}
                                   {formatTimeRange(rider.time_range)}
                                 </p>
@@ -323,7 +323,7 @@ export default function CorralPanel({
                                       e.stopPropagation()
                                       addRiderToNewGroup(rider)
                                     }}
-                                    className="rounded p-1 text-purple-500 hover:bg-purple-50"
+                                    className="rounded p-1 text-navy hover:bg-navy-50"
                                     title="Add to new group"
                                   >
                                     <svg
@@ -345,7 +345,7 @@ export default function CorralPanel({
                                       e.stopPropagation()
                                       handleRemoveFromCorral(rider)
                                     }}
-                                    className="rounded p-1 text-blue-500 hover:bg-blue-50"
+                                    className="rounded p-1 text-navy hover:bg-navy-50"
                                     title="Remove from corral (return to origin)"
                                   >
                                     <svg
@@ -367,7 +367,7 @@ export default function CorralPanel({
                                       e.stopPropagation()
                                       handleRemoveFromCorralToUnmatched(rider)
                                     }}
-                                    className="rounded p-1 text-red-500 hover:bg-red-50"
+                                    className="rounded p-1 text-danger hover:bg-danger-tint"
                                     title="Remove from corral and make unmatched"
                                   >
                                     <svg
@@ -402,18 +402,16 @@ export default function CorralPanel({
           )}
 
           {!leftSidebarTabs.includes('createGroup') && (
-            <div className="flex flex-1 flex-col overflow-hidden border-t border-gray-200">
+            <div className="flex flex-1 flex-col overflow-hidden border-t border-line">
               <button
                 onClick={() =>
                   setNewGroupSectionExpanded(!newGroupSectionExpanded)
                 }
-                className="flex w-full flex-shrink-0 items-center justify-between p-4 hover:bg-gray-50"
+                className="flex w-full flex-shrink-0 items-center justify-between p-4 hover:bg-paper"
               >
-                <h3 className="font-semibold text-gray-900">
-                  Create New Group
-                </h3>
+                <h3 className="font-semibold text-ink">Create New Group</h3>
                 <svg
-                  className={`h-5 w-5 text-gray-600 transition-transform ${
+                  className={`h-5 w-5 text-stone transition-transform ${
                     newGroupSectionExpanded ? 'rotate-180' : ''
                   }`}
                   fill="none"

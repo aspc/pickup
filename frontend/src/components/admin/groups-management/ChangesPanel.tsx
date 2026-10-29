@@ -117,8 +117,8 @@ function ChangedGroupCard({
     <div
       className={`rounded-lg border ${
         changedGroup.emailsSent
-          ? 'border-gray-200 bg-gray-50'
-          : 'border-yellow-300 bg-yellow-50'
+          ? 'border-line bg-paper'
+          : 'border-warning/30 bg-warning-tint'
       } ${showContactInfo ? 'p-0' : 'p-3'}`}
     >
       <div
@@ -126,20 +126,20 @@ function ChangedGroupCard({
       >
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <p className="font-semibold text-gray-900">
+            <p className="font-semibold text-ink">
               Group #{changedGroup.group.ride_id}
             </p>
             <span
               className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
                 changedGroup.changeType === 'deleted'
-                  ? 'bg-red-100 text-red-800'
-                  : 'bg-blue-100 text-blue-800'
+                  ? 'bg-danger-tint text-danger'
+                  : 'bg-navy-100 text-navy'
               }`}
             >
               {changedGroup.changeType === 'deleted' ? 'Deleted' : 'Modified'}
             </span>
             {changedGroup.emailsSent && (
-              <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-800">
+              <span className="rounded-full bg-sage-tint px-2 py-0.5 text-xs font-semibold text-sage-strong">
                 Emailed
               </span>
             )}
@@ -148,13 +148,13 @@ function ChangedGroupCard({
             changedGroup.changeDescriptions.length > 0 && (
               <div className="mt-1 space-y-0.5">
                 {changedGroup.changeDescriptions.map((description, index) => (
-                  <p key={index} className="text-xs text-gray-700">
+                  <p key={index} className="text-xs text-ink">
                     {description}
                   </p>
                 ))}
               </div>
             )}
-          <p className="mt-1 text-xs text-gray-600">
+          <p className="mt-1 text-xs text-stone">
             {changedGroup.group.riders.length} rider
             {changedGroup.group.riders.length !== 1 ? 's' : ''} •{' '}
             {new Date(changedGroup.changedAt).toLocaleString()}
@@ -165,8 +165,8 @@ function ChangedGroupCard({
             <button
               onClick={fetchMemberEmails}
               disabled={loadingEmails}
-              className={`rounded p-0.5 text-gray-600 hover:bg-gray-200 ${
-                showContactInfo && contactView === 'emails' ? 'bg-gray-200' : ''
+              className={`rounded p-0.5 text-stone hover:bg-line ${
+                showContactInfo && contactView === 'emails' ? 'bg-line' : ''
               }`}
               title="View member emails"
             >
@@ -175,8 +175,8 @@ function ChangedGroupCard({
             <button
               onClick={fetchMemberPhones}
               disabled={loadingPhones}
-              className={`rounded p-0.5 text-gray-600 hover:bg-gray-200 ${
-                showContactInfo && contactView === 'phones' ? 'bg-gray-200' : ''
+              className={`rounded p-0.5 text-stone hover:bg-line ${
+                showContactInfo && contactView === 'phones' ? 'bg-line' : ''
               }`}
               title="View member phone numbers"
             >
@@ -191,8 +191,8 @@ function ChangedGroupCard({
                   disabled={isConfirming}
                   className={`rounded px-2 py-1 text-xs font-medium transition-all ${
                     isConfirming
-                      ? 'cursor-not-allowed bg-gray-400 text-gray-200'
-                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                      ? 'cursor-not-allowed bg-stone-light text-white/80'
+                      : 'bg-navy text-white hover:bg-navy-700'
                   }`}
                 >
                   {isConfirming ? 'Sending...' : 'Email group'}
@@ -203,8 +203,8 @@ function ChangedGroupCard({
                 disabled={isConfirming}
                 className={`rounded px-2 py-1 text-xs font-medium transition-all ${
                   isConfirming
-                    ? 'cursor-not-allowed bg-gray-400 text-gray-200'
-                    : 'bg-green-600 text-white hover:bg-green-700'
+                    ? 'cursor-not-allowed bg-stone-light text-white/80'
+                    : 'bg-sage text-white hover:bg-sage-strong'
                 }`}
               >
                 {isConfirming ? 'Confirming...' : 'Confirm'}
@@ -215,19 +215,19 @@ function ChangedGroupCard({
       </div>
 
       {showEmailModal && onEmailGroup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="max-w-sm rounded-lg bg-white p-4 shadow-xl">
-            <h3 className="text-lg font-semibold text-gray-900">
+        <div className="fixed inset-0 z-50 flex animate-overlay-in items-center justify-center bg-navy-900/40 p-4">
+          <div className="max-w-sm rounded-lg bg-card p-4 shadow-overlay">
+            <h3 className="text-lg font-semibold text-ink">
               Send match emails
             </h3>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-stone">
               Send match notification emails to all{' '}
               {changedGroup.group.riders.length} rider
               {changedGroup.group.riders.length !== 1 ? 's' : ''} in Group #
               {changedGroup.group.ride_id}?
             </p>
             {emailError && (
-              <p className="mt-2 text-sm text-red-600">{emailError}</p>
+              <p className="mt-2 text-sm text-danger">{emailError}</p>
             )}
             <div className="mt-4 flex justify-end gap-2">
               <button
@@ -236,7 +236,7 @@ function ChangedGroupCard({
                   setEmailError(null)
                 }}
                 disabled={isConfirming}
-                className="rounded border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+                className="rounded border border-line-strong bg-card px-3 py-1.5 text-sm text-ink hover:bg-paper"
               >
                 Cancel
               </button>
@@ -255,7 +255,7 @@ function ChangedGroupCard({
                   }
                 }}
                 disabled={isConfirming}
-                className="rounded bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                className="rounded bg-navy px-3 py-1.5 text-sm font-medium text-white hover:bg-navy-700 disabled:opacity-50"
               >
                 {isConfirming ? 'Sending...' : 'Send'}
               </button>
@@ -265,9 +265,9 @@ function ChangedGroupCard({
       )}
 
       {showContactInfo && (
-        <div className="mt-3 w-full rounded-b-lg bg-white p-3">
+        <div className="mt-3 w-full rounded-b-lg bg-card p-3">
           <div className="mb-2 flex items-center justify-between">
-            <p className="text-xs font-semibold text-gray-700">
+            <p className="text-xs font-semibold text-ink">
               {contactView === 'emails'
                 ? 'Member Emails:'
                 : 'Member Phone Numbers:'}
@@ -277,7 +277,7 @@ function ChangedGroupCard({
               : memberPhones.length > 0) && (
               <button
                 onClick={copyToClipboard}
-                className="flex items-center gap-1 rounded px-2 py-1 text-xs text-gray-600 hover:bg-gray-100"
+                className="flex items-center gap-1 rounded px-2 py-1 text-xs text-stone hover:bg-sunken"
                 title={`Copy ${contactView === 'emails' ? 'emails' : 'phone numbers'} to clipboard`}
               >
                 <Copy className="h-3 w-3" />
@@ -290,33 +290,30 @@ function ChangedGroupCard({
               memberEmails.length > 0 ? (
                 <div className="space-y-1">
                   {memberEmails.map((email, index) => (
-                    <p
-                      key={index}
-                      className="break-words text-xs text-gray-600"
-                    >
+                    <p key={index} className="break-words text-xs text-stone">
                       {email}
                     </p>
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-gray-500">No emails found</p>
+                <p className="text-xs text-stone">No emails found</p>
               )
             ) : memberPhones.length > 0 ? (
               <div className="space-y-1">
                 {memberPhones.map((contact) => (
                   <p
                     key={contact.user_id}
-                    className="break-words text-xs text-gray-600"
+                    className="break-words text-xs text-stone"
                   >
                     {contact.phonenumber}
                     {contact.sms_opt_in !== true && (
-                      <span className="text-red-600"> (SMS opt-out)</span>
+                      <span className="text-danger"> (SMS opt-out)</span>
                     )}
                   </p>
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-gray-500">No phone numbers found</p>
+              <p className="text-xs text-stone">No phone numbers found</p>
             )}
           </div>
         </div>
@@ -415,8 +412,8 @@ function UnmatchedIndividualCard({
     <div
       className={`rounded-lg border ${
         item.emailSent
-          ? 'border-gray-200 bg-gray-50'
-          : 'border-orange-300 bg-orange-50'
+          ? 'border-line bg-paper'
+          : 'border-warning/30 bg-warning-tint'
       } ${showContactInfo ? 'p-0' : 'p-3'}`}
     >
       <div
@@ -424,21 +421,21 @@ function UnmatchedIndividualCard({
       >
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <p className="flex items-center gap-1.5 font-semibold text-gray-900">
+            <p className="flex items-center gap-1.5 font-semibold text-ink">
               {item.rider.name}
               {item.rider.original_unmatched && (
                 <span title="Originally unmatched">
-                  <Flag className="h-3 w-3 flex-shrink-0 text-amber-500" />
+                  <Flag className="h-3 w-3 flex-shrink-0 text-warning" />
                 </span>
               )}
             </p>
             {item.emailSent && (
-              <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-800">
+              <span className="rounded-full bg-sage-tint px-2 py-0.5 text-xs font-semibold text-sage-strong">
                 Emailed
               </span>
             )}
           </div>
-          <p className="mt-1 text-xs text-gray-600">
+          <p className="mt-1 text-xs text-stone">
             Became unmatched:{' '}
             {new Date(item.becameUnmatchedAt).toLocaleString()}
           </p>
@@ -448,8 +445,8 @@ function UnmatchedIndividualCard({
             <button
               onClick={fetchEmail}
               disabled={loadingEmail}
-              className={`rounded p-0.5 text-gray-600 hover:bg-gray-200 ${
-                showContactInfo && contactView === 'emails' ? 'bg-gray-200' : ''
+              className={`rounded p-0.5 text-stone hover:bg-line ${
+                showContactInfo && contactView === 'emails' ? 'bg-line' : ''
               }`}
               title="View email"
             >
@@ -458,8 +455,8 @@ function UnmatchedIndividualCard({
             <button
               onClick={fetchPhone}
               disabled={loadingPhone}
-              className={`rounded p-0.5 text-gray-600 hover:bg-gray-200 ${
-                showContactInfo && contactView === 'phones' ? 'bg-gray-200' : ''
+              className={`rounded p-0.5 text-stone hover:bg-line ${
+                showContactInfo && contactView === 'phones' ? 'bg-line' : ''
               }`}
               title="View phone number"
             >
@@ -472,8 +469,8 @@ function UnmatchedIndividualCard({
               disabled={isConfirming}
               className={`rounded px-2 py-1 text-xs font-medium transition-all ${
                 isConfirming
-                  ? 'cursor-not-allowed bg-gray-400 text-gray-200'
-                  : 'bg-green-600 text-white hover:bg-green-700'
+                  ? 'cursor-not-allowed bg-stone-light text-white/80'
+                  : 'bg-sage text-white hover:bg-sage-strong'
               }`}
             >
               {isConfirming ? 'Confirming...' : 'Confirm'}
@@ -482,9 +479,9 @@ function UnmatchedIndividualCard({
         </div>
       </div>
       {showContactInfo && (
-        <div className="mt-3 w-full rounded-b-lg bg-white p-3">
+        <div className="mt-3 w-full rounded-b-lg bg-card p-3">
           <div className="mb-2 flex items-center justify-between">
-            <p className="text-xs font-semibold text-gray-700">
+            <p className="text-xs font-semibold text-ink">
               {contactView === 'emails' ? 'Email:' : 'Phone Number:'}
             </p>
             {((contactView === 'emails' &&
@@ -495,7 +492,7 @@ function UnmatchedIndividualCard({
                 phone !== 'No phone number found')) && (
               <button
                 onClick={copyToClipboard}
-                className="flex items-center gap-1 rounded px-2 py-1 text-xs text-gray-600 hover:bg-gray-100"
+                className="flex items-center gap-1 rounded px-2 py-1 text-xs text-stone hover:bg-sunken"
                 title={`Copy ${contactView === 'emails' ? 'email' : 'phone number'} to clipboard`}
               >
                 <Copy className="h-3 w-3" />
@@ -504,7 +501,7 @@ function UnmatchedIndividualCard({
             )}
           </div>
           <div className="max-h-96 overflow-y-auto">
-            <p className="break-words text-xs text-gray-600">
+            <p className="break-words text-xs text-stone">
               {contactView === 'emails' ? (
                 email
               ) : (
@@ -513,7 +510,7 @@ function UnmatchedIndividualCard({
                   {phone &&
                     phone !== 'No phone number found' &&
                     smsOptIn !== true && (
-                      <span className="text-red-600"> (SMS opt-out)</span>
+                      <span className="text-danger"> (SMS opt-out)</span>
                     )}
                 </>
               )}
@@ -549,8 +546,8 @@ export default function ChangesPanel({
 
   if (loading) {
     return (
-      <div className="flex flex-1 items-center justify-center gap-3 p-6 text-sm text-gray-600">
-        <span className="h-5 w-5 animate-spin rounded-full border-2 border-teal-200 border-t-teal-600"></span>
+      <div className="flex flex-1 items-center justify-center gap-3 p-6 text-sm text-stone">
+        <span className="h-5 w-5 animate-spin rounded-full border-2 border-sage/30 border-t-sage"></span>
         Loading pending changes...
       </div>
     )
@@ -563,7 +560,7 @@ export default function ChangesPanel({
           (changedGroup: ChangedGroup) => !changedGroup.emailsSent,
         ).length > 0 && (
           <div>
-            <h3 className="mb-2 text-sm font-semibold text-gray-900">
+            <h3 className="mb-2 text-sm font-semibold text-ink">
               Changed Groups (
               {
                 changedGroups.filter(
@@ -704,7 +701,7 @@ export default function ChangesPanel({
           (changedGroup: ChangedGroup) => changedGroup.emailsSent,
         ).length > 0 && (
           <div>
-            <h3 className="mb-2 text-sm font-semibold text-green-700">
+            <h3 className="mb-2 text-sm font-semibold text-sage-strong">
               Confirmed/Emailed Groups (
               {
                 changedGroups.filter(
@@ -731,7 +728,7 @@ export default function ChangesPanel({
           (item: UnmatchedIndividual) => !item.emailSent,
         ).length > 0 && (
           <div>
-            <h3 className="mb-2 text-sm font-semibold text-gray-900">
+            <h3 className="mb-2 text-sm font-semibold text-ink">
               Unmatched Individuals (
               {
                 unmatchedIndividuals.filter(
@@ -831,7 +828,7 @@ export default function ChangesPanel({
           (item: UnmatchedIndividual) => item.emailSent,
         ).length > 0 && (
           <div>
-            <h3 className="mb-2 text-sm font-semibold text-green-700">
+            <h3 className="mb-2 text-sm font-semibold text-sage-strong">
               Confirmed/Emailed Unmatched Individuals (
               {
                 unmatchedIndividuals.filter(
@@ -855,9 +852,7 @@ export default function ChangesPanel({
         )}
 
         {changedGroups.length === 0 && unmatchedIndividuals.length === 0 && (
-          <p className="text-center text-sm text-gray-500">
-            No changes to track
-          </p>
+          <p className="text-center text-sm text-stone">No changes to track</p>
         )}
       </div>
     </div>

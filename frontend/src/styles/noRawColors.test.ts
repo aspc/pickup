@@ -16,16 +16,6 @@ const DECORATION =
 
 // Files not yet migrated to the design system. Shrinks to empty.
 const LEGACY_FILES: string[] = [
-  'components/admin/groups-management/ChangeLogPanel.tsx',
-  'components/admin/groups-management/ChangesPanel.tsx',
-  'components/admin/groups-management/CorralPanel.tsx',
-  'components/admin/groups-management/CreateGroupPanel.tsx',
-  'components/admin/groups-management/FiltersPanel.tsx',
-  'components/admin/groups-management/GroupsManagementModals.tsx',
-  'components/admin/groups-management/MatchedGroupsPanel.tsx',
-  'components/admin/groups-management/UnmatchedRidersPanel.tsx',
-  'components/admin/groups-management/utils/rules.ts',
-  'components/admin/GroupsManagement.tsx',
   'components/buttons/RedirectButton.tsx',
   'components/buttons/SimpleRedirectButton.tsx',
 ]
