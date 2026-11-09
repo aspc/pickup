@@ -64,15 +64,9 @@ export function getDerivedCoveredDates(): {
 }
 
 export function isDateCovered(date: string, toAirport: boolean): boolean {
-  if (!date) {
-    return false
-  }
-
-  const [, month, day] = date.split('-')
-  const mmdd = `${month}-${day}`
-  const { outbound, inbound } = getDerivedCoveredDates()
-
-  return toAirport ? outbound.includes(mmdd) : inbound.includes(mmdd)
+  // Subsidy eligibility is tied to the configured service period year. The
+  // derived MM-DD lists remain available for legacy year-agnostic consumers.
+  return isDirectionAllowedForDate(date, toAirport)
 }
 
 function getPeriodForBufferedDate(date: string): ServicePeriod | undefined {
