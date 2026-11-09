@@ -94,4 +94,15 @@ export const SERVICE_PERIODS: ServicePeriod[] = [
     buffered: { start: '2026-10-20', end: '2026-10-26' },
     deadline: '2026-10-12T23:59:59-07:00',
   },
+  {
+    id: 'thanksgiving-2026',
+    name: 'Thanksgiving Break',
+    allowedDirections: ['outbound', 'inbound'],
+    subsidized: {
+      outbound: { start: '2026-11-23', end: '2026-11-30' },
+      inbound: { start: '2026-11-23', end: '2026-11-30' },
+    },
+    buffered: { start: '2026-11-23', end: '2026-11-30' },
+    deadline: '2026-11-19T23:59:59-08:00',
+  }
 ]
