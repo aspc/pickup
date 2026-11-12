@@ -71,7 +71,7 @@ serve(async (req) => {
     const textBody = `
 Hi ${userData?.firstname ?? 'there'},
 
-Thanks for submitting your flight to PICKUP — we’ve received it!
+Thanks for submitting your flight to RideLink - we’ve received it!
 
 Flight details:
 - Date: ${displayDate}
@@ -84,7 +84,7 @@ https://p-ickup.com/questionnaires
 
 If anything looks off, edit your flight to improve your match quality.
 
-— The PICKUP Team
+The RideLink Team
 `.trim()
     // HTML email
     const TURQ = '#06b6d4' // swap to your brand turquoise if different
@@ -100,7 +100,7 @@ If anything looks off, edit your flight to improve your match quality.
   <div style="font-size:0; height:0; overflow:hidden;">id:${flight_id}&#8203;</div>
 
   <h2 style="color:${TURQ}; margin: 0 0 10px 0;">We got your flight submission ✈️</h2>
-  <p style="margin:0 0 16px 0;">Hi ${escapeHtml(userData.firstname ?? 'there')}, thanks for submitting your flight to <strong>PICKUP</strong>! We’ll use these details to find you the best ride match.</p>
+  <p style="margin:0 0 16px 0;">Hi ${escapeHtml(userData.firstname ?? 'there')}, thanks for submitting your flight to <strong>RideLink</strong>! We’ll use these details to find you the best ride match.</p>
 
   <div style="background:#f7f9fb; padding:16px 20px; border-radius:10px; margin:20px 0;">
     <h3 style="margin:0 0 10px 0; color:#222;">Your flight</h3>
@@ -123,7 +123,7 @@ If anything looks off, edit your flight to improve your match quality.
   <p style="color:#555; margin:0 0 20px 0;">Tip: keeping your time window and baggage info accurate helps us find better matches faster.</p>
 
   <hr style="border:none; border-top:1px solid #eee; margin:24px 0;">
-  <p style="color:#666; font-size:12px; margin:0;">— The PICKUP Team</p>
+  <p style="color:#666; font-size:12px; margin:0;">The RideLink Team</p>
 </div>
 `.trim()
 
@@ -135,9 +135,9 @@ If anything looks off, edit your flight to improve your match quality.
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'PICKUP <match@notify.p-ickup.com>',
+        from: 'ASPC RideLink <match@notify.p-ickup.com>',
         to: [userData.email],
-        subject: 'PICKUP: Flight received ✔︎', // <- use the unique subject here
+        subject: 'RideLink: Flight received ✔︎', // <- use the unique subject here
         text: textBody, // keep your text part (quick to scan, good for inboxing)
         html: htmlBody,
       }),
