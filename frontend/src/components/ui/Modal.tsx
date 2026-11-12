@@ -96,7 +96,7 @@ export function Modal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
       onKeyDown={handleKeyDown}
     >
       <div
@@ -112,7 +112,7 @@ export function Modal({
         aria-describedby={description ? descriptionId : undefined}
         tabIndex={-1}
         className={cn(
-          'relative flex max-h-[92vh] w-full animate-dialog-in flex-col overflow-hidden rounded-t-xl bg-card shadow-overlay outline-none sm:rounded-lg',
+          'relative flex max-h-[calc(100dvh-2rem)] w-full animate-dialog-in flex-col overflow-hidden rounded-lg bg-card shadow-overlay outline-none',
           sizes[size],
           className,
         )}
