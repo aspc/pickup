@@ -415,7 +415,7 @@ describe('AdminDashboard', () => {
   it('loads and renders the core dashboard metrics', async () => {
     const { supabase } = renderDashboard()
 
-    expect(await screen.findByText('Pickup Dashboard')).toBeInTheDocument()
+    expect(await screen.findByText('RideLink Dashboard')).toBeInTheDocument()
     expect(requestJsonMock).toHaveBeenCalledWith(
       expect.stringMatching(
         /^\/api\/admin\/dashboard-summary\?unmatchedStart=\d{4}-\d{2}-\d{2}&unmatchedEnd=\d{4}-\d{2}-\d{2}$/,
@@ -432,7 +432,7 @@ describe('AdminDashboard', () => {
   it('links to groups management from the action button', async () => {
     renderDashboard()
 
-    await screen.findByText('Pickup Dashboard')
+    await screen.findByText('RideLink Dashboard')
     const groupsLink = screen.getByRole('link', {
       name: /View & Manage Groups/i,
     })
@@ -442,7 +442,7 @@ describe('AdminDashboard', () => {
 
   const openComposer = async (name: string) => {
     renderDashboard()
-    await screen.findByText('Pickup Dashboard')
+    await screen.findByText('RideLink Dashboard')
     await userEvent.click(screen.getByRole('button', { name }))
     return screen.findByRole('dialog', { name })
   }
@@ -498,7 +498,7 @@ describe('AdminDashboard', () => {
       total: 2,
     })
     renderDashboard()
-    await screen.findByText('Pickup Dashboard')
+    await screen.findByText('RideLink Dashboard')
 
     await userEvent.selectOptions(screen.getByLabelText('Airport'), 'ONT')
     await userEvent.selectOptions(
@@ -546,7 +546,7 @@ describe('AdminDashboard', () => {
       total: 1,
     })
     renderDashboard()
-    await screen.findByText('Pickup Dashboard')
+    await screen.findByText('RideLink Dashboard')
 
     await userEvent.type(screen.getByLabelText('Flight date to'), '2026-11-30')
     await userEvent.click(
@@ -600,7 +600,7 @@ describe('AdminDashboard', () => {
 
     renderDashboard()
 
-    await screen.findByText('Pickup Dashboard')
+    await screen.findByText('RideLink Dashboard')
     await userEvent.click(
       screen.getByRole('button', { name: /Load no-shows/i }),
     )
@@ -618,7 +618,7 @@ describe('AdminDashboard', () => {
   it('loads and renders billable cancellation rows on demand', async () => {
     renderDashboard()
 
-    await screen.findByText('Pickup Dashboard')
+    await screen.findByText('RideLink Dashboard')
     await userEvent.click(
       screen.getByRole('button', { name: /Load billable cancellations/i }),
     )
@@ -638,7 +638,7 @@ describe('AdminDashboard', () => {
   it('loads and renders waived cancellation rows on demand', async () => {
     renderDashboard()
 
-    await screen.findByText('Pickup Dashboard')
+    await screen.findByText('RideLink Dashboard')
     await userEvent.click(
       screen.getByRole('button', { name: /Load waived cancellations/i }),
     )

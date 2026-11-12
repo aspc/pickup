@@ -51,7 +51,7 @@ function generateUnmatchedEmailHtml(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PICKUP - No Match Found</title>
+  <title>RideLink - No Match Found</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f9fafb;">
   <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f9fafb;">
@@ -63,7 +63,7 @@ function generateUnmatchedEmailHtml(
           <tr>
             <td style="padding: 32px 32px 24px; background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%); border-radius: 8px 8px 0 0;">
               <h1 style="margin: 0; font-size: 28px; font-weight: bold; color: #ffffff; text-align: center;">
-                PICKUP
+                RideLink
               </h1>
             </td>
           </tr>
@@ -76,7 +76,7 @@ function generateUnmatchedEmailHtml(
               </p>
 
               <p style="margin: 0 0 20px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Thank you for requesting a rideshare group through <strong>PICKUP x RideLink</strong>! Unfortunately, we weren't able to find a matching group for your requested ride <strong>${direction} ${airport}</strong> on <strong>${formattedDate}</strong>. Since no groups of all Pomona students could be made for your time range, it cannot be subsidized by ASPC.
+                Thank you for requesting a rideshare group through <strong>RideLink</strong>! Unfortunately, we weren't able to find a matching group for your requested ride <strong>${direction} ${airport}</strong> on <strong>${formattedDate}</strong>. Since no groups of all Pomona students could be made for your time range, it cannot be subsidized by ASPC.
               </p>
 
               <p style="margin: 0 0 20px; font-size: 16px; line-height: 1.6; color: #374151;">
@@ -98,7 +98,7 @@ function generateUnmatchedEmailHtml(
 
               <p style="margin: 24px 0 0; font-size: 16px; line-height: 1.6; color: #374151;">
                 Best,<br>
-                <strong>PICKUP</strong>
+                <strong>RideLink</strong>
               </p>
             </td>
           </tr>
@@ -107,7 +107,7 @@ function generateUnmatchedEmailHtml(
           <tr>
             <td style="padding: 24px 32px; background-color: #f9fafb; border-radius: 0 0 8px 8px; border-top: 1px solid #e5e7eb;">
               <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #6b7280; text-align: center;">
-                This is an automated message from PICKUP. Please do not reply to this email.<br>
+                This is an automated message from RideLink. Please do not reply to this email.<br>
                 For questions, contact <a href="mailto:ridelink@aspc.pomona.edu" style="color: #0ea5e9; text-decoration: none;">ridelink@aspc.pomona.edu</a>
               </p>
             </td>
@@ -136,7 +136,7 @@ function buildSubject(flight: UnmatchedFlight, customSubject?: string): string {
     return fillPlaceholders(customSubject.trim(), flight)
   }
   const direction = flight.to_airport ? 'to' : 'from'
-  return `PICKUP — No match found for your ride ${direction} ${flight.airport} on ${flight.date}`
+  return `RideLink - No match found for your ride ${direction} ${flight.airport} on ${flight.date}`
 }
 
 // Admin-written bodies are plain text: escaped (no HTML injection) and line breaks kept,
@@ -344,7 +344,7 @@ serve(async (req) => {
 
     // ACTUAL SEND MODE
     const emailPayloads: EmailPayload[] = unmatchedFlights.map((flight) => ({
-      from: 'PICKUP <match@notify.p-ickup.com>',
+      from: 'ASPC RideLink <match@notify.p-ickup.com>',
       to: flight.email,
       subject: buildSubject(flight, custom_subject),
       html: custom_body?.trim()

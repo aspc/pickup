@@ -20,7 +20,7 @@ const NAV_ITEMS = [
 
 const ADMIN_ITEM = { href: '/admin', label: 'Dashboard' }
 
-export default function PickupHeader() {
+export default function RideLinkHeader() {
   const { user, avatarUrl, isAdmin, isLoading, signOut, signInWithGoogle } =
     useAuth()
   const router = useRouter()
@@ -66,7 +66,7 @@ export default function PickupHeader() {
           <Link
             href="/"
             className="group flex shrink-0 items-center gap-3 rounded-md"
-            aria-label="PICKUP home"
+            aria-label="RideLink home"
           >
             <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-[10px] bg-white">
               <Image
@@ -78,8 +78,8 @@ export default function PickupHeader() {
               />
             </span>
             <span className="leading-none">
-              <span className="block text-[17px] font-bold tracking-[0.06em]">
-                PICKUP
+              <span className="block text-lg font-bold tracking-tight">
+                RideLink
               </span>
               <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.14em] text-navy-200">
                 by ASPC

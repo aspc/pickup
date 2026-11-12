@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import PickupHeader from './PickupHeader'
+import RideLinkHeader from './RideLinkHeader'
 
 const mockAuth = jest.fn()
 let mockPathname = '/'
@@ -24,7 +24,7 @@ const authState = (overrides: Record<string, unknown> = {}) => ({
 
 const student = { id: 'u1', email: 'ana@pickup.dev' }
 
-describe('PickupHeader', () => {
+describe('RideLinkHeader', () => {
   beforeEach(() => {
     mockPathname = '/'
   })
@@ -32,7 +32,7 @@ describe('PickupHeader', () => {
   it('offers sign in to signed-out visitors and opens the sign-in dialog', async () => {
     const user = userEvent.setup()
     mockAuth.mockReturnValue(authState())
-    render(<PickupHeader />)
+    render(<RideLinkHeader />)
 
     expect(screen.queryByRole('link', { name: 'Dashboard' })).toBeNull()
     await user.click(screen.getByRole('button', { name: 'Sign in' }))
@@ -41,13 +41,13 @@ describe('PickupHeader', () => {
 
   it('never renders the Dashboard link for students', () => {
     mockAuth.mockReturnValue(authState({ user: student }))
-    render(<PickupHeader />)
+    render(<RideLinkHeader />)
     expect(screen.queryByRole('link', { name: 'Dashboard' })).toBeNull()
   })
 
   it('shows the Dashboard link to admins', () => {
     mockAuth.mockReturnValue(authState({ user: student, isAdmin: true }))
-    render(<PickupHeader />)
+    render(<RideLinkHeader />)
     const links = screen.getAllByRole('link', { name: 'Dashboard' })
     expect(links[0]).toHaveAttribute('href', '/admin')
   })
@@ -55,7 +55,7 @@ describe('PickupHeader', () => {
   it('marks the current page in the navigation', () => {
     mockPathname = '/results'
     mockAuth.mockReturnValue(authState({ user: student }))
-    render(<PickupHeader />)
+    render(<RideLinkHeader />)
     const nav = screen.getByRole('navigation', { name: 'Main' })
     expect(within(nav).getByRole('link', { name: 'Results' })).toHaveAttribute(
       'aria-current',
@@ -66,7 +66,7 @@ describe('PickupHeader', () => {
   it('opens the mobile menu and closes it with Escape', async () => {
     const user = userEvent.setup()
     mockAuth.mockReturnValue(authState({ user: student }))
-    render(<PickupHeader />)
+    render(<RideLinkHeader />)
 
     const toggle = screen.getByRole('button', { name: 'Menu' })
     expect(toggle).toHaveAttribute('aria-expanded', 'false')

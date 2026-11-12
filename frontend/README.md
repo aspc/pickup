@@ -1,4 +1,4 @@
-# PICKUP Frontend
+# RideLink Frontend
 
 Next.js app for managing pickup workflows, matching requests, and admin operations with Supabase.
 

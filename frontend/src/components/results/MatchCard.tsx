@@ -82,7 +82,7 @@ DTEND:${end}
 BEGIN:VALARM
 TRIGGER:-P1D
 ACTION:DISPLAY
-DESCRIPTION:Reminder: Your PICKUP Match is tomorrow!
+DESCRIPTION:Reminder: Your RideLink Match is tomorrow!
 END:VALARM
 END:VEVENT
 END:VCALENDAR`
@@ -189,9 +189,14 @@ const MatchCard = ({
     const matchTime = primaryMatch.time
     const flightData = primaryMatch.Flights
 
-    const title = `PICKUP Group: ${flightData?.to_airport ? 'School → ' + flightData.airport : flightData.airport + ' → School'}`
+    const title = `RideLink Group: ${flightData?.to_airport ? 'School → ' + flightData.airport : flightData.airport + ' → School'}`
 
-    createICSFile(title, 'Your PICKUP ride share match!', matchDate, matchTime)
+    createICSFile(
+      title,
+      'Your RideLink ride share match!',
+      matchDate,
+      matchTime,
+    )
   }
 
   const status = !upcoming ? 'past' : isGroupReady ? 'ready' : 'matched'

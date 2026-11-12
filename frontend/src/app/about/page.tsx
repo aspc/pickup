@@ -7,7 +7,7 @@ const TIMELINE = [
   { when: 'Months in advance', what: 'Book your flight.' },
   {
     when: '14 days',
-    what: 'Complete PICKUP questionnaire.',
+    what: 'Complete RideLink questionnaire.',
     note: 'Anytime between booking and 7 days before',
   },
   { when: '3 days', what: 'Receive your match and contact.' },
@@ -19,7 +19,7 @@ export default function About() {
     <PageContainer width="prose">
       <PageHeader
         eyebrow="About"
-        title="About PICKUP"
+        title="About RideLink"
         description="Making airport travel affordable and accessible for the 5C community."
       />
 
@@ -27,7 +27,7 @@ export default function About() {
         <p>
           No student should pay $100+ for a solo ride to LAX. While the
           Claremont Colleges sometimes provide shuttles, they&apos;re often
-          limited. That&apos;s where PICKUP comes in.
+          limited. That&apos;s where RideLink comes in.
         </p>
         <p>
           We&apos;re a student-led team making travel more affordable and
@@ -35,14 +35,14 @@ export default function About() {
           similar flight plans so you can share rides and split costs.
         </p>
         <p>
-          The idea for PICKUP was born out of personal frustration. After
+          The idea for RideLink was born out of personal frustration. After
           struggling to find affordable airport transportation ourselves, we
           realized there was a better solution waiting to be built. With the
           help of our loving and dedicated engineering team, we&apos;ve been
           working on this platform throughout the year.
         </p>
         <p className="font-display text-xl text-navy">
-          Whether it&apos;s your first ride or your fiftieth, we hope PICKUP
+          Whether it&apos;s your first ride or your fiftieth, we hope RideLink
           makes your journey a little easier.
         </p>
       </div>
@@ -88,7 +88,7 @@ export default function About() {
         <Card className="mt-6 overflow-hidden">
           <Image
             src="/images/teampic.jpg"
-            alt="PICKUP Engineering Team"
+            alt="RideLink Engineering Team"
             width={800}
             height={600}
             className="h-auto w-full object-cover"
@@ -113,7 +113,7 @@ export default function About() {
 
         <p className="mt-6 rounded-lg bg-sage-tint px-5 py-4 text-[15px] leading-relaxed text-ink">
           Thank you to our amazing team for helping us build the foundation of
-          PICKUP. Your contributions made this platform possible for the 5C
+          RideLink. Your contributions made this platform possible for the 5C
           community!
         </p>
       </section>
