@@ -1,8 +1,11 @@
+import { getSubsidizedPeriodRanges } from '@/config/servicePeriodHelpers'
 import { badRequestJson, withAdminRoute } from '@/lib/server/auth'
 import { NextResponse } from 'next/server'
 
 export const POST = withAdminRoute(async (request) => {
-  const serviceUrl = process.env.ALGORITHM_SERVICE_URL
+  // Function URLs are shown with a trailing slash; strip it so `${serviceUrl}/run`
+  // doesn't become `//run`, which the service 404s.
+  const serviceUrl = process.env.ALGORITHM_SERVICE_URL?.replace(/\/+$/, '')
 
   if (!serviceUrl) {
     return NextResponse.json(
@@ -41,6 +44,7 @@ export const POST = withAdminRoute(async (request) => {
       body: JSON.stringify({
         days_ahead: daysAhead,
         days_ahead_start: daysAheadStart,
+        subsidized_periods: getSubsidizedPeriodRanges(),
       }),
       signal: AbortSignal.timeout(60000),
     })
@@ -50,7 +54,11 @@ export const POST = withAdminRoute(async (request) => {
     if (!response.ok) {
       return NextResponse.json(
         {
-          error: data?.detail || 'The algorithm service rejected the request.',
+          // FastAPI returns validation errors (422) as a list; only pass strings through.
+          error:
+            typeof data?.detail === 'string'
+              ? data.detail
+              : 'The algorithm service rejected the request.',
         },
         { status: response.status },
       )

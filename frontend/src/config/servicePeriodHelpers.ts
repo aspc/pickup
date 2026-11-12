@@ -63,6 +63,30 @@ export function getDerivedCoveredDates(): {
   }
 }
 
+export interface SubsidizedPeriodRange extends DateRange {
+  direction: TripDirection
+}
+
+/**
+ * Every subsidized range as a flat list, in the shape the matching Lambda
+ * expects as `subsidized_periods` — so the matcher subsidizes exactly the
+ * dates students are shown here, instead of keeping its own list.
+ */
+export function getSubsidizedPeriodRanges(): SubsidizedPeriodRange[] {
+  const ranges: SubsidizedPeriodRange[] = []
+
+  for (const period of SERVICE_PERIODS) {
+    for (const direction of ['outbound', 'inbound'] as const) {
+      const range = period.subsidized[direction]
+      if (range && period.allowedDirections.includes(direction)) {
+        ranges.push({ direction, start: range.start, end: range.end })
+      }
+    }
+  }
+
+  return ranges
+}
+
 export function isDateCovered(date: string, toAirport: boolean): boolean {
   if (!date) {
     return false
