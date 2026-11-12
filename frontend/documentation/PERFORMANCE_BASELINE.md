@@ -14,12 +14,12 @@ Automated evidence verifies one-command browser contracts for the common move pa
 
 On June 13, 2026, Xavier M's `AA 123` flight was removed from Group #736 and restored to the same group through the authenticated local production build. Timing began with the mutation click and ended when the corresponding rider state became visible. The original four-rider group was restored after measurement.
 
-| Mutation | Visible completion |
-| --- | ---: |
-| Remove from Group #736 to Unmatched | **404 ms** |
-| Move from Unmatched into the Corral | **637 ms** |
-| Re-add from the Corral to Group #736 | **703 ms** |
-| Complete re-add mutation work | **1.34 s** |
+| Mutation                             | Visible completion |
+| ------------------------------------ | -----------------: |
+| Remove from Group #736 to Unmatched  |         **404 ms** |
+| Move from Unmatched into the Corral  |         **637 ms** |
+| Re-add from the Corral to Group #736 |         **703 ms** |
+| Complete re-add mutation work        |         **1.34 s** |
 
 The 1.34-second re-add total combines the required Unmatched-to-Corral and Corral-to-group mutations and excludes administrator navigation and selection time. These measurements represent immediate user-visible state on a warm local production build; server persistence remains protected by the saving state, and failures trigger authoritative reconciliation.
 
@@ -37,12 +37,12 @@ For each route, open the browser network panel with cache disabled, perform one 
 
 On June 13, 2026, the application was built with `next build`, served with `next start` on localhost, and measured through an authenticated account containing matches, unmatched flights, and scoped Admin access. After one warm-up navigation, each route was fully reloaded three times. The endpoint was considered visible when its principal page heading appeared. Browser cache remained enabled, so these values represent warm repeat navigation rather than cold-cache or public-network performance.
 
-| Route | Three authenticated runs | Median time to principal content | Primary telemetry response |
-| --- | ---: | ---: | --- |
-| Results | 826 ms, 710 ms, 692 ms | **710 ms** | Server-rendered `/results`; `/api/results` on later refresh |
-| Unmatched | 646 ms, 640 ms, 915 ms | **646 ms** | Server-rendered `/unmatched`; `/api/unmatched/options` on later refresh |
-| Admin | 672 ms, 683 ms, 666 ms | **672 ms** | `/api/admin/dashboard-summary` |
-| Admin Groups | 775 ms, 818 ms, 790 ms | **790 ms** | `/api/admin/groups/snapshot` |
+| Route        | Three authenticated runs | Median time to principal content | Primary telemetry response                                              |
+| ------------ | -----------------------: | -------------------------------: | ----------------------------------------------------------------------- |
+| Results      |   826 ms, 710 ms, 692 ms |                       **710 ms** | Server-rendered `/results`; `/api/results` on later refresh             |
+| Unmatched    |   646 ms, 640 ms, 915 ms |                       **646 ms** | Server-rendered `/unmatched`; `/api/unmatched/options` on later refresh |
+| Admin        |   672 ms, 683 ms, 666 ms |                       **672 ms** | `/api/admin/dashboard-summary`                                          |
+| Admin Groups |   775 ms, 818 ms, 790 ms |                       **790 ms** | `/api/admin/groups/snapshot`                                            |
 
 All four principal views became visible in under one second at the median. Admin Groups, the heaviest audited workflow, reached visible content in 790 ms while loading a bounded first page. These values demonstrate the remediated local application path but do not include internet latency, remote production compute variance, or cold-cache startup. The `Server-Timing` and `X-Response-Bytes` headers remain available for a Network-panel capture in staging or production.
 

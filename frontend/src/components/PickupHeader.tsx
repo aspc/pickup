@@ -1,34 +1,58 @@
 'use client'
 
+import { ChevronRight, LogOut, Menu, UserRound, X } from 'lucide-react'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 
-import SimpleRedirectButton from '@/components/buttons/SimpleRedirectButton'
+import { NavLink } from '@/components/NavLink'
 import SignInModal from '@/components/SignInModal'
+import { Button } from '@/components/ui/Button'
 import { useAuth } from '@/hooks/useAuth'
-import { useRouter } from 'next/navigation'
+
+const NAV_ITEMS = [
+  { href: '/questionnaires', label: 'Forms' },
+  { href: '/results', label: 'Results' },
+  { href: '/unmatched', label: 'Unmatched' },
+  { href: '/feedback', label: 'Feedback' },
+]
+
+const ADMIN_ITEM = { href: '/admin', label: 'Dashboard' }
 
 export default function PickupHeader() {
-  const { user, avatarUrl, isAdmin, signOut, signInWithGoogle } = useAuth()
+  const { user, avatarUrl, isAdmin, isLoading, signOut, signInWithGoogle } =
+    useAuth()
   const router = useRouter()
-  const [avatarKey, setAvatarKey] = useState(0)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false)
+  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSignInOpen, setIsSignInOpen] = useState(false)
+  const menuToggleRef = useRef<HTMLButtonElement>(null)
 
-  // Force re-render when avatarUrl changes
+  const navItems = isAdmin ? [...NAV_ITEMS, ADMIN_ITEM] : NAV_ITEMS
+
   useEffect(() => {
-    setAvatarKey((prev) => prev + 1)
-  }, [avatarUrl])
+    setIsMenuOpen(false)
+  }, [pathname])
 
-  const handleProfileClick = () => {
-    if (user) {
-      router.push('/profile')
-    } else {
-      setIsSignInModalOpen(true)
+  useEffect(() => {
+    if (!isMenuOpen) return
+    const { overflow } = document.body.style
+    document.body.style.overflow = 'hidden'
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      setIsMenuOpen(false)
+      menuToggleRef.current?.focus()
     }
-  }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.body.style.overflow = overflow
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [isMenuOpen])
 
   const handleSignOut = async () => {
+    setIsMenuOpen(false)
     const { error } = await signOut()
     if (!error) {
       router.refresh()
@@ -37,199 +61,149 @@ export default function PickupHeader() {
 
   return (
     <>
-      <header className="flex min-h-[80px] items-center justify-between bg-gradient-to-r from-teal-500 to-yellow-100 p-4 text-white shadow-lg sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3">
-          <div
-            onClick={() => router.push('/')}
-            className="h-25 w-25 border-1 cursor-pointer overflow-hidden rounded-full hover:border-yellow-200"
+      <header className="sticky top-0 z-40 bg-navy text-white">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6">
+          <Link
+            href="/"
+            className="group flex shrink-0 items-center gap-3 rounded-md"
+            aria-label="PICKUP home"
           >
-            <Image
-              src="/favicon.ico"
-              alt="P-ickup logo"
-              width={65}
-              height={65}
-              className="object-cover"
-            />
-          </div>
-          {/* Dashboard button - always rendered to prevent layout shift, hidden on mobile */}
-          <div
-            className={`hidden transition-opacity duration-200 md:block ${
-              isAdmin
-                ? 'pointer-events-auto opacity-100'
-                : 'pointer-events-none opacity-0'
-            }`}
-          >
-            <SimpleRedirectButton
-              label="Dashboard"
-              route="/admin"
-              variant="nav"
-            />
-          </div>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden space-x-1 md:flex lg:space-x-3">
-          <SimpleRedirectButton
-            label="Forms"
-            route="/questionnaires"
-            variant="nav"
-          />
-          <SimpleRedirectButton
-            label="Results"
-            route="/results"
-            variant="nav"
-          />
-          <SimpleRedirectButton
-            label="Unmatched"
-            route="/unmatched"
-            variant="nav"
-          />
-          <SimpleRedirectButton
-            label="Feedback"
-            route="/feedback"
-            variant="nav"
-          />
-        </nav>
-
-        {/* Mobile Navigation - Hamburger Menu */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="flex h-8 w-8 flex-col items-center justify-center space-y-1"
-          >
-            <span
-              className={`block h-0.5 w-6 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'translate-y-1.5 rotate-45' : ''}`}
-            ></span>
-            <span
-              className={`block h-0.5 w-6 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}
-            ></span>
-            <span
-              className={`block h-0.5 w-6 bg-white transition-all duration-300 ${isMobileMenuOpen ? '-translate-y-1.5 -rotate-45' : ''}`}
-            ></span>
-          </button>
-        </div>
-
-        <div className="flex items-center gap-2 sm:gap-4">
-          {user ? (
-            <>
-              <div className="flex items-center gap-3">
-                <div
-                  onClick={handleProfileClick}
-                  className="h-12 w-12 cursor-pointer overflow-hidden rounded-full border-2 border-white shadow-md transition-all duration-300 hover:scale-105 hover:border-indigo-300"
-                >
-                  <Image
-                    key={avatarKey}
-                    src={avatarUrl || '/images/profileIcon.webp'}
-                    alt="Profile"
-                    width={50}
-                    height={50}
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-              <button
-                onClick={handleSignOut}
-                className="hidden items-center gap-2 rounded-lg border border-red-200 bg-white/90 px-4 py-2
-                text-sm font-medium text-red-500 shadow-md backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-red-50 active:bg-red-100 sm:flex"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                  />
-                </svg>
-                Logout
-              </button>
-              {/* Mobile logout - just icon */}
-              <button
-                onClick={handleSignOut}
-                className="flex items-center justify-center rounded-lg border border-red-200 bg-white/90 p-2 text-red-500
-                shadow-md backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-red-50 active:bg-red-100 sm:hidden"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                  />
-                </svg>
-              </button>
-            </>
-          ) : (
-            <div
-              onClick={handleProfileClick}
-              className="cursor-pointer transition-all duration-300 hover:scale-105"
-            >
+            <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-[10px] bg-white">
               <Image
-                src="/images/profileIcon.webp"
-                alt="Login"
-                width={40}
-                height={40}
-                className="object-cover"
+                src="/favicon.png"
+                alt=""
+                width={36}
+                height={36}
+                priority
               />
-            </div>
-          )}
+            </span>
+            <span className="leading-none">
+              <span className="block text-[17px] font-bold tracking-[0.06em]">
+                PICKUP
+              </span>
+              <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.14em] text-navy-200">
+                by ASPC
+              </span>
+            </span>
+          </Link>
+
+          <nav
+            aria-label="Main"
+            className="hidden flex-1 items-center justify-center gap-7 lg:flex"
+          >
+            {navItems.map((item) => (
+              <NavLink key={item.href} href={item.href} variant="header">
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="flex shrink-0 items-center gap-2">
+            {isLoading ? (
+              <span aria-hidden className="h-9 w-9 rounded-full bg-navy-700" />
+            ) : user ? (
+              <>
+                <Link
+                  href="/profile"
+                  aria-label="Profile"
+                  className="relative h-9 w-9 overflow-hidden rounded-full ring-2 ring-navy-500 transition-shadow hover:ring-sage-soft"
+                >
+                  {avatarUrl ? (
+                    <Image
+                      key={avatarUrl}
+                      src={avatarUrl}
+                      alt=""
+                      fill
+                      sizes="36px"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="flex h-full w-full items-center justify-center bg-navy-700 text-navy-100">
+                      <UserRound aria-hidden className="h-5 w-5" />
+                    </span>
+                  )}
+                </Link>
+                <Button
+                  variant="on-navy"
+                  size="sm"
+                  onClick={handleSignOut}
+                  className="hidden lg:inline-flex"
+                >
+                  Sign out
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="on-navy"
+                size="sm"
+                onClick={() => setIsSignInOpen(true)}
+              >
+                Sign in
+              </Button>
+            )}
+            <button
+              ref={menuToggleRef}
+              type="button"
+              aria-label="Menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setIsMenuOpen((open) => !open)}
+              className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-navy-700 lg:hidden"
+            >
+              {isMenuOpen ? (
+                <X aria-hidden className="h-6 w-6" />
+              ) : (
+                <Menu aria-hidden className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Mobile Dropdown Menu */}
-      {isMobileMenuOpen && (
-        <div className="border-t border-white/20 bg-gradient-to-r from-teal-500 to-yellow-100 md:hidden">
-          <div className="space-y-1 px-4 py-4">
-            <SimpleRedirectButton
-              label="📋 Questionnaire"
-              route="/questionnaires"
-              variant="mobile"
-              onNavigate={() => setIsMobileMenuOpen(false)}
-            />
-            <SimpleRedirectButton
-              label="🎯 Results"
-              route="/results"
-              variant="mobile"
-              onNavigate={() => setIsMobileMenuOpen(false)}
-            />
-            <SimpleRedirectButton
-              label="👥 Unmatched"
-              route="/unmatched"
-              variant="mobile"
-              onNavigate={() => setIsMobileMenuOpen(false)}
-            />
-            <SimpleRedirectButton
-              label="💬 Feedback"
-              route="/feedback"
-              variant="mobile"
-              onNavigate={() => setIsMobileMenuOpen(false)}
-            />
-            {isAdmin && (
-              <SimpleRedirectButton
-                label="🔐 Dashboard"
-                route="/admin"
-                variant="mobile"
-                onNavigate={() => setIsMobileMenuOpen(false)}
-              />
+      {isMenuOpen && (
+        <div
+          id="mobile-menu"
+          className="fixed inset-x-0 bottom-0 top-16 z-30 animate-overlay-in overflow-y-auto bg-paper lg:hidden"
+        >
+          <nav aria-label="Mobile" className="space-y-1 px-3 py-4">
+            {navItems.map((item) => (
+              <NavLink key={item.href} href={item.href} variant="mobile">
+                {item.label}
+                <ChevronRight
+                  aria-hidden
+                  className="h-5 w-5 text-stone-light"
+                />
+              </NavLink>
+            ))}
+          </nav>
+          <div className="mx-6 border-t border-line pt-4">
+            {user ? (
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="flex min-h-12 items-center gap-2 text-base font-medium text-danger"
+              >
+                <LogOut aria-hidden className="h-5 w-5" />
+                Sign out
+              </button>
+            ) : (
+              <Button
+                fullWidth
+                onClick={() => {
+                  setIsMenuOpen(false)
+                  setIsSignInOpen(true)
+                }}
+              >
+                Sign in
+              </Button>
             )}
           </div>
         </div>
       )}
 
       <SignInModal
-        isOpen={isSignInModalOpen}
-        onClose={() => setIsSignInModalOpen(false)}
+        isOpen={isSignInOpen}
+        onClose={() => setIsSignInOpen(false)}
         onSignIn={signInWithGoogle}
       />
     </>

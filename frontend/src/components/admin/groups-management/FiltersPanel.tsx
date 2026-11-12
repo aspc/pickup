@@ -46,7 +46,7 @@ export default function FiltersPanel() {
   return (
     <div className="flex-1 space-y-4 overflow-y-auto p-4">
       <div>
-        <label className="mb-2 block text-xs font-medium text-gray-700">
+        <label className="mb-2 block text-xs font-medium text-ink">
           Airports
         </label>
         <div className="flex flex-wrap gap-3">
@@ -59,9 +59,9 @@ export default function FiltersPanel() {
                 type="checkbox"
                 checked={selectedAirports.includes(airport)}
                 onChange={() => toggleAirport(airport)}
-                className="h-3.5 w-3.5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                className="h-3.5 w-3.5 rounded border-line-strong text-sage focus:ring-sage/30"
               />
-              <span className="text-xs text-gray-700">{airport}</span>
+              <span className="text-xs text-ink">{airport}</span>
             </label>
           ))}
         </div>
@@ -71,24 +71,24 @@ export default function FiltersPanel() {
               type="checkbox"
               checked={filterDirectionTo}
               onChange={(e) => setFilterDirectionTo(e.target.checked)}
-              className="h-3.5 w-3.5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+              className="h-3.5 w-3.5 rounded border-line-strong text-sage focus:ring-sage/30"
             />
-            <span className="text-xs text-gray-700">To airport</span>
+            <span className="text-xs text-ink">To airport</span>
           </label>
           <label className="flex cursor-pointer items-center gap-2">
             <input
               type="checkbox"
               checked={filterDirectionFrom}
               onChange={(e) => setFilterDirectionFrom(e.target.checked)}
-              className="h-3.5 w-3.5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+              className="h-3.5 w-3.5 rounded border-line-strong text-sage focus:ring-sage/30"
             />
-            <span className="text-xs text-gray-700">From airport</span>
+            <span className="text-xs text-ink">From airport</span>
           </label>
         </div>
       </div>
 
       <div>
-        <label className="mb-2 block text-xs font-medium text-gray-700">
+        <label className="mb-2 block text-xs font-medium text-ink">
           Date Range
         </label>
         <div className="flex flex-col gap-2 md:flex-row md:gap-2">
@@ -98,7 +98,7 @@ export default function FiltersPanel() {
               value={dateRangeStart}
               onChange={(e) => setDateRangeStart(e.target.value)}
               placeholder="Start date"
-              className="w-full rounded border border-gray-300 bg-white px-2 py-1.5 pr-8 text-xs text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+              className="w-full rounded border border-line-strong bg-card px-2 py-1.5 pr-8 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
               style={
                 {
                   WebkitAppearance: 'none',
@@ -112,7 +112,7 @@ export default function FiltersPanel() {
                   .previousElementSibling as HTMLInputElement
                 input?.showPicker?.()
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-teal-600"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-light transition-colors hover:text-sage"
               title="Open calendar"
             >
               <Calendar className="h-3.5 w-3.5" />
@@ -124,7 +124,7 @@ export default function FiltersPanel() {
               value={dateRangeEnd}
               onChange={(e) => setDateRangeEnd(e.target.value)}
               placeholder="End date"
-              className="w-full rounded border border-gray-300 bg-white px-2 py-1.5 pr-8 text-xs text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+              className="w-full rounded border border-line-strong bg-card px-2 py-1.5 pr-8 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
               style={
                 {
                   WebkitAppearance: 'none',
@@ -138,7 +138,7 @@ export default function FiltersPanel() {
                   .previousElementSibling as HTMLInputElement
                 input?.showPicker?.()
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-teal-600"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-light transition-colors hover:text-sage"
               title="Open calendar"
             >
               <Calendar className="h-3.5 w-3.5" />
@@ -148,7 +148,7 @@ export default function FiltersPanel() {
       </div>
 
       <div>
-        <label className="mb-2 block text-xs font-medium text-gray-700">
+        <label className="mb-2 block text-xs font-medium text-ink">
           Time Range
         </label>
         <div className="flex items-center gap-2">
@@ -157,7 +157,7 @@ export default function FiltersPanel() {
               type="time"
               value={timeRangeStart}
               onChange={(e) => setTimeRangeStart(e.target.value)}
-              className="w-full rounded border border-gray-300 bg-white px-2 py-1.5 pr-8 text-xs text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+              className="w-full rounded border border-line-strong bg-card px-2 py-1.5 pr-8 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
               style={
                 {
                   WebkitAppearance: 'none',
@@ -171,19 +171,19 @@ export default function FiltersPanel() {
                   .previousElementSibling as HTMLInputElement
                 input?.showPicker?.()
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-teal-600"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-light transition-colors hover:text-sage"
               title="Open time picker"
             >
               <Clock className="h-3.5 w-3.5" />
             </button>
           </div>
-          <span className="text-xs text-gray-500">-</span>
+          <span className="text-xs text-stone">-</span>
           <div className="relative flex-1">
             <input
               type="time"
               value={timeRangeEnd}
               onChange={(e) => setTimeRangeEnd(e.target.value)}
-              className="w-full rounded border border-gray-300 bg-white px-2 py-1.5 pr-8 text-xs text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+              className="w-full rounded border border-line-strong bg-card px-2 py-1.5 pr-8 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
               style={
                 {
                   WebkitAppearance: 'none',
@@ -197,7 +197,7 @@ export default function FiltersPanel() {
                   .previousElementSibling as HTMLInputElement
                 input?.showPicker?.()
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-teal-600"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-light transition-colors hover:text-sage"
               title="Open time picker"
             >
               <Clock className="h-3.5 w-3.5" />
@@ -207,7 +207,7 @@ export default function FiltersPanel() {
       </div>
 
       <div>
-        <label className="mb-2 block text-xs font-medium text-gray-700">
+        <label className="mb-2 block text-xs font-medium text-ink">
           Subsidy
         </label>
         <select
@@ -217,7 +217,7 @@ export default function FiltersPanel() {
               e.target.value as 'subsidized' | 'unsubsidized' | 'all',
             )
           }
-          className="w-full rounded border border-gray-300 bg-white px-2 py-1.5 text-xs text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+          className="w-full rounded border border-line-strong bg-card px-2 py-1.5 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
         >
           <option value="all">All</option>
           <option value="subsidized">Subsidized</option>
@@ -226,7 +226,7 @@ export default function FiltersPanel() {
       </div>
 
       <div>
-        <label className="mb-2 block text-xs font-medium text-gray-700">
+        <label className="mb-2 block text-xs font-medium text-ink">
           Uber type
         </label>
         <div className="flex flex-wrap gap-x-3 gap-y-1.5">
@@ -251,9 +251,9 @@ export default function FiltersPanel() {
                       return next
                     })
                   }}
-                  className="h-3.5 w-3.5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                  className="h-3.5 w-3.5 rounded border-line-strong text-sage focus:ring-sage/30"
                 />
-                <span className="text-xs text-gray-700">{label}</span>
+                <span className="text-xs text-ink">{label}</span>
               </label>
             )
           })}
@@ -261,7 +261,7 @@ export default function FiltersPanel() {
       </div>
 
       <div>
-        <label className="mb-2 block text-xs font-medium text-gray-700">
+        <label className="mb-2 block text-xs font-medium text-ink">
           Bag Units
         </label>
         <div className="flex items-center gap-2">
@@ -271,22 +271,22 @@ export default function FiltersPanel() {
             value={minBags}
             onChange={(e) => setMinBags(e.target.value)}
             placeholder="Min"
-            className="w-full rounded border border-gray-300 bg-white px-2 py-1.5 text-xs text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+            className="w-full rounded border border-line-strong bg-card px-2 py-1.5 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
           />
-          <span className="text-xs text-gray-500">-</span>
+          <span className="text-xs text-stone">-</span>
           <input
             type="number"
             min="0"
             value={maxBags}
             onChange={(e) => setMaxBags(e.target.value)}
             placeholder="Max"
-            className="w-full rounded border border-gray-300 bg-white px-2 py-1.5 text-xs text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+            className="w-full rounded border border-line-strong bg-card px-2 py-1.5 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
           />
         </div>
       </div>
 
       <div>
-        <label className="mb-2 block text-xs font-medium text-gray-700">
+        <label className="mb-2 block text-xs font-medium text-ink">
           Sorting
         </label>
         <div className="space-y-2">
@@ -328,13 +328,13 @@ export default function FiltersPanel() {
               }}
               className={`flex items-center gap-1 rounded border p-1 transition-colors ${
                 draggedSortIndex === index
-                  ? 'border-teal-500 bg-teal-50 opacity-50'
+                  ? 'border-sage/30 bg-sage-tint opacity-50'
                   : dragOverSortIndex === index
-                    ? 'border-teal-400 bg-teal-100'
-                    : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'
+                    ? 'border-sage/30 bg-sage-tint'
+                    : 'border-line bg-card hover:border-line-strong hover:bg-paper'
               } ${draggedSortIndex !== null && draggedSortIndex !== index ? 'cursor-move' : ''}`}
             >
-              <div className="flex-shrink-0 cursor-grab text-gray-400 hover:text-gray-600 active:cursor-grabbing">
+              <div className="flex-shrink-0 cursor-grab text-stone-light hover:text-stone active:cursor-grabbing">
                 <svg
                   className="h-3 w-3"
                   fill="none"
@@ -361,7 +361,7 @@ export default function FiltersPanel() {
                     | 'ride_id'
                   setSortingRules(newRules)
                 }}
-                className="min-w-0 flex-1 rounded border border-gray-300 bg-white px-1.5 py-1 text-xs text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                className="min-w-0 flex-1 rounded border border-line-strong bg-card px-1.5 py-1 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
               >
                 <option value="ride_id">Group ID</option>
                 <option value="bag_size">Bag Size</option>
@@ -376,7 +376,7 @@ export default function FiltersPanel() {
                   newRules[index].direction = e.target.value as 'asc' | 'desc'
                   setSortingRules(newRules)
                 }}
-                className="w-16 flex-shrink-0 rounded border border-gray-300 bg-white px-1.5 py-1 text-xs text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                className="w-16 flex-shrink-0 rounded border border-line-strong bg-card px-1.5 py-1 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
               >
                 <option value="asc">Asc</option>
                 <option value="desc">Desc</option>
@@ -387,7 +387,7 @@ export default function FiltersPanel() {
                     sortingRules.filter((_: any, i: number) => i !== index),
                   )
                 }}
-                className="flex-shrink-0 rounded p-0.5 text-red-500 hover:bg-red-50"
+                className="flex-shrink-0 rounded p-0.5 text-danger hover:bg-danger-tint"
                 title="Remove sorting rule"
               >
                 <svg
@@ -413,7 +413,7 @@ export default function FiltersPanel() {
                 { field: 'date', direction: 'asc' },
               ])
             }}
-            className="w-full rounded border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-50"
+            className="w-full rounded border border-line-strong bg-card px-3 py-1.5 text-xs text-ink hover:bg-paper"
           >
             + Add Sorting Rule
           </button>
@@ -446,7 +446,7 @@ export default function FiltersPanel() {
             setMaxBags('')
             setSortingRules([])
           }}
-          className="mt-2 w-full rounded border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-50"
+          className="mt-2 w-full rounded border border-line-strong bg-card px-3 py-1.5 text-xs text-ink hover:bg-paper"
         >
           Clear All Filters
         </button>

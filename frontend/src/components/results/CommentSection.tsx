@@ -1,5 +1,10 @@
 'use client'
 
+import { MessageCircle } from 'lucide-react'
+
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Field'
+
 import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import type { Database } from '@/lib/database.types'
@@ -94,43 +99,63 @@ export default function CommentSection({ rideId }: { rideId: number }) {
   }
 
   return (
-    <div className="mt-4 flex max-h-64 flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md">
+    <div className="flex max-h-72 flex-col overflow-hidden rounded-lg border border-line bg-card">
+      <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
+        <MessageCircle aria-hidden className="h-4 w-4 text-stone" />
+        <p className="text-sm font-medium text-navy">Group chat</p>
+      </div>
       <div
         ref={scrollContainerRef}
-        className="space-y-2 overflow-y-auto p-3 text-sm text-gray-700"
+        className="flex flex-col gap-2 overflow-y-auto px-4 py-3 text-sm"
       >
         {commentList.length > 0 ? (
-          commentList.map((comment) => (
-            <div
-              key={comment.id}
-              className="rounded-lg bg-gray-100 px-3 py-2 shadow-sm"
-            >
-              <span className="block font-semibold text-gray-800">
-                {comment.user?.firstname || 'Unknown User'}
-              </span>
-              <span>{comment.comment}</span>
-            </div>
-          ))
+          commentList.map((comment) => {
+            const mine = comment.user_id === user?.id
+            return (
+              <div
+                key={comment.id}
+                className={
+                  mine
+                    ? 'max-w-[85%] self-end rounded-lg rounded-br-sm bg-navy px-3 py-2 text-white'
+                    : 'max-w-[85%] self-start rounded-lg rounded-bl-sm bg-sunken px-3 py-2 text-ink'
+                }
+              >
+                {!mine && (
+                  <span className="block text-xs font-semibold text-navy">
+                    {comment.user?.firstname || 'Unknown User'}
+                  </span>
+                )}
+                <span className="break-words">{comment.comment}</span>
+              </div>
+            )
+          })
         ) : (
-          <p className="text-sm text-gray-500">No messages yet.</p>
+          <p className="py-2 text-sm text-stone">No messages yet.</p>
         )}
       </div>
-      <div className="mt-auto flex border-t border-gray-200 px-3 py-2">
-        <input
-          type="text"
+      <form
+        className="mt-auto flex gap-2 border-t border-line p-2"
+        onSubmit={(event) => {
+          event.preventDefault()
+          void handleAddComment()
+        }}
+      >
+        <Input
+          aria-label="Message your group"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Type your message..."
-          className="flex-1 rounded-md border border-gray-300 bg-white text-sm focus:border-indigo-500 focus:outline-none"
+          className="h-10 flex-1"
         />
-        <button
-          onClick={handleAddComment}
-          className="ml-2 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700 disabled:opacity-50"
+        <Button
+          type="submit"
+          size="sm"
+          className="h-10"
           disabled={!newComment.trim()}
         >
           Send
-        </button>
-      </div>
+        </Button>
+      </form>
     </div>
   )
 }

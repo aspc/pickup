@@ -68,7 +68,7 @@ export function getContingencyVoucherDeclineReasons(
     result.hadContingencyVoucherOnFile === true
   ) {
     merged.push(
-      'If you expected a voucher, try again or contact ASPC—there may have been a sync issue.',
+      'If you expected a voucher, try again or contact ASPC - there may have been a sync issue.',
     )
   }
   if (merged.length === 0) {

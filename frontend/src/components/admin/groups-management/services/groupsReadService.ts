@@ -520,9 +520,9 @@ export const fetchGroupsManagementSnapshot = async ({
       if (!groupsMap.has(match.ride_id)) {
         groupsMap.set(match.ride_id, {
           ride_id: match.ride_id,
-          airport: '—',
+          airport: '-',
           date: '',
-          time_range: '—',
+          time_range: '-',
           match_time: match.time || undefined,
           to_airport: true,
           riders: [],
@@ -541,8 +541,8 @@ export const fetchGroupsManagementSnapshot = async ({
         phone: 'N/A',
         checked_bags: 0,
         carry_on_bags: 0,
-        time_range: '—',
-        airport: '—',
+        time_range: '-',
+        airport: '-',
         to_airport: true,
         date: '',
         flight_no: '',

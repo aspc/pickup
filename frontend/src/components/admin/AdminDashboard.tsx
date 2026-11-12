@@ -2,7 +2,7 @@
 
 import type { AdminSummaryDto } from '@/contracts/readModels'
 import type { NoShowRiderInfo } from '@/utils/adminMatchNoShows'
-import SimpleRedirectButton from '@/components/buttons/SimpleRedirectButton'
+import { ButtonLink } from '@/components/ui/Button'
 import { requestJson } from '@/utils/api'
 import {
   estimateCancellationFee,
@@ -245,16 +245,15 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
-        <div className="relative flex min-h-screen items-center justify-center p-4">
+      <div className="relative">
+        <div className="flex min-h-[60vh] items-center justify-center p-4">
           <div
-            className="flex items-center space-x-4 rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm"
+            className="flex items-center gap-3"
             role="status"
             aria-live="polite"
           >
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-200 border-t-teal-500"></div>
-            <span className="text-lg font-medium text-gray-700">
+            <div className="h-8 w-8 animate-spin rounded-full border-[3px] border-sage border-r-transparent"></div>
+            <span className="text-lg font-medium text-ink">
               Loading Dashboard...
             </span>
           </div>
@@ -264,26 +263,25 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="px-4 pb-16 pt-8 sm:px-6">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
-        <h1 className="mb-8 text-3xl font-bold text-gray-900">
+        <h1 className="mb-8 font-display text-[32px] font-semibold text-navy sm:text-[40px]">
           Pickup Dashboard
         </h1>
 
         {/* Stats Cards - 5 Column Grid */}
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
           {/* Card 1: Last Run */}
-          <div className="overflow-hidden rounded-lg bg-white shadow-md">
-            <div className="h-1 bg-gradient-to-r from-teal-500 to-teal-600"></div>
+          <div className="overflow-hidden rounded-lg border border-line bg-card shadow-card">
             <div className="p-6">
-              <p className="mb-2 text-sm text-gray-500">Last Run</p>
-              <p className="mb-2 text-2xl font-bold text-gray-900">
+              <p className="mb-2 text-sm text-stone">Last Run</p>
+              <p className="mb-2 text-2xl font-semibold tabular-nums text-navy">
                 {algorithmLastRan || 'Never'}
               </p>
               {lastRunStatus && (
                 <div className="mt-2">
-                  <span className="inline-block rounded border border-gray-200 bg-gray-50 px-2 py-1 text-xs text-gray-600">
+                  <span className="inline-block rounded border border-line bg-paper px-2 py-1 text-xs text-stone">
                     {lastRunStatus}
                   </span>
                 </div>
@@ -292,16 +290,15 @@ export default function AdminDashboard() {
           </div>
 
           {/* Card 2: Next Scheduled Run */}
-          <div className="overflow-hidden rounded-lg bg-white shadow-md">
-            <div className="h-1 bg-gradient-to-r from-teal-400 to-cyan-500"></div>
+          <div className="overflow-hidden rounded-lg border border-line bg-card shadow-card">
             <div className="p-6">
-              <p className="mb-2 text-sm text-gray-500">Next Scheduled Run</p>
-              <p className="mb-2 text-2xl font-bold text-gray-900">
+              <p className="mb-2 text-sm text-stone">Next Scheduled Run</p>
+              <p className="mb-2 text-2xl font-semibold tabular-nums text-navy">
                 {nextScheduledRunDate || 'N/A'}
               </p>
               {nextScheduledRunTarget && (
                 <div className="mt-2">
-                  <span className="inline-block rounded border border-gray-200 bg-gray-50 px-2 py-1 text-xs text-gray-600">
+                  <span className="inline-block rounded border border-line bg-paper px-2 py-1 text-xs text-stone">
                     Scheduled ({nextScheduledRunTarget})
                   </span>
                 </div>
@@ -310,19 +307,18 @@ export default function AdminDashboard() {
           </div>
 
           {/* Card 3: Match Rate */}
-          <div className="overflow-hidden rounded-lg bg-white shadow-md">
-            <div className="h-1 bg-gradient-to-r from-cyan-500 to-cyan-600"></div>
+          <div className="overflow-hidden rounded-lg border border-line bg-card shadow-card">
             <div className="p-6">
-              <p className="mb-2 text-sm text-gray-500">Match Rate</p>
-              <p className="mb-2 text-3xl font-bold text-gray-900">
+              <p className="mb-2 text-sm text-stone">Match Rate</p>
+              <p className="mb-2 text-3xl font-semibold tabular-nums text-navy">
                 {matchRate}%
               </p>
-              <p className="mb-3 text-sm text-gray-600">
+              <p className="mb-3 text-sm text-stone">
                 {matchedRiders} / {totalRiders} riders matched
               </p>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-gray-400">
+              <div className="h-2 w-full overflow-hidden rounded-full bg-sunken">
                 <div
-                  className="h-full bg-[linear-gradient(to_right,theme(colors.red.500)_0%,theme(colors.orange.500)_10%,theme(colors.green.500)_60%)] transition-all duration-500"
+                  className="h-full rounded-full bg-sage transition-[width] duration-500"
                   style={{ width: `${matchRate}%` }}
                 ></div>
               </div>
@@ -330,36 +326,33 @@ export default function AdminDashboard() {
           </div>
 
           {/* Card 4: Unmatched Flight Forms */}
-          <div className="overflow-hidden rounded-lg bg-white shadow-md">
-            <div className="h-1 bg-gradient-to-r from-purple-500 to-purple-600"></div>
+          <div className="overflow-hidden rounded-lg border border-line bg-card shadow-card">
             <div className="p-6">
-              <p className="mb-2 text-sm text-gray-500">
-                Unmatched Flight Forms
-              </p>
-              <p className="mb-2 text-3xl font-bold text-gray-900">
+              <p className="mb-2 text-sm text-stone">Unmatched Flight Forms</p>
+              <p className="mb-2 text-3xl font-semibold tabular-nums text-navy">
                 {unmatchedFlightsCount}
               </p>
               <div className="mt-4 space-y-2">
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-gray-700">
+                  <label className="mb-1 block text-xs font-medium text-ink">
                     From Date
                   </label>
                   <input
                     type="date"
                     value={unmatchedDateStart}
                     onChange={(e) => setUnmatchedDateStart(e.target.value)}
-                    className="w-full rounded border border-gray-300 bg-white px-2 py-1.5 text-xs text-gray-900 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                    className="w-full rounded border border-line-strong bg-card px-2 py-1.5 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-gray-700">
+                  <label className="mb-1 block text-xs font-medium text-ink">
                     To Date (optional)
                   </label>
                   <input
                     type="date"
                     value={unmatchedDateEnd}
                     onChange={(e) => setUnmatchedDateEnd(e.target.value)}
-                    className="w-full rounded border border-gray-300 bg-white px-2 py-1.5 text-xs text-gray-900 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                    className="w-full rounded border border-line-strong bg-card px-2 py-1.5 text-xs text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   />
                 </div>
               </div>
@@ -367,11 +360,10 @@ export default function AdminDashboard() {
           </div>
 
           {/* Card 5: School */}
-          <div className="overflow-hidden rounded-lg bg-white shadow-md">
-            <div className="h-1 bg-gradient-to-r from-lime-500 to-lime-600"></div>
+          <div className="overflow-hidden rounded-lg border border-line bg-card shadow-card">
             <div className="p-6">
-              <p className="mb-2 text-sm text-gray-500">School</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="mb-2 text-sm text-stone">School</p>
+              <p className="text-2xl font-semibold text-navy">
                 {school || 'Not set'}
               </p>
             </div>
@@ -379,20 +371,16 @@ export default function AdminDashboard() {
         </div>
 
         <div className="mb-8 flex flex-wrap justify-center gap-4">
-          <SimpleRedirectButton
-            label="View & Manage Groups"
-            route="/admin/groups"
-            variant="cta"
-          />
+          <ButtonLink href="/admin/groups" size="lg">
+            View & manage groups
+          </ButtonLink>
         </div>
 
-        {/* Match no-shows — warm orange–yellow banner (Cancellations keeps red–orange) */}
-        <div className="mb-8 rounded-lg bg-white shadow-md">
-          <div className="border-b border-orange-300/90 bg-gradient-to-r from-yellow-200 via-amber-200 to-orange-300 px-6 py-4">
-            <h2 className="text-orange-950 text-xl font-bold">
-              Match No-Shows
-            </h2>
-            <p className="text-orange-950/90 mt-1 text-sm">
+        {/* Match no-shows */}
+        <div className="mb-8 rounded-lg border border-line bg-card shadow-card">
+          <div className="border-b border-line px-6 py-4">
+            <h2 className="text-lg font-semibold text-navy">Match No-Shows</h2>
+            <p className="mt-1 text-sm text-stone">
               View Riders reported as missing and whether they submitted their
               pickup or delay form.
             </p>
@@ -400,18 +388,18 @@ export default function AdminDashboard() {
           <div className="p-6">
             <div className="mb-4 flex flex-wrap items-end gap-4">
               <div className="min-w-[160px]">
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-ink">
                   Match date from
                 </label>
                 <input
                   type="date"
                   value={noShowsDateStart}
                   onChange={(e) => setNoShowsDateStart(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-line-strong px-3 py-2 text-ink"
                 />
               </div>
               <div className="min-w-[160px]">
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-ink">
                   Match date to (today)
                 </label>
                 <input
@@ -419,14 +407,14 @@ export default function AdminDashboard() {
                   value={noShowsDateEnd}
                   max={new Date().toISOString().split('T')[0]}
                   onChange={(e) => setNoShowsDateEnd(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-line-strong px-3 py-2 text-ink"
                 />
               </div>
               <button
                 type="button"
                 onClick={() => void fetchMatchNoShows()}
                 disabled={noShowsLoading}
-                className="rounded-lg bg-orange-500 px-4 py-2 font-medium text-white hover:bg-orange-600 disabled:opacity-50"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-navy px-4 text-sm font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
               >
                 {noShowsLoading ? 'Loading…' : 'Load no-shows'}
               </button>
@@ -435,63 +423,63 @@ export default function AdminDashboard() {
             {noShowRows.length > 0 && (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-paper">
                     <tr>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Rider (reported missing)
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Group #
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Ride match date
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Reported by
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Reporters / group
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Submitted ready-for-pickup later
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Delay / new flight (ChangeLog)
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-line">
                     {noShowRows.map((row) => (
                       <tr key={`${row.rideId}-${row.missingUserId}`}>
-                        <td className="px-4 py-2 font-medium text-gray-900">
+                        <td className="px-4 py-2 font-medium text-ink">
                           {row.name}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                        <td className="whitespace-nowrap px-4 py-2 text-ink">
                           {row.rideId}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                          {row.matchDate ? row.matchDate : '—'}
+                        <td className="whitespace-nowrap px-4 py-2 text-ink">
+                          {row.matchDate ? row.matchDate : '-'}
                         </td>
-                        <td className="max-w-[12rem] px-4 py-2 text-gray-700">
-                          {row.info.reporterNames.join(', ') || '—'}
+                        <td className="max-w-[12rem] px-4 py-2 text-ink">
+                          {row.info.reporterNames.join(', ') || '-'}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2 font-medium tabular-nums text-gray-700">
+                        <td className="whitespace-nowrap px-4 py-2 font-medium tabular-nums text-ink">
                           {row.rideRosterSize > 0
                             ? `${row.reporterCount}/${row.rideRosterSize}`
                             : row.reporterCount}
                         </td>
-                        <td className="px-4 py-2 text-gray-700">
+                        <td className="px-4 py-2 text-ink">
                           {row.info.missingRiderSubmittedReady ? (
-                            <span className="rounded bg-green-100 px-2 py-0.5 text-green-800">
+                            <span className="rounded bg-sage-tint px-2 py-0.5 text-sage-strong">
                               Yes
                             </span>
                           ) : (
-                            <span className="rounded bg-gray-100 px-2 py-0.5 text-gray-700">
+                            <span className="rounded bg-sunken px-2 py-0.5 text-ink">
                               Not yet
                             </span>
                           )}
                         </td>
-                        <td className="px-4 py-2 text-gray-700">
+                        <td className="px-4 py-2 text-ink">
                           {row.info.submittedDelayForRide
                             ? row.info.hadNewFlightOnDelay
                               ? 'Delay + new flight in log'
@@ -502,18 +490,18 @@ export default function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
-                <p className="mt-3 text-xs text-gray-600">
+                <p className="mt-3 text-xs text-stone">
                   <strong>Ride match date</strong> = this group’s match date
-                  from <code className="rounded bg-gray-100 px-1">Matches</code>
-                  .<strong> Reporters / group</strong> = reporters ÷ riders on
+                  from <code className="rounded bg-sunken px-1">Matches</code>.
+                  <strong> Reporters / group</strong> = reporters ÷ riders on
                   the ride. Delay ={' '}
-                  <code className="rounded bg-gray-100 px-1">ASPC_DELAY</code>.
+                  <code className="rounded bg-sunken px-1">ASPC_DELAY</code>.
                 </p>
               </div>
             )}
 
             {noShowRows.length === 0 && !noShowsLoading && (
-              <p className="py-4 text-center text-gray-500">
+              <p className="py-4 text-center text-stone">
                 Choose match dates above, then click &quot;Load no-shows&quot;
                 to view records
               </p>
@@ -522,12 +510,12 @@ export default function AdminDashboard() {
         </div>
 
         {/* Match Cancellations (Fee Billing) */}
-        <div className="mb-8 rounded-lg bg-white shadow-md">
-          <div className="border-b border-gray-200 bg-gradient-to-r from-red-500 to-orange-500 px-6 py-4">
-            <h2 className="text-xl font-bold text-white">
+        <div className="mb-8 rounded-lg border border-line bg-card shadow-card">
+          <div className="border-b border-line px-6 py-4">
+            <h2 className="text-lg font-semibold text-navy">
               Match Cancellations (Fee Billing)
             </h2>
-            <p className="mt-1 text-sm text-white/90">
+            <p className="mt-1 text-sm text-stone">
               Billable = riders who were subsidized with a voucher or Connect
               shuttle. Waived = unsubsidized riders.
             </p>
@@ -535,32 +523,32 @@ export default function AdminDashboard() {
           <div className="p-6">
             <div className="mb-4 flex flex-wrap items-end gap-4">
               <div className="min-w-[160px]">
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-ink">
                   From Date
                 </label>
                 <input
                   type="date"
                   value={cancellationsDateStart}
                   onChange={(e) => setCancellationsDateStart(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-line-strong px-3 py-2 text-ink"
                 />
               </div>
               <div className="min-w-[160px]">
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-ink">
                   To Date
                 </label>
                 <input
                   type="date"
                   value={cancellationsDateEnd}
                   onChange={(e) => setCancellationsDateEnd(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900"
+                  className="w-full rounded-lg border border-line-strong px-3 py-2 text-ink"
                 />
               </div>
               <button
                 type="button"
                 onClick={() => fetchCancellations(false)}
                 disabled={cancellationsLoading}
-                className="rounded-lg bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700 disabled:opacity-50"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-navy px-4 text-sm font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
               >
                 {cancellationsLoading && cancellationsFetchTarget === 'billable'
                   ? 'Loading...'
@@ -570,7 +558,7 @@ export default function AdminDashboard() {
                 type="button"
                 onClick={() => fetchCancellations(true)}
                 disabled={cancellationsLoading}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                className="inline-flex h-11 items-center justify-center rounded-md border border-line-strong bg-card px-4 text-sm font-medium text-ink transition-[background-color,transform] duration-150 hover:bg-sunken active:scale-[0.97] disabled:opacity-50"
               >
                 {cancellationsLoading && cancellationsFetchTarget === 'waived'
                   ? 'Loading...'
@@ -579,7 +567,7 @@ export default function AdminDashboard() {
             </div>
 
             {cancellationsView && cancellations.length > 0 && (
-              <p className="mb-3 text-sm font-medium text-gray-600">
+              <p className="mb-3 text-sm font-medium text-stone">
                 Viewing:{' '}
                 {cancellationsView === 'billable' ? 'Billable' : 'Waived'}{' '}
                 cancellations
@@ -589,34 +577,34 @@ export default function AdminDashboard() {
             {cancellations.length > 0 && (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-paper">
                     <tr>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Cancelled
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Rider
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Match Date/Time
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Airport
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         After Deadline
                       </th>
-                      <th className="px-4 py-2 text-left font-medium text-gray-600">
+                      <th className="px-4 py-2 text-left font-medium text-stone">
                         Before 1hr
                       </th>
                       {cancellationsView === 'billable' && (
-                        <th className="px-4 py-2 text-left font-medium text-gray-600">
+                        <th className="px-4 py-2 text-left font-medium text-stone">
                           Est. Fee
                         </th>
                       )}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-line">
                     {cancellations.map((c) => {
                       const fee = estimateCancellationFee({
                         airport: c.airport,
@@ -625,8 +613,8 @@ export default function AdminDashboard() {
                         waived: c.waived,
                       })
                       return (
-                        <tr key={c.id} className="hover:bg-gray-50">
-                          <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                        <tr key={c.id} className="hover:bg-paper">
+                          <td className="whitespace-nowrap px-4 py-2 text-ink">
                             {formatDateTime(c.cancelled_at)}
                           </td>
                           <td className="px-4 py-2">
@@ -634,32 +622,32 @@ export default function AdminDashboard() {
                               {c.firstname} {c.lastname}
                             </span>
                             <br />
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-stone">
                               {c.email}
                             </span>
                           </td>
-                          <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                          <td className="whitespace-nowrap px-4 py-2 text-ink">
                             {c.match_date} {c.match_time?.slice(0, 5)}
                           </td>
                           <td className="px-4 py-2">{c.airport}</td>
                           <td className="px-4 py-2">
                             {c.cancelled_after_deadline ? (
-                              <span className="rounded bg-red-100 px-2 py-0.5 text-red-800">
+                              <span className="rounded bg-danger-tint px-2 py-0.5 text-danger">
                                 Yes
                               </span>
                             ) : (
-                              <span className="rounded bg-green-100 px-2 py-0.5 text-green-800">
+                              <span className="rounded bg-sage-tint px-2 py-0.5 text-sage-strong">
                                 No
                               </span>
                             )}
                           </td>
                           <td className="px-4 py-2">
                             {c.cancelled_before_1hr ? (
-                              <span className="rounded bg-green-100 px-2 py-0.5 text-green-800">
+                              <span className="rounded bg-sage-tint px-2 py-0.5 text-sage-strong">
                                 Yes
                               </span>
                             ) : (
-                              <span className="rounded bg-red-100 px-2 py-0.5 text-red-800">
+                              <span className="rounded bg-danger-tint px-2 py-0.5 text-danger">
                                 No
                               </span>
                             )}
@@ -674,7 +662,7 @@ export default function AdminDashboard() {
                     })}
                   </tbody>
                 </table>
-                <div className="mt-3 flex justify-between border-t border-gray-200 pt-3 text-sm text-gray-600">
+                <div className="mt-3 flex justify-between border-t border-line pt-3 text-sm text-stone">
                   <span>
                     {cancellations.length} cancellation
                     {cancellations.length !== 1 ? 's' : ''}
@@ -742,7 +730,7 @@ export default function AdminDashboard() {
                       a.click()
                       window.URL.revokeObjectURL(url)
                     }}
-                    className="text-red-600 hover:underline"
+                    className="font-medium text-navy underline-offset-2 hover:underline"
                   >
                     Download CSV
                   </button>
@@ -751,7 +739,7 @@ export default function AdminDashboard() {
             )}
 
             {cancellations.length === 0 && !cancellationsLoading && (
-              <p className="py-4 text-center text-gray-500">
+              <p className="py-4 text-center text-stone">
                 Choose a date range, then load billable or waived cancellations
               </p>
             )}
@@ -759,13 +747,15 @@ export default function AdminDashboard() {
         </div>
 
         {/* Match Emails Section */}
-        <div className="mb-8 rounded-lg bg-white shadow-md">
-          <div className="border-b border-gray-200 bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
-            <h2 className="text-xl font-bold text-white">Send Match Emails</h2>
+        <div className="mb-8 rounded-lg border border-line bg-card shadow-card">
+          <div className="border-b border-line px-6 py-4">
+            <h2 className="text-lg font-semibold text-navy">
+              Send Match Emails
+            </h2>
           </div>
 
           <div className="p-6">
-            <p className="mb-4 text-sm text-gray-600">
+            <p className="mb-4 text-sm text-stone">
               Emails every verified match that has not been emailed yet. Narrow
               the recipients by ride date, airport and direction.
             </p>
@@ -773,7 +763,7 @@ export default function AdminDashboard() {
               <div>
                 <label
                   htmlFor="match-email-date-start"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium text-ink"
                 >
                   Ride date from (optional)
                 </label>
@@ -782,14 +772,14 @@ export default function AdminDashboard() {
                   type="date"
                   value={matchEmailDateStart}
                   onChange={(e) => setMatchEmailDateStart(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-4 py-2 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="match-email-date-end"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium text-ink"
                 >
                   Ride date to (optional)
                 </label>
@@ -799,14 +789,14 @@ export default function AdminDashboard() {
                   value={matchEmailDateEnd}
                   min={matchEmailDateStart || undefined}
                   onChange={(e) => setMatchEmailDateEnd(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-4 py-2 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="match-email-airport"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium text-ink"
                 >
                   Airport
                 </label>
@@ -816,7 +806,7 @@ export default function AdminDashboard() {
                   onChange={(e) =>
                     setMatchEmailAirport(e.target.value as EmailAirport)
                   }
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-4 py-2 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
                 >
                   <option value="">All airports</option>
                   <option value="LAX">LAX</option>
@@ -827,7 +817,7 @@ export default function AdminDashboard() {
               <div>
                 <label
                   htmlFor="match-email-direction"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium text-ink"
                 >
                   Direction
                 </label>
@@ -837,7 +827,7 @@ export default function AdminDashboard() {
                   onChange={(e) =>
                     setMatchEmailDirection(e.target.value as EmailDirection)
                   }
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-4 py-2 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
                 >
                   <option value="">Both directions</option>
                   <option value="TO">To the airport</option>
@@ -850,7 +840,7 @@ export default function AdminDashboard() {
               <button
                 type="button"
                 onClick={() => setShowMatchEmailComposer(true)}
-                className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-navy px-5 text-sm font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
               >
                 Email matched riders
               </button>
@@ -887,15 +877,15 @@ export default function AdminDashboard() {
         </div>
 
         {/* Unmatched Emails Section */}
-        <div className="mb-8 rounded-lg bg-white shadow-md">
-          <div className="border-b border-gray-200 bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4">
-            <h2 className="text-xl font-bold text-white">
+        <div className="mb-8 rounded-lg border border-line bg-card shadow-card">
+          <div className="border-b border-line px-6 py-4">
+            <h2 className="text-lg font-semibold text-navy">
               Send Unmatched Rider Emails
             </h2>
           </div>
 
           <div className="p-6">
-            <p className="mb-4 text-sm text-gray-600">
+            <p className="mb-4 text-sm text-stone">
               Emails riders whose flights in this date range were not matched
               and have not been emailed yet.
             </p>
@@ -903,7 +893,7 @@ export default function AdminDashboard() {
               <div>
                 <label
                   htmlFor="unmatched-email-date-start"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium text-ink"
                 >
                   Flight date from
                 </label>
@@ -912,14 +902,14 @@ export default function AdminDashboard() {
                   type="date"
                   value={unmatchedEmailDateStart}
                   onChange={(e) => setUnmatchedEmailDateStart(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-4 py-2 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="unmatched-email-date-end"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium text-ink"
                 >
                   Flight date to
                 </label>
@@ -929,7 +919,7 @@ export default function AdminDashboard() {
                   value={unmatchedEmailDateEnd}
                   min={unmatchedEmailDateStart || undefined}
                   onChange={(e) => setUnmatchedEmailDateEnd(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-4 py-2 text-ink focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
                 />
               </div>
             </div>
@@ -938,7 +928,7 @@ export default function AdminDashboard() {
               <button
                 type="button"
                 onClick={() => setShowUnmatchedEmailComposer(true)}
-                className="rounded-lg bg-orange-600 px-6 py-3 font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-navy px-5 text-sm font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
               >
                 Email unmatched riders
               </button>

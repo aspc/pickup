@@ -64,12 +64,12 @@ export default function GroupsManagementModals() {
   return (
     <>
       {deleteGroupConfirmation && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="mb-4 text-lg font-semibold text-gray-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50">
+          <div className="mx-4 w-full max-w-md rounded-lg bg-card p-6 shadow-overlay">
+            <h3 className="mb-4 text-lg font-semibold text-ink">
               Delete Group?
             </h3>
-            <p className="mb-6 text-sm text-gray-600">
+            <p className="mb-6 text-sm text-stone">
               By deleting the last person from the group, the group will be
               deleted.
             </p>
@@ -77,7 +77,7 @@ export default function GroupsManagementModals() {
               <button
                 onClick={closeDeleteGroupConfirmation}
                 disabled={isDeletingGroup}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-wait disabled:opacity-50"
+                className="rounded-lg border border-line-strong bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper disabled:cursor-wait disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -92,7 +92,7 @@ export default function GroupsManagementModals() {
                   }
                 }}
                 disabled={isDeletingGroup}
-                className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-wait disabled:opacity-70"
+                className="flex items-center gap-2 rounded-lg bg-navy px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-navy-700 disabled:cursor-wait disabled:opacity-70"
               >
                 {isDeletingGroup && (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -105,35 +105,35 @@ export default function GroupsManagementModals() {
       )}
 
       {editTimeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="mb-4 text-lg font-semibold text-gray-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50">
+          <div className="mx-4 w-full max-w-md rounded-lg bg-card p-6 shadow-overlay">
+            <h3 className="mb-4 text-lg font-semibold text-ink">
               Edit Group Date and Time
             </h3>
-            <p className="mb-4 text-sm text-gray-600">
+            <p className="mb-4 text-sm text-stone">
               Group #{editTimeModal.group.ride_id} •{' '}
               {editTimeModal.group.riders.length} rider
               {editTimeModal.group.riders.length !== 1 ? 's' : ''}
             </p>
             <div className="mb-4 space-y-4">
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   Date
                 </label>
                 <input
                   type="date"
                   value={editDateValue}
                   onChange={(event) => setEditDateValue(event.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 />
                 {editTimeModal.group.date && (
-                  <p className="mt-2 text-xs text-gray-500">
+                  <p className="mt-2 text-xs text-stone">
                     Current date: {editTimeModal.group.date}
                   </p>
                 )}
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   Time (HH:MM)
                 </label>
                 <div className="relative">
@@ -141,7 +141,7 @@ export default function GroupsManagementModals() {
                     type="time"
                     value={editTimeValue}
                     onChange={(event) => setEditTimeValue(event.target.value)}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   />
                   <button
                     type="button"
@@ -150,14 +150,14 @@ export default function GroupsManagementModals() {
                         .previousElementSibling as HTMLInputElement
                       input?.showPicker?.()
                     }}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-light hover:text-stone"
                     title="Open time picker"
                   >
                     <Clock className="h-4 w-4" />
                   </button>
                 </div>
                 {editTimeModal.group.match_time && (
-                  <p className="mt-2 text-xs text-gray-500">
+                  <p className="mt-2 text-xs text-stone">
                     Current time:{' '}
                     {editTimeModal.group.match_time.substring(0, 5)}
                   </p>
@@ -168,7 +168,7 @@ export default function GroupsManagementModals() {
               <button
                 onClick={closeEditTime}
                 disabled={isUpdatingTime}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+                className="rounded-lg border border-line-strong bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -183,7 +183,7 @@ export default function GroupsManagementModals() {
                   }
                 }}
                 disabled={isUpdatingTime || !editTimeValue}
-                className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-700 disabled:opacity-50"
+                className="rounded-lg bg-sage px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-sage-strong disabled:opacity-50"
               >
                 {isUpdatingTime ? 'Updating...' : 'Update Date/Time'}
               </button>
@@ -193,18 +193,18 @@ export default function GroupsManagementModals() {
       )}
 
       {editVoucherModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="mb-4 text-lg font-semibold text-gray-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50">
+          <div className="mx-4 w-full max-w-md rounded-lg bg-card p-6 shadow-overlay">
+            <h3 className="mb-4 text-lg font-semibold text-ink">
               Edit Uber Voucher
             </h3>
-            <p className="mb-4 text-sm text-gray-600">
+            <p className="mb-4 text-sm text-stone">
               Group #{editVoucherModal.group.ride_id} •{' '}
               {editVoucherModal.group.riders.length} rider
               {editVoucherModal.group.riders.length !== 1 ? 's' : ''}
             </p>
             <div className="mb-4">
-              <label className="mb-2 block text-sm font-medium text-gray-700">
+              <label className="mb-2 block text-sm font-medium text-ink">
                 Voucher Code
               </label>
               <input
@@ -212,15 +212,15 @@ export default function GroupsManagementModals() {
                 value={editVoucherValue}
                 onChange={(event) => setEditVoucherValue(event.target.value)}
                 placeholder="Enter voucher code (e.g., VOUCHER123)"
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
               />
               {editVoucherModal.group.group_voucher && (
-                <p className="mt-2 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-stone">
                   Current voucher:{' '}
                   {formatVoucher(editVoucherModal.group.group_voucher)}
                 </p>
               )}
-              <p className="mt-2 text-xs text-gray-500">
+              <p className="mt-2 text-xs text-stone">
                 This will update the voucher for all{' '}
                 {editVoucherModal.group.riders.length} rider
                 {editVoucherModal.group.riders.length !== 1 ? 's' : ''} in this
@@ -231,7 +231,7 @@ export default function GroupsManagementModals() {
               <button
                 onClick={closeEditVoucher}
                 disabled={isUpdatingVoucher}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+                className="rounded-lg border border-line-strong bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -243,7 +243,7 @@ export default function GroupsManagementModals() {
                   )
                 }}
                 disabled={isUpdatingVoucher}
-                className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-700 disabled:opacity-50"
+                className="rounded-lg bg-sage px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-sage-strong disabled:opacity-50"
               >
                 {isUpdatingVoucher ? 'Updating...' : 'Update Voucher'}
               </button>
@@ -253,12 +253,12 @@ export default function GroupsManagementModals() {
       )}
 
       {editGroupOverridesModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="mb-4 text-lg font-semibold text-gray-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50">
+          <div className="mx-4 w-full max-w-md rounded-lg bg-card p-6 shadow-overlay">
+            <h3 className="mb-4 text-lg font-semibold text-ink">
               Subsidized & Uber type
             </h3>
-            <p className="mb-4 text-sm text-gray-600">
+            <p className="mb-4 text-sm text-stone">
               Group #{editGroupOverridesModal.group.ride_id} •{' '}
               {editGroupOverridesModal.group.riders.length} rider
               {editGroupOverridesModal.group.riders.length !== 1 ? 's' : ''}.
@@ -269,12 +269,12 @@ export default function GroupsManagementModals() {
             <div className="mb-4 space-y-4">
               <div className="flex items-center gap-2">
                 {overrideSubsidized !== 'auto' ? (
-                  <Lock className="h-4 w-4 flex-shrink-0 text-amber-600" />
+                  <Lock className="h-4 w-4 flex-shrink-0 text-warning" />
                 ) : (
-                  <Unlock className="h-4 w-4 flex-shrink-0 text-gray-400" />
+                  <Unlock className="h-4 w-4 flex-shrink-0 text-stone-light" />
                 )}
                 <div className="min-w-0 flex-1">
-                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                  <label className="mb-1 block text-sm font-medium text-ink">
                     Subsidized
                   </label>
                   <select
@@ -284,7 +284,7 @@ export default function GroupsManagementModals() {
                         event.target.value as 'auto' | 'yes' | 'no',
                       )
                     }
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   >
                     <option value="auto">Unlocked (auto on add/move)</option>
                     <option value="yes">Locked: Yes</option>
@@ -294,12 +294,12 @@ export default function GroupsManagementModals() {
               </div>
               <div className="flex items-center gap-2">
                 {overrideUberType !== 'auto' ? (
-                  <Lock className="h-4 w-4 flex-shrink-0 text-amber-600" />
+                  <Lock className="h-4 w-4 flex-shrink-0 text-warning" />
                 ) : (
-                  <Unlock className="h-4 w-4 flex-shrink-0 text-gray-400" />
+                  <Unlock className="h-4 w-4 flex-shrink-0 text-stone-light" />
                 )}
                 <div className="min-w-0 flex-1">
-                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                  <label className="mb-1 block text-sm font-medium text-ink">
                     Uber type
                   </label>
                   <select
@@ -314,7 +314,7 @@ export default function GroupsManagementModals() {
                           | 'Connect',
                       )
                     }
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                   >
                     <option value="auto">Unlocked (auto on add/move)</option>
                     <option value="X">Locked: Uber X</option>
@@ -329,7 +329,7 @@ export default function GroupsManagementModals() {
               <button
                 onClick={() => setEditGroupOverridesModal(null)}
                 disabled={isUpdatingOverrides}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+                className="rounded-lg border border-line-strong bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -342,7 +342,7 @@ export default function GroupsManagementModals() {
                   )
                 }}
                 disabled={isUpdatingOverrides}
-                className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-700 disabled:opacity-50"
+                className="rounded-lg bg-sage px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-sage-strong disabled:opacity-50"
               >
                 {isUpdatingOverrides ? 'Saving...' : 'Save'}
               </button>
@@ -352,28 +352,28 @@ export default function GroupsManagementModals() {
       )}
 
       {validationErrorModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="mb-4 text-lg font-semibold text-red-600">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50">
+          <div className="mx-4 w-full max-w-md rounded-lg bg-card p-6 shadow-overlay">
+            <h3 className="mb-4 text-lg font-semibold text-danger">
               {validationErrorModal.issue === 'time'
                 ? 'No Time Overlap'
                 : 'Bag Capacity Exceeded'}
             </h3>
-            <p className="mb-4 text-sm text-gray-700">
+            <p className="mb-4 text-sm text-ink">
               {validationErrorModal.issue === 'time'
                 ? `The rider "${validationErrorModal.rider.name}" has no time overlap with group #${validationErrorModal.group.ride_id}.`
                 : `Adding this rider would exceed the bag capacity limit (10 bags) for groups with 4+ members.`}
             </p>
-            <div className="mb-4 rounded-lg bg-gray-50 p-4">
-              <p className="mb-2 text-xs font-semibold text-gray-600">
+            <div className="mb-4 rounded-lg bg-paper p-4">
+              <p className="mb-2 text-xs font-semibold text-stone">
                 Group #{validationErrorModal.group.ride_id}:
               </p>
-              <p className="text-sm text-gray-900">
+              <p className="text-sm text-ink">
                 Members: {validationErrorModal.group.riders.length + 1} (after
                 adding)
               </p>
               {validationErrorModal.issue === 'bags' && (
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-ink">
                   Bag Units:{' '}
                   {calculateBagUnits([
                     ...validationErrorModal.group.riders,
@@ -386,7 +386,7 @@ export default function GroupsManagementModals() {
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => validationErrorModal.onCancel()}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+                className="rounded-lg border border-line-strong bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper"
               >
                 Cancel
               </button>
@@ -403,7 +403,7 @@ export default function GroupsManagementModals() {
                     setTimeout(() => setErrorMessage(null), 3000)
                   }
                 }}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700"
+                className="rounded-lg bg-danger px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-danger-strong"
               >
                 Acknowledge & Continue
               </button>
@@ -413,24 +413,24 @@ export default function GroupsManagementModals() {
       )}
 
       {timeConflictModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="mb-4 text-lg font-semibold text-red-600">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50">
+          <div className="mx-4 w-full max-w-md rounded-lg bg-card p-6 shadow-overlay">
+            <h3 className="mb-4 text-lg font-semibold text-danger">
               Time/Date Conflict
             </h3>
-            <p className="mb-4 text-sm text-gray-700">
+            <p className="mb-4 text-sm text-ink">
               You are trying to drag a user into a group where they have no
               overlap.
             </p>
-            <div className="mb-4 space-y-3 rounded-lg bg-gray-50 p-4">
+            <div className="mb-4 space-y-3 rounded-lg bg-paper p-4">
               <div>
-                <p className="mb-1 text-xs font-semibold text-gray-600">
+                <p className="mb-1 text-xs font-semibold text-stone">
                   Group #{timeConflictModal.group.ride_id}:
                 </p>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-ink">
                   Date: {timeConflictModal.group.date}
                 </p>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-ink">
                   Time:{' '}
                   {timeConflictModal.group.match_time
                     ? formatTime(timeConflictModal.group.match_time)
@@ -439,14 +439,14 @@ export default function GroupsManagementModals() {
                       )}
                 </p>
               </div>
-              <div className="border-t border-gray-300 pt-3">
-                <p className="mb-1 text-xs font-semibold text-gray-600">
+              <div className="border-t border-line-strong pt-3">
+                <p className="mb-1 text-xs font-semibold text-stone">
                   User ({timeConflictModal.rider.name}):
                 </p>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-ink">
                   Date: {timeConflictModal.rider.date}
                 </p>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-ink">
                   Time: {formatTimeRange(timeConflictModal.rider.time_range)}
                 </p>
               </div>
@@ -457,7 +457,7 @@ export default function GroupsManagementModals() {
                   setTimeConflictModal(null)
                   setDraggedRider(null)
                 }}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+                className="rounded-lg border border-line-strong bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper"
               >
                 Cancel
               </button>
@@ -470,7 +470,7 @@ export default function GroupsManagementModals() {
                     await confirmTimeConflict()
                   }
                 }}
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                className="rounded-lg bg-navy px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-navy-700"
               >
                 OK
               </button>
@@ -480,18 +480,18 @@ export default function GroupsManagementModals() {
       )}
 
       {editRiderModal && editRiderForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="mx-4 w-full max-w-lg rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="mb-4 text-lg font-semibold text-gray-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/50">
+          <div className="mx-4 w-full max-w-lg rounded-lg bg-card p-6 shadow-overlay">
+            <h3 className="mb-4 text-lg font-semibold text-ink">
               Edit Rider Details
             </h3>
-            <p className="mb-4 text-sm text-gray-600">
+            <p className="mb-4 text-sm text-stone">
               {editRiderModal.rider.name} • Flight #
               {editRiderModal.rider.flight_id}
             </p>
             <div className="max-h-96 space-y-4 overflow-y-auto">
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   Flight Number
                 </label>
                 <input
@@ -504,11 +504,11 @@ export default function GroupsManagementModals() {
                     })
                   }
                   maxLength={4}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   Airline Code (IATA)
                 </label>
                 <input
@@ -521,11 +521,11 @@ export default function GroupsManagementModals() {
                     })
                   }
                   maxLength={2}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   Airport
                 </label>
                 <select
@@ -536,14 +536,14 @@ export default function GroupsManagementModals() {
                       airport: event.target.value,
                     })
                   }
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 >
                   <option value="LAX">LAX</option>
                   <option value="ONT">ONT</option>
                 </select>
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   Direction
                 </label>
                 <select
@@ -554,14 +554,14 @@ export default function GroupsManagementModals() {
                       to_airport: event.target.value === 'to',
                     })
                   }
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 >
                   <option value="to">To Airport</option>
                   <option value="from">From Airport</option>
                 </select>
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   Date
                 </label>
                 <input
@@ -575,11 +575,11 @@ export default function GroupsManagementModals() {
                   }
                   min={flightDateBounds.min}
                   max={flightDateBounds.max}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   Time Range (HH:MM - HH:MM)
                 </label>
                 <input
@@ -592,9 +592,9 @@ export default function GroupsManagementModals() {
                     })
                   }
                   placeholder="09:00 - 12:00"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-ink focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 />
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-stone">
                   Format: HH:MM - HH:MM (24-hour format)
                 </p>
               </div>
@@ -603,7 +603,7 @@ export default function GroupsManagementModals() {
               <button
                 onClick={closeEditRider}
                 disabled={isUpdatingRider}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+                className="rounded-lg border border-line-strong bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-paper disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -619,7 +619,7 @@ export default function GroupsManagementModals() {
                   })
                 }}
                 disabled={isUpdatingRider}
-                className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-700 disabled:opacity-50"
+                className="rounded-lg bg-sage px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-sage-strong disabled:opacity-50"
               >
                 {isUpdatingRider ? 'Updating...' : 'Update Rider'}
               </button>

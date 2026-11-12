@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import RedirectButton from '@/components/buttons/RedirectButton'
+import { PlaneTakeoff, School } from 'lucide-react'
+import { ButtonLink } from '@/components/ui/Button'
 import SubmitSuccess, {
   type SubmitSuccessVariant,
 } from '@/components/questionnaires/SubmitSuccess'
@@ -1098,20 +1099,20 @@ export default function FlightForm({
 
   if (!profileCheckComplete || !isProfileComplete) {
     return (
-      <div className="flex items-center justify-center p-6 text-sm text-gray-600">
+      <div className="flex items-center justify-center p-6 text-sm text-stone">
         Checking profile...
       </div>
     )
   }
 
   return (
-    <div className="flex w-full flex-col items-center text-black">
-      <div className="mb-4 flex items-center gap-2">
+    <div className="flex w-full flex-col items-center text-ink">
+      <div className="mb-4 flex w-full max-w-3xl flex-col gap-1 text-sm text-stone sm:flex-row sm:items-center sm:justify-between">
         <p>All fields are required.</p>
         {userSchool === 'Pomona' && (
           <a
             href="/aspc-info"
-            className="text-sm text-blue-600 underline hover:text-blue-800"
+            className="text-sm font-medium text-navy underline underline-offset-2 hover:text-sage"
           >
             See here for ASPC policies and resources
           </a>
@@ -1119,30 +1120,30 @@ export default function FlightForm({
       </div>
       {!isProfileComplete && (
         <div className="mb-6">
-          <RedirectButton label="Complete Profile First" route="/profile" />
+          <ButtonLink href="/profile">Complete profile first</ButtonLink>
         </div>
       )}
 
-      <div className="w-full max-w-4xl md:rounded-lg md:bg-white md:shadow-md">
+      <div className="w-full max-w-3xl overflow-hidden rounded-lg border border-line bg-card shadow-card">
         {isLoading && (
-          <div className="flex items-center justify-center bg-blue-50 p-4">
-            <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-teal-500"></div>
-            <span className="ml-2 text-teal-600">Loading flight data...</span>
+          <div className="flex items-center justify-center border-b border-line bg-navy-50 p-4">
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-sage border-r-transparent"></div>
+            <span className="ml-2 text-sage">Loading flight data...</span>
           </div>
         )}
 
         {/* Progress indicator */}
-        <div className="border-b bg-white px-4 py-6 md:px-8">
+        <div className="border-b border-line bg-card px-4 py-6 md:px-8">
           <div className="mb-4 flex items-center justify-between">
             {stepNumbers.map((step) => (
               <div key={step} className="flex flex-1 items-center">
                 <div
-                  className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 font-semibold transition-colors ${
+                  className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border-2 text-sm font-semibold transition-colors sm:h-9 sm:w-9 ${
                     step < currentStep
-                      ? 'border-teal-500 bg-teal-500 text-white'
+                      ? 'border-sage bg-sage text-white'
                       : step === currentStep
-                        ? 'border-teal-500 bg-white text-teal-500'
-                        : 'border-gray-300 bg-white text-gray-400'
+                        ? 'border-navy bg-navy text-white'
+                        : 'border-line-strong bg-card text-stone'
                   }`}
                 >
                   {step < currentStep ? (
@@ -1165,18 +1166,18 @@ export default function FlightForm({
                 </div>
                 {step < totalSteps && (
                   <div
-                    className={`mx-2 h-1 flex-1 transition-colors ${
-                      step < currentStep ? 'bg-teal-500' : 'bg-gray-300'
+                    className={`mx-1.5 h-0.5 flex-1 rounded-full transition-colors sm:mx-2 ${
+                      step < currentStep ? 'bg-sage' : 'bg-line'
                     }`}
                   ></div>
                 )}
               </div>
             ))}
           </div>
-          <h2 className="text-center text-xl font-bold text-gray-800">
+          <h2 className="text-center font-display text-2xl font-semibold text-navy">
             {getStepTitle()}
           </h2>
-          <p className="mt-1 text-center text-sm text-gray-600">
+          <p className="mt-1 text-center text-sm text-stone">
             Step {currentStep} of {totalSteps}
           </p>
         </div>
@@ -1186,7 +1187,7 @@ export default function FlightForm({
             {/* Step 1: Ride Date & Airport */}
             {currentStep === 1 && (
               <div className="space-y-6">
-                <div className="rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
+                <div className="rounded-md border border-navy-100 bg-navy-50 p-4 text-sm leading-relaxed text-ink">
                   <p className="mb-2 font-medium">
                     Let&apos;s start with the basics:
                   </p>
@@ -1198,10 +1199,10 @@ export default function FlightForm({
 
                 <div className="space-y-4">
                   <div>
-                    <label className="mb-2 block text-lg font-bold text-gray-800">
+                    <label className="mb-2 block text-[15px] font-semibold text-navy">
                       Date You Need the Ride
                     </label>
-                    <p className="mb-2 text-sm text-gray-600">
+                    <p className="mb-2 text-sm text-stone">
                       This might be different from your flight date if traveling
                       overnight or early morning.
                     </p>
@@ -1214,16 +1215,16 @@ export default function FlightForm({
                   </div>
 
                   {isPastDeadline && deadlineErrorMessage && (
-                    <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-                      <p className="font-medium text-red-800">
-                        ⚠️ {deadlineErrorMessage}
+                    <div className="rounded-md border border-danger/20 bg-danger-tint p-4">
+                      <p className="font-medium text-danger">
+                        {deadlineErrorMessage}
                       </p>
                     </div>
                   )}
 
                   {dateOfFlight && !isPastDeadline && isAugust19RideDate && (
-                    <div className="rounded-lg border border-orange-200 bg-orange-50 p-4">
-                      <p className="text-sm text-orange-800">
+                    <div className="rounded-md border border-warning/20 bg-warning-tint p-4">
+                      <p className="text-sm text-warning">
                         Only international first-year students are eligible for
                         the ASPC RideLink subsidy on August 19. Other students
                         can still continue with a non-subsidized request.
@@ -1236,8 +1237,8 @@ export default function FlightForm({
                     !isAugust19RideDate &&
                     !outboundAllowed &&
                     !inboundAllowed && (
-                      <div className="rounded-lg border border-orange-200 bg-orange-50 p-4">
-                        <p className="text-sm text-orange-800">
+                      <div className="rounded-md border border-warning/20 bg-warning-tint p-4">
+                        <p className="text-sm text-warning">
                           This date is outside subsidized ASPC RideLink travel
                           windows. You can still continue with a non-subsidized
                           request.
@@ -1246,17 +1247,17 @@ export default function FlightForm({
                     )}
 
                   <label className="block">
-                    <span className="mb-2 block text-lg font-bold text-gray-800">
+                    <span className="mb-2 block text-[15px] font-semibold text-navy">
                       Which Airport?
                     </span>
                     <div className="grid grid-cols-2 gap-4">
                       <button
                         type="button"
                         onClick={() => setAirport('LAX')}
-                        className={`rounded-xl border-2 p-6 text-center font-semibold transition-all ${
+                        className={`rounded-lg border p-5 text-center font-semibold transition-[border-color,background-color,box-shadow] duration-150 ${
                           airport === 'LAX'
-                            ? 'border-teal-500 bg-teal-50 text-teal-700'
-                            : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                            ? 'border-sage bg-sage-tint text-sage-strong ring-1 ring-sage'
+                            : 'border-line-strong bg-card text-ink hover:border-navy-300'
                         }`}
                       >
                         <div className="text-2xl font-bold">LAX</div>
@@ -1267,10 +1268,10 @@ export default function FlightForm({
                       <button
                         type="button"
                         onClick={() => setAirport('ONT')}
-                        className={`rounded-xl border-2 p-6 text-center font-semibold transition-all ${
+                        className={`rounded-lg border p-5 text-center font-semibold transition-[border-color,background-color,box-shadow] duration-150 ${
                           airport === 'ONT'
-                            ? 'border-teal-500 bg-teal-50 text-teal-700'
-                            : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                            ? 'border-sage bg-sage-tint text-sage-strong ring-1 ring-sage'
+                            : 'border-line-strong bg-card text-ink hover:border-navy-300'
                         }`}
                       >
                         <div className="text-2xl font-bold">ONT</div>
@@ -1287,7 +1288,7 @@ export default function FlightForm({
             {/* Step 2: Trip Direction & Flight Details */}
             {currentStep === 2 && (
               <div className="space-y-6">
-                <div className="rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
+                <div className="rounded-md border border-navy-100 bg-navy-50 p-4 text-sm leading-relaxed text-ink">
                   <p className="mb-2 font-medium">Flight Information:</p>
                   <p>
                     Select your trip direction, then enter your time range and
@@ -1297,7 +1298,7 @@ export default function FlightForm({
 
                 <div className="space-y-4">
                   <label className="block">
-                    <span className="mb-3 block text-lg font-bold text-gray-800">
+                    <span className="mb-3 block text-[15px] font-semibold text-navy">
                       Trip Direction
                     </span>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -1306,22 +1307,25 @@ export default function FlightForm({
                         onClick={() => outboundSelectable && setTripType(true)}
                         disabled={!outboundSelectable}
                         aria-disabled={!outboundSelectable}
-                        className={`rounded-xl border-2 p-6 text-center transition-all ${
+                        className={`rounded-lg border p-5 text-center transition-[border-color,background-color,box-shadow] duration-150 ${
                           !outboundSelectable
-                            ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-60'
+                            ? 'cursor-not-allowed border-line bg-sunken opacity-60'
                             : tripType === true
-                              ? 'border-teal-500 bg-teal-50'
-                              : 'border-gray-300 bg-white hover:border-gray-400'
+                              ? 'border-sage bg-sage-tint ring-1 ring-sage'
+                              : 'border-line-strong bg-card hover:border-navy-300'
                         }`}
                       >
-                        <div className="mb-2 text-3xl">✈️</div>
+                        <PlaneTakeoff
+                          aria-hidden
+                          className="mx-auto mb-2 h-7 w-7 text-navy"
+                        />
                         <div
                           className={`text-lg font-bold ${
                             !outboundSelectable
-                              ? 'text-gray-600'
+                              ? 'text-stone'
                               : tripType === true
-                                ? 'text-teal-700'
-                                : 'text-gray-700'
+                                ? 'text-sage-strong'
+                                : 'text-navy'
                           }`}
                         >
                           To Airport
@@ -1329,8 +1333,8 @@ export default function FlightForm({
                         <div
                           className={`mt-1 text-sm ${
                             !outboundSelectable
-                              ? 'text-gray-500'
-                              : 'text-gray-600'
+                              ? 'text-stone-light'
+                              : 'text-stone'
                           }`}
                         >
                           {outboundSelectable
@@ -1345,22 +1349,25 @@ export default function FlightForm({
                         onClick={() => inboundSelectable && setTripType(false)}
                         disabled={!inboundSelectable}
                         aria-disabled={!inboundSelectable}
-                        className={`rounded-xl border-2 p-6 text-center transition-all ${
+                        className={`rounded-lg border p-5 text-center transition-[border-color,background-color,box-shadow] duration-150 ${
                           !inboundSelectable
-                            ? 'cursor-not-allowed border-gray-200 bg-gray-100 opacity-60'
+                            ? 'cursor-not-allowed border-line bg-sunken opacity-60'
                             : tripType === false
-                              ? 'border-teal-500 bg-teal-50'
-                              : 'border-gray-300 bg-white hover:border-gray-400'
+                              ? 'border-sage bg-sage-tint ring-1 ring-sage'
+                              : 'border-line-strong bg-card hover:border-navy-300'
                         }`}
                       >
-                        <div className="mb-2 text-3xl">🏫</div>
+                        <School
+                          aria-hidden
+                          className="mx-auto mb-2 h-7 w-7 text-navy"
+                        />
                         <div
                           className={`text-lg font-bold ${
                             !inboundSelectable
-                              ? 'text-gray-600'
+                              ? 'text-stone'
                               : tripType === false
-                                ? 'text-teal-700'
-                                : 'text-gray-700'
+                                ? 'text-sage-strong'
+                                : 'text-navy'
                           }`}
                         >
                           To Campus
@@ -1368,8 +1375,8 @@ export default function FlightForm({
                         <div
                           className={`mt-1 text-sm ${
                             !inboundSelectable
-                              ? 'text-gray-500'
-                              : 'text-gray-600'
+                              ? 'text-stone-light'
+                              : 'text-stone'
                           }`}
                         >
                           {inboundSelectable
@@ -1384,7 +1391,7 @@ export default function FlightForm({
 
                   {/* Earliest Time */}
                   <div>
-                    <label className="mb-2 block text-lg font-bold text-gray-800">
+                    <label className="mb-2 block text-[15px] font-semibold text-navy">
                       Earliest Time You&apos;re Able to Leave{' '}
                       {tripType === true
                         ? 'from Campus'
@@ -1397,7 +1404,7 @@ export default function FlightForm({
                       type="time"
                       value={earliestArrival}
                       onChange={(e) => setEarliestArrival(e.target.value)}
-                      className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                      className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                       required
                     />
                   </div>
@@ -1405,7 +1412,7 @@ export default function FlightForm({
                   {/* Latest Time */}
                   <div>
                     <div className="mb-2 flex items-center gap-2">
-                      <label className="text-lg font-bold text-gray-800">
+                      <label className="text-base font-semibold text-navy">
                         Latest Time You&apos;re Able to Leave{' '}
                         {tripType === true
                           ? 'from Campus'
@@ -1417,9 +1424,9 @@ export default function FlightForm({
                       <div className="hidden md:block">
                         <Tooltip {...timeRangeTooltip}>
                           <TooltipTrigger asChild>
-                            <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-blue-100 p-1 transition-colors hover:bg-blue-200">
+                            <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-navy-50 p-1 transition-colors hover:bg-navy-100">
                               <svg
-                                className="h-3 w-3 text-blue-600"
+                                className="h-3 w-3 text-navy-500"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                               >
@@ -1443,7 +1450,7 @@ export default function FlightForm({
                       <div className="block md:hidden">
                         <button
                           type="button"
-                          className="flex h-5 w-5 cursor-pointer touch-manipulation items-center justify-center rounded-full bg-blue-100 p-1 transition-colors active:bg-blue-300"
+                          className="flex h-5 w-5 cursor-pointer touch-manipulation items-center justify-center rounded-full bg-navy-50 p-1 transition-colors active:bg-navy-100"
                           onClick={(e) => {
                             e.stopPropagation()
                             showMobileInfoModal(
@@ -1452,7 +1459,7 @@ export default function FlightForm({
                           }}
                         >
                           <svg
-                            className="h-3 w-3 text-blue-600"
+                            className="h-3 w-3 text-navy-500"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -1469,15 +1476,15 @@ export default function FlightForm({
                       type="time"
                       value={latestArrival}
                       onChange={(e) => setLatestArrival(e.target.value)}
-                      className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                      className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                       required
                     />
                   </div>
 
                   {/* Time Range Duration Display */}
                   {earliestArrival && latestArrival && (
-                    <div className="rounded-lg bg-teal-50 p-3 text-center">
-                      <p className="text-sm font-medium text-teal-800">
+                    <div className="rounded-md bg-sage-tint p-3 text-center">
+                      <p className="text-sm font-medium text-sage-strong">
                         Your provided time range is{' '}
                         <span className="font-bold">
                           {calculateTimeRange().toFixed(1)} hours
@@ -1488,13 +1495,13 @@ export default function FlightForm({
 
                   {/* Duplicate Flight Warning */}
                   {isDuplicateError && duplicateErrorMessage && (
-                    <div className="rounded-lg border border-orange-200 bg-orange-50 p-4">
-                      <p className="mb-2 font-medium text-orange-800">
-                        ⚠️ {duplicateErrorMessage}
+                    <div className="rounded-md border border-warning/20 bg-warning-tint p-4">
+                      <p className="mb-2 font-medium text-warning">
+                        {duplicateErrorMessage}
                       </p>
                       <a
                         href="/questionnaires"
-                        className="inline-block rounded-lg bg-orange-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-700"
+                        className="inline-block rounded-md bg-warning px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
                       >
                         Go to Your Flights
                       </a>
@@ -1503,7 +1510,7 @@ export default function FlightForm({
 
                   <div className="grid gap-4 md:grid-cols-3">
                     <label className="block">
-                      <span className="mb-2 block text-lg font-bold text-gray-800">
+                      <span className="mb-2 block text-[15px] font-semibold text-navy">
                         Airline Code
                       </span>
                       <input
@@ -1512,11 +1519,11 @@ export default function FlightForm({
                         onChange={(e) =>
                           handleAirlineCodeChange(e.target.value)
                         }
-                        className={`w-full rounded-lg border-2 bg-white p-3 text-black focus:outline-none ${
+                        className={`w-full rounded-md border bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 focus:outline-none focus:ring-2 focus-visible:ring-offset-0 ${
                           flightValidationError &&
                           flightValidationError.includes('Airline')
-                            ? 'border-red-500'
-                            : 'border-gray-300 focus:border-teal-500'
+                            ? 'border-danger focus:ring-danger/20'
+                            : 'border-line-strong hover:border-navy-300 focus:border-sage focus:ring-sage/25'
                         }`}
                         placeholder="AA"
                         maxLength={2}
@@ -1524,7 +1531,7 @@ export default function FlightForm({
                       />
                     </label>
                     <label className="block">
-                      <span className="mb-2 block text-lg font-bold text-gray-800">
+                      <span className="mb-2 block text-[15px] font-semibold text-navy">
                         Flight Number
                       </span>
                       <input
@@ -1533,11 +1540,11 @@ export default function FlightForm({
                         onChange={(e) =>
                           handleFlightNumberChange(e.target.value)
                         }
-                        className={`w-full rounded-lg border-2 bg-white p-3 text-black focus:outline-none ${
+                        className={`w-full rounded-md border bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 focus:outline-none focus:ring-2 focus-visible:ring-offset-0 ${
                           flightValidationError &&
                           flightValidationError.includes('Flight number')
-                            ? 'border-red-500'
-                            : 'border-gray-300 focus:border-teal-500'
+                            ? 'border-danger focus:ring-danger/20'
+                            : 'border-line-strong hover:border-navy-300 focus:border-sage focus:ring-sage/25'
                         }`}
                         placeholder="123"
                         maxLength={4}
@@ -1545,14 +1552,14 @@ export default function FlightForm({
                       />
                     </label>
                     <label className="block">
-                      <span className="mb-2 block text-lg font-bold text-gray-800">
+                      <span className="mb-2 block text-[15px] font-semibold text-navy">
                         Terminal
                       </span>
                       <input
                         type="text"
                         value={terminal}
                         onChange={(e) => setTerminal(e.target.value)}
-                        className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                        className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                         placeholder="e.g., TBIT, 2"
                         maxLength={MAX_TERMINAL_LENGTH}
                         required
@@ -1560,12 +1567,12 @@ export default function FlightForm({
                     </label>
                   </div>
                   {flightValidationError && (
-                    <p className="text-sm text-red-600">
+                    <p className="text-sm text-danger">
                       {flightValidationError}
                     </p>
                   )}
                   {airline_iata && flight_no && !flightValidationError && (
-                    <p className="text-sm font-medium text-teal-600">
+                    <p className="text-sm font-medium text-sage">
                       ✓ Full Flight: {airline_iata}
                       {flight_no}
                     </p>
@@ -1577,7 +1584,7 @@ export default function FlightForm({
             {/* Step 3: Connecting Flights */}
             {currentStep === 3 && (
               <div className="space-y-6">
-                <div className="rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
+                <div className="rounded-md border border-navy-100 bg-navy-50 p-4 text-sm leading-relaxed text-ink">
                   <p className="mb-2">Add all flights in your itinerary.</p>
                   <p>
                     RideLink uses this information to determine if earlier
@@ -1589,17 +1596,17 @@ export default function FlightForm({
                   {itineraryFlights.map((flight, index) => (
                     <div
                       key={index}
-                      className="rounded-lg border-2 border-gray-200 bg-gray-50 p-4"
+                      className="rounded-md border border-line bg-paper p-4"
                     >
                       <div className="mb-4 flex items-center justify-between gap-4">
-                        <h3 className="text-lg font-bold text-gray-800">
+                        <h3 className="text-base font-semibold text-navy">
                           {getItineraryFlightLabel(index)}
                         </h3>
                         {itineraryFlights.length > 1 && (
                           <button
                             type="button"
                             onClick={() => removeItineraryFlight(index)}
-                            className="rounded-lg border border-red-200 bg-white px-3 py-2 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
+                            className="rounded-md border border-danger/25 bg-card px-3 py-2 text-sm font-medium text-danger transition-colors hover:bg-danger-tint"
                           >
                             Remove
                           </button>
@@ -1608,7 +1615,7 @@ export default function FlightForm({
 
                       <div className="grid gap-4 md:grid-cols-2">
                         <label className="block">
-                          <span className="mb-2 block text-sm font-bold text-gray-700">
+                          <span className="mb-2 block text-sm font-medium text-ink">
                             Airline
                           </span>
                           <input
@@ -1621,7 +1628,7 @@ export default function FlightForm({
                                 e.target.value,
                               )
                             }
-                            className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                             placeholder="American Airlines or AA"
                             maxLength={80}
                             required
@@ -1629,7 +1636,7 @@ export default function FlightForm({
                         </label>
 
                         <label className="block">
-                          <span className="mb-2 block text-sm font-bold text-gray-700">
+                          <span className="mb-2 block text-sm font-medium text-ink">
                             Flight Number
                           </span>
                           <input
@@ -1642,7 +1649,7 @@ export default function FlightForm({
                                 e.target.value,
                               )
                             }
-                            className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                             placeholder="123"
                             maxLength={12}
                             required
@@ -1650,7 +1657,7 @@ export default function FlightForm({
                         </label>
 
                         <label className="block">
-                          <span className="mb-2 block text-sm font-bold text-gray-700">
+                          <span className="mb-2 block text-sm font-medium text-ink">
                             Departure Airport
                           </span>
                           <input
@@ -1663,7 +1670,7 @@ export default function FlightForm({
                                 e.target.value.toUpperCase(),
                               )
                             }
-                            className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                             placeholder="LAX"
                             maxLength={8}
                             required
@@ -1671,7 +1678,7 @@ export default function FlightForm({
                         </label>
 
                         <label className="block">
-                          <span className="mb-2 block text-sm font-bold text-gray-700">
+                          <span className="mb-2 block text-sm font-medium text-ink">
                             Arrival Airport
                           </span>
                           <input
@@ -1684,7 +1691,7 @@ export default function FlightForm({
                                 e.target.value.toUpperCase(),
                               )
                             }
-                            className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                             placeholder="DFW"
                             maxLength={8}
                             required
@@ -1692,7 +1699,7 @@ export default function FlightForm({
                         </label>
 
                         <label className="block md:col-span-2">
-                          <span className="mb-2 block text-sm font-bold text-gray-700">
+                          <span className="mb-2 block text-sm font-medium text-ink">
                             Date
                           </span>
                           <DatePicker
@@ -1710,7 +1717,7 @@ export default function FlightForm({
                   <button
                     type="button"
                     onClick={addItineraryFlight}
-                    className="w-full rounded-lg border-2 border-dashed border-teal-300 bg-teal-50 px-4 py-3 font-semibold text-teal-700 transition-colors hover:border-teal-400 hover:bg-teal-100"
+                    className="w-full rounded-md border border-dashed border-sage/50 bg-sage-tint/50 px-4 py-3 text-[15px] font-medium text-sage-strong transition-colors hover:bg-sage-tint"
                   >
                     Add another flight
                   </button>
@@ -1721,7 +1728,7 @@ export default function FlightForm({
             {/* Step 4: U.S. Phone Access */}
             {currentStep === 4 && (
               <div className="space-y-6">
-                <div className="rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
+                <div className="rounded-md border border-navy-100 bg-navy-50 p-4 text-sm leading-relaxed text-ink">
                   <p className="mb-2 font-medium">Phone Access:</p>
                   <p>
                     This helps coordinators know how reliably they can reach you
@@ -1731,7 +1738,7 @@ export default function FlightForm({
 
                 <div className="space-y-6">
                   <label className="block">
-                    <span className="mb-3 block text-lg font-bold text-gray-800">
+                    <span className="mb-3 block text-[15px] font-semibold text-navy">
                       Do you have a U.S. phone number?
                     </span>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -1741,10 +1748,10 @@ export default function FlightForm({
                           setHasUsPhone(true)
                           setPhoneWorksInUs('')
                         }}
-                        className={`rounded-xl border-2 p-5 text-center font-semibold transition-all ${
+                        className={`rounded-lg border p-4 text-center font-semibold transition-[border-color,background-color,box-shadow] duration-150 ${
                           hasUsPhone === true
-                            ? 'border-teal-500 bg-teal-50 text-teal-700'
-                            : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                            ? 'border-sage bg-sage-tint text-sage-strong ring-1 ring-sage'
+                            : 'border-line-strong bg-card text-ink hover:border-navy-300'
                         }`}
                       >
                         Yes
@@ -1755,10 +1762,10 @@ export default function FlightForm({
                           setHasUsPhone(false)
                           setUsPhoneNumber('')
                         }}
-                        className={`rounded-xl border-2 p-5 text-center font-semibold transition-all ${
+                        className={`rounded-lg border p-4 text-center font-semibold transition-[border-color,background-color,box-shadow] duration-150 ${
                           hasUsPhone === false
-                            ? 'border-teal-500 bg-teal-50 text-teal-700'
-                            : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                            ? 'border-sage bg-sage-tint text-sage-strong ring-1 ring-sage'
+                            : 'border-line-strong bg-card text-ink hover:border-navy-300'
                         }`}
                       >
                         No
@@ -1768,14 +1775,14 @@ export default function FlightForm({
 
                   {hasUsPhone === true && (
                     <label className="block">
-                      <span className="mb-2 block text-lg font-bold text-gray-800">
+                      <span className="mb-2 block text-[15px] font-semibold text-navy">
                         Provide this phone number
                       </span>
                       <input
                         type="tel"
                         value={usPhoneNumber}
                         onChange={(e) => setUsPhoneNumber(e.target.value)}
-                        className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                        className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                         placeholder="(909) 555-1234"
                         maxLength={40}
                         required
@@ -1785,7 +1792,7 @@ export default function FlightForm({
 
                   {hasUsPhone === false && (
                     <label className="block">
-                      <span className="mb-3 block text-lg font-bold text-gray-800">
+                      <span className="mb-3 block text-[15px] font-semibold text-navy">
                         Does your provided phone number or mobile data work in
                         the U.S.?
                       </span>
@@ -1804,10 +1811,10 @@ export default function FlightForm({
                                 setUsPhoneNumber('')
                               }
                             }}
-                            className={`rounded-xl border-2 p-5 text-center font-semibold transition-all ${
+                            className={`rounded-lg border p-4 text-center font-semibold transition-[border-color,background-color,box-shadow] duration-150 ${
                               phoneWorksInUs === value
-                                ? 'border-teal-500 bg-teal-50 text-teal-700'
-                                : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                                ? 'border-sage bg-sage-tint text-sage-strong ring-1 ring-sage'
+                                : 'border-line-strong bg-card text-ink hover:border-navy-300'
                             }`}
                           >
                             {label}
@@ -1816,14 +1823,14 @@ export default function FlightForm({
                       </div>
                       {phoneWorksInUs === 'yes' && (
                         <div className="mt-4">
-                          <span className="mb-2 block text-lg font-bold text-gray-800">
+                          <span className="mb-2 block text-[15px] font-semibold text-navy">
                             Provide this phone number
                           </span>
                           <input
                             type="tel"
                             value={usPhoneNumber}
                             onChange={(e) => setUsPhoneNumber(e.target.value)}
-                            className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                             placeholder="enter number with country code"
                             maxLength={40}
                             required
@@ -1839,7 +1846,7 @@ export default function FlightForm({
             {/* Step 5: Luggage Information */}
             {currentStep === 5 && (
               <div className="space-y-6">
-                <div className="rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
+                <div className="rounded-md border border-navy-100 bg-navy-50 p-4 text-sm leading-relaxed text-ink">
                   <p className="mb-2 font-medium">Luggage Details:</p>
                   <p>
                     Let us know how much luggage you&apos;ll be traveling with.
@@ -1850,15 +1857,15 @@ export default function FlightForm({
                 <div className="space-y-4">
                   <label className="block">
                     <div className="mb-2 flex items-center gap-2">
-                      <span className="text-lg font-bold text-gray-800">
+                      <span className="text-base font-semibold text-navy">
                         Personal Items
                       </span>
                       <div className="hidden md:block">
                         <Tooltip {...personalItemsTooltip}>
                           <TooltipTrigger asChild>
-                            <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-blue-100 p-1 transition-colors hover:bg-blue-200">
+                            <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-navy-50 p-1 transition-colors hover:bg-navy-100">
                               <svg
-                                className="h-3 w-3 text-blue-600"
+                                className="h-3 w-3 text-navy-500"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                               >
@@ -1881,7 +1888,7 @@ export default function FlightForm({
                       <div className="block md:hidden">
                         <button
                           type="button"
-                          className="flex h-5 w-5 cursor-pointer touch-manipulation items-center justify-center rounded-full bg-blue-100 p-1 transition-colors active:bg-blue-300"
+                          className="flex h-5 w-5 cursor-pointer touch-manipulation items-center justify-center rounded-full bg-navy-50 p-1 transition-colors active:bg-navy-100"
                           onClick={(e) => {
                             e.stopPropagation()
                             showMobileInfoModal(
@@ -1890,7 +1897,7 @@ export default function FlightForm({
                           }}
                         >
                           <svg
-                            className="h-3 w-3 text-blue-600"
+                            className="h-3 w-3 text-navy-500"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -1909,22 +1916,22 @@ export default function FlightForm({
                       max={MAX_BAG_COUNT}
                       value={bag_no_personal}
                       onChange={(e) => setBagNoPersonal(Number(e.target.value))}
-                      className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                      className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                       required
                     />
                   </label>
 
                   <label className="block">
                     <div className="mb-2 flex items-center gap-2">
-                      <span className="text-lg font-bold text-gray-800">
+                      <span className="text-base font-semibold text-navy">
                         Carry-on Sized Bags
                       </span>
                       <div className="hidden md:block">
                         <Tooltip {...carryOnBagsTooltip}>
                           <TooltipTrigger asChild>
-                            <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-blue-100 p-1 transition-colors hover:bg-blue-200">
+                            <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-navy-50 p-1 transition-colors hover:bg-navy-100">
                               <svg
-                                className="h-3 w-3 text-blue-600"
+                                className="h-3 w-3 text-navy-500"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                               >
@@ -1947,7 +1954,7 @@ export default function FlightForm({
                       <div className="block md:hidden">
                         <button
                           type="button"
-                          className="flex h-5 w-5 cursor-pointer touch-manipulation items-center justify-center rounded-full bg-blue-100 p-1 transition-colors active:bg-blue-300"
+                          className="flex h-5 w-5 cursor-pointer touch-manipulation items-center justify-center rounded-full bg-navy-50 p-1 transition-colors active:bg-navy-100"
                           onClick={(e) => {
                             e.stopPropagation()
                             showMobileInfoModal(
@@ -1956,7 +1963,7 @@ export default function FlightForm({
                           }}
                         >
                           <svg
-                            className="h-3 w-3 text-blue-600"
+                            className="h-3 w-3 text-navy-500"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -1975,22 +1982,22 @@ export default function FlightForm({
                       max={MAX_BAG_COUNT}
                       value={bag_no}
                       onChange={(e) => setBagNo(Number(e.target.value))}
-                      className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                      className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                       required
                     />
                   </label>
 
                   <label className="block">
                     <div className="mb-2 flex items-center gap-2">
-                      <span className="text-lg font-bold text-gray-800">
+                      <span className="text-base font-semibold text-navy">
                         Checked Luggage
                       </span>
                       <div className="hidden md:block">
                         <Tooltip {...checkedLuggageTooltip}>
                           <TooltipTrigger asChild>
-                            <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-blue-100 p-1 transition-colors hover:bg-blue-200">
+                            <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full bg-navy-50 p-1 transition-colors hover:bg-navy-100">
                               <svg
-                                className="h-3 w-3 text-blue-600"
+                                className="h-3 w-3 text-navy-500"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                               >
@@ -2013,7 +2020,7 @@ export default function FlightForm({
                       <div className="block md:hidden">
                         <button
                           type="button"
-                          className="flex h-5 w-5 cursor-pointer touch-manipulation items-center justify-center rounded-full bg-blue-100 p-1 transition-colors active:bg-blue-300"
+                          className="flex h-5 w-5 cursor-pointer touch-manipulation items-center justify-center rounded-full bg-navy-50 p-1 transition-colors active:bg-navy-100"
                           onClick={(e) => {
                             e.stopPropagation()
                             showMobileInfoModal(
@@ -2022,7 +2029,7 @@ export default function FlightForm({
                           }}
                         >
                           <svg
-                            className="h-3 w-3 text-blue-600"
+                            className="h-3 w-3 text-navy-500"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -2041,7 +2048,7 @@ export default function FlightForm({
                       max={MAX_BAG_COUNT}
                       value={bag_no_large}
                       onChange={(e) => setBagNoLarge(Number(e.target.value))}
-                      className="w-full rounded-lg border-2 border-gray-300 bg-white p-3 text-black focus:border-teal-500 focus:outline-none"
+                      className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                       required
                     />
                   </label>
@@ -2052,7 +2059,7 @@ export default function FlightForm({
             {/* Step 6: Review & Submit */}
             {currentStep === 6 && (
               <div className="space-y-6">
-                <div className="rounded-lg bg-blue-50 p-4 text-sm text-blue-800">
+                <div className="rounded-md border border-navy-100 bg-navy-50 p-4 text-sm leading-relaxed text-ink">
                   <p className="mb-2 font-medium">Review Your Information:</p>
                   <p>
                     Please review all your flight details below before
@@ -2061,44 +2068,40 @@ export default function FlightForm({
                 </div>
 
                 {/* Flight Summary */}
-                <div className="space-y-4 rounded-lg border-2 border-gray-200 bg-gray-50 p-6">
-                  <h3 className="mb-4 text-xl font-bold text-gray-800">
+                <div className="space-y-4 rounded-md border border-line bg-paper p-5 sm:p-6">
+                  <h3 className="mb-4 text-lg font-semibold text-navy">
                     Flight Summary
                   </h3>
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
+                      <p className="text-sm font-medium text-stone">
                         Trip Direction
                       </p>
-                      <p className="mt-1 text-lg font-semibold text-gray-900">
+                      <p className="mt-1 text-base font-semibold text-ink">
                         {tripType === true
                           ? 'To Airport'
                           : tripType === false
                             ? 'To Campus'
-                            : '—'}
+                            : '-'}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
-                        Airport
-                      </p>
-                      <p className="mt-1 text-lg font-semibold text-gray-900">
+                      <p className="text-sm font-medium text-stone">Airport</p>
+                      <p className="mt-1 text-base font-semibold text-ink">
                         {airport}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
-                        Flight
-                      </p>
-                      <p className="mt-1 text-lg font-semibold text-gray-900">
+                      <p className="text-sm font-medium text-stone">Flight</p>
+                      <p className="mt-1 text-base font-semibold text-ink">
                         {airline_iata}
                         {flight_no} - Terminal {terminal}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Date</p>
-                      <p className="mt-1 text-lg font-semibold text-gray-900">
+                      <p className="text-sm font-medium text-stone">Date</p>
+                      <p className="mt-1 text-base font-semibold text-ink">
                         {dateOfFlight
                           ? new Date(
                               dateOfFlight + 'T00:00:00',
@@ -2112,31 +2115,29 @@ export default function FlightForm({
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
+                      <p className="text-sm font-medium text-stone">
                         Time Range (PST)
                       </p>
-                      <p className="mt-1 text-lg font-semibold text-gray-900">
+                      <p className="mt-1 text-base font-semibold text-ink">
                         {formatTime12Hour(earliestArrival)} -{' '}
                         {formatTime12Hour(latestArrival)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
-                        Luggage
-                      </p>
-                      <p className="mt-1 text-lg font-semibold text-gray-900">
+                      <p className="text-sm font-medium text-stone">Luggage</p>
+                      <p className="mt-1 text-base font-semibold text-ink">
                         {bag_no_personal} personal, {bag_no} carry-on,{' '}
                         {bag_no_large} checked
                       </p>
                     </div>
                   </div>
 
-                  <div className="grid gap-4 border-t border-gray-200 pt-4 md:grid-cols-2">
+                  <div className="grid gap-4 border-t border-line pt-4 md:grid-cols-2">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
+                      <p className="text-sm font-medium text-stone">
                         Itinerary
                       </p>
-                      <div className="mt-1 space-y-1 text-base font-semibold text-gray-900">
+                      <div className="mt-1 space-y-1 text-base font-semibold text-ink">
                         {itineraryFlights.map((flight, index) => (
                           <p key={index} className="break-words">
                             {getItineraryFlightLabel(index)}:{' '}
@@ -2146,10 +2147,10 @@ export default function FlightForm({
                       </div>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">
+                      <p className="text-sm font-medium text-stone">
                         U.S. Phone Access
                       </p>
-                      <p className="mt-1 text-base font-semibold text-gray-900">
+                      <p className="mt-1 text-base font-semibold text-ink">
                         {hasUsPhone === true
                           ? `U.S. phone: ${usPhoneNumber || 'Not set'}`
                           : hasUsPhone === false
@@ -2168,26 +2169,26 @@ export default function FlightForm({
                   <button
                     type="button"
                     onClick={() => setCurrentStep(1)}
-                    className="mt-4 text-sm font-medium text-teal-600 hover:text-teal-700 hover:underline"
+                    className="mt-4 text-sm font-medium text-sage hover:text-sage-strong hover:underline"
                   >
                     ← Edit Information
                   </button>
                 </div>
 
                 {/* Opt-in checkbox */}
-                <label className="block rounded-lg bg-gray-100 p-4">
+                <label className="block rounded-md bg-sunken p-4">
                   <div className="flex items-start">
                     <input
                       type="checkbox"
                       checked={optInUnmatched}
                       onChange={(e) => setOptInUnmatched(e.target.checked)}
-                      className="mr-3 mt-1 h-5 w-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                      className="mr-3 mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-line-strong accent-sage"
                     />
                     <div>
-                      <strong className="text-gray-900">
+                      <strong className="text-ink">
                         I would like to opt-in to the Unmatched page.
                       </strong>
-                      <p className="mt-2 text-sm text-gray-700">
+                      <p className="mt-2 text-sm text-ink">
                         If PICKUP is unable to match you through our algorithm,
                         the Unmatched page will display your name, email, flight
                         date, and time, so you can try to find others who you
@@ -2200,17 +2201,17 @@ export default function FlightForm({
                 {/* ASPC Warning */}
                 {showASPCWarning && (
                   <div
-                    className={`rounded-xl border-2 p-4 shadow-lg ${
+                    className={`rounded-md border p-4 ${
                       aspcWarningMessage.includes('✅')
-                        ? 'to-emerald-50 border-green-200 bg-gradient-to-r from-green-50'
-                        : 'border-orange-200 bg-gradient-to-r from-orange-50 to-yellow-50'
+                        ? 'border-sage/25 bg-sage-tint'
+                        : 'border-warning/20 bg-warning-tint'
                     }`}
                   >
                     <div className="flex items-start space-x-3">
                       <div className="flex-shrink-0">
                         {aspcWarningMessage.includes('✅') ? (
                           <svg
-                            className="h-6 w-6 text-green-500"
+                            className="h-6 w-6 text-sage"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -2222,7 +2223,7 @@ export default function FlightForm({
                           </svg>
                         ) : (
                           <svg
-                            className="h-6 w-6 text-orange-500"
+                            className="h-6 w-6 text-warning"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -2238,11 +2239,11 @@ export default function FlightForm({
                         <p
                           className={`text-sm font-medium ${
                             aspcWarningMessage.includes('✅')
-                              ? 'text-green-800'
-                              : 'text-orange-800'
+                              ? 'text-ink'
+                              : 'text-ink'
                           }`}
                         >
-                          {aspcWarningMessage}
+                          {aspcWarningMessage.replace(/^✅\s*/, '')}
                         </p>
                         <div className="mt-2">
                           <a
@@ -2251,8 +2252,8 @@ export default function FlightForm({
                             rel="noopener noreferrer"
                             className={`inline-flex items-center text-sm font-semibold underline hover:opacity-80 ${
                               aspcWarningMessage.includes('✅')
-                                ? 'text-green-600 hover:text-green-700'
-                                : 'text-orange-600 hover:text-orange-700'
+                                ? 'text-sage-strong'
+                                : 'text-warning'
                             }`}
                           >
                             View ASPC Policy Details
@@ -2276,8 +2277,8 @@ export default function FlightForm({
                         onClick={() => setShowASPCWarning(false)}
                         className={`flex-shrink-0 hover:opacity-80 ${
                           aspcWarningMessage.includes('✅')
-                            ? 'text-green-400 hover:text-green-600'
-                            : 'text-orange-400 hover:text-orange-600'
+                            ? 'text-sage'
+                            : 'text-warning'
                         }`}
                       >
                         <svg
@@ -2297,22 +2298,22 @@ export default function FlightForm({
                 )}
 
                 {/* Terms + acknowledgments (last step only) */}
-                <div className="touch-manipulation space-y-4 rounded-lg border-2 border-gray-200 bg-white p-3 sm:p-4">
+                <div className="touch-manipulation space-y-4 rounded-md border border-line bg-paper p-3 sm:p-4">
                   <label className="block cursor-pointer py-0.5">
                     <div className="flex items-start gap-3">
                       <input
                         type="checkbox"
                         checked={termsAccepted}
                         onChange={(e) => setTermsAccepted(e.target.checked)}
-                        className="mt-0.5 h-6 w-6 shrink-0 rounded border-gray-300 text-teal-600 focus:ring-teal-500 sm:mt-1 sm:h-5 sm:w-5"
+                        className="mt-0.5 h-6 w-6 shrink-0 cursor-pointer rounded border-line-strong accent-sage sm:mt-0.5 sm:h-5 sm:w-5"
                       />
-                      <span className="min-w-0 break-words text-sm leading-relaxed text-gray-800">
+                      <span className="min-w-0 break-words text-sm leading-relaxed text-ink">
                         I have read, understand, and agree to the ASPC RideLink{' '}
                         <a
                           href={TERMS_URL}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-semibold text-teal-700 underline hover:text-teal-900"
+                          className="font-medium text-navy underline underline-offset-2 hover:text-sage"
                           onClick={(ev) => ev.stopPropagation()}
                         >
                           Terms & Conditions
@@ -2322,7 +2323,7 @@ export default function FlightForm({
                           href={PRIVACY_URL}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-semibold text-teal-700 underline hover:text-teal-900"
+                          className="font-medium text-navy underline underline-offset-2 hover:text-sage"
                           onClick={(ev) => ev.stopPropagation()}
                         >
                           Privacy Notice
@@ -2333,8 +2334,8 @@ export default function FlightForm({
                     </div>
                   </label>
 
-                  <div className="space-y-3 border-t border-gray-200 pt-4">
-                    <p className="text-sm font-semibold text-gray-900">
+                  <div className="space-y-3 border-t border-line pt-4">
+                    <p className="text-sm font-semibold text-ink">
                       I acknowledge the following:
                     </p>
                     <label className="block cursor-pointer py-0.5">
@@ -2345,16 +2346,16 @@ export default function FlightForm({
                           onChange={(e) =>
                             setAckCancellationNoShowFees(e.target.checked)
                           }
-                          className="mt-0.5 h-6 w-6 shrink-0 rounded border-gray-300 text-teal-600 focus:ring-teal-500 sm:mt-1 sm:h-5 sm:w-5"
+                          className="mt-0.5 h-6 w-6 shrink-0 cursor-pointer rounded border-line-strong accent-sage sm:mt-0.5 sm:h-5 sm:w-5"
                         />
-                        <span className="min-w-0 break-words text-sm leading-relaxed text-gray-800">
+                        <span className="min-w-0 break-words text-sm leading-relaxed text-ink">
                           I acknowledge and agree that cancellation and no-show
                           fees may apply under the{' '}
                           <a
                             href="https://p-ickup.com/aspc-fees"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="font-semibold text-teal-700 underline hover:text-teal-900"
+                            className="font-medium text-navy underline underline-offset-2 hover:text-sage"
                             onClick={(ev) => ev.stopPropagation()}
                           >
                             ASPC Cancellation and Change Policies
@@ -2371,16 +2372,16 @@ export default function FlightForm({
                           onChange={(e) =>
                             setAckAirlineDelaysCovered(e.target.checked)
                           }
-                          className="mt-0.5 h-6 w-6 shrink-0 rounded border-gray-300 text-teal-600 focus:ring-teal-500 sm:mt-1 sm:h-5 sm:w-5"
+                          className="mt-0.5 h-6 w-6 shrink-0 cursor-pointer rounded border-line-strong accent-sage sm:mt-0.5 sm:h-5 sm:w-5"
                         />
-                        <span className="min-w-0 break-words text-sm leading-relaxed text-gray-800">
+                        <span className="min-w-0 break-words text-sm leading-relaxed text-ink">
                           I acknowledge that any airline-initiated delays or
                           cancellations may be accommodated in accordance with
                           ASPC RideLink Policies, and that I must promptly
                           report related issues to ASPC RideLink at{' '}
                           <a
                             href="mailto:ridelink@aspc.pomona.edu"
-                            className="font-semibold text-teal-700 underline hover:text-teal-900"
+                            className="font-medium text-navy underline underline-offset-2 hover:text-sage"
                             onClick={(ev) => ev.stopPropagation()}
                           >
                             ridelink@aspc.pomona.edu
@@ -2399,17 +2400,17 @@ export default function FlightForm({
               <>
                 {isValidationError ? (
                   /* Validation Error - Lighter yellow/orange style */
-                  <div className="rounded-lg border-2 border-yellow-400 bg-yellow-50 p-4 text-center">
-                    <p className="font-medium text-yellow-800">⚠️ {message}</p>
+                  <div className="rounded-md border border-warning/25 bg-warning-tint p-4 text-center">
+                    <p className="font-medium text-warning">{message}</p>
                   </div>
                 ) : (
                   /* Submission Error - Bold red style */
-                  <div className="rounded-lg border-2 border-red-400 bg-red-100 p-6 text-center shadow-lg">
-                    <p className="mb-2 text-lg font-bold text-red-800">
-                      ⚠️ Submission Failed
+                  <div className="rounded-md border border-danger/30 bg-danger-tint p-5 text-center">
+                    <p className="mb-2 text-base font-semibold text-danger">
+                      Submission failed
                     </p>
-                    <p className="font-medium text-red-700">{message}</p>
-                    <p className="mt-2 text-sm text-red-600">
+                    <p className="font-medium text-danger">{message}</p>
+                    <p className="mt-2 text-sm text-danger">
                       Please try again. If the problem persists, contact
                       support.
                     </p>
@@ -2424,7 +2425,7 @@ export default function FlightForm({
                 <button
                   type="button"
                   onClick={goToPreviousStep}
-                  className="flex items-center gap-2 rounded-lg border-2 border-gray-300 bg-white px-6 py-3 font-semibold text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
+                  className="inline-flex h-11 items-center gap-2 rounded-md border border-line-strong bg-card px-5 text-[15px] font-medium text-ink transition-[background-color,transform] duration-150 hover:bg-sunken active:scale-[0.97]"
                 >
                   <svg
                     className="h-5 w-5"
@@ -2444,7 +2445,7 @@ export default function FlightForm({
               ) : (
                 <Link
                   href="/questionnaires"
-                  className="flex items-center gap-2 rounded-lg border-2 border-gray-300 bg-white px-6 py-3 font-semibold text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
+                  className="inline-flex h-11 items-center gap-2 rounded-md border border-line-strong bg-card px-5 text-[15px] font-medium text-ink transition-[background-color,transform] duration-150 hover:bg-sunken active:scale-[0.97]"
                 >
                   Cancel
                 </Link>
@@ -2455,10 +2456,10 @@ export default function FlightForm({
                   type="button"
                   onClick={goToNextStep}
                   disabled={isLoading || isDuplicateError || isPastDeadline}
-                  className={`flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white transition-colors ${
+                  className={`inline-flex h-11 items-center gap-2 rounded-md px-5 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 active:scale-[0.97] ${
                     isLoading || isDuplicateError || isPastDeadline
-                      ? 'cursor-not-allowed bg-gray-400'
-                      : 'bg-teal-500 hover:bg-teal-600'
+                      ? 'cursor-not-allowed bg-navy opacity-40'
+                      : 'bg-navy hover:bg-navy-700'
                   }`}
                 >
                   Next
@@ -2487,14 +2488,14 @@ export default function FlightForm({
                     isPastDeadline ||
                     !allSubmitAcknowledgments
                   }
-                  className={`rounded-lg px-8 py-3 font-semibold text-white transition-colors ${
+                  className={`inline-flex h-11 items-center justify-center rounded-md px-6 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 active:scale-[0.97] ${
                     isLoading ||
                     isSubmitting ||
                     isDuplicateError ||
                     isPastDeadline ||
                     !allSubmitAcknowledgments
-                      ? 'cursor-not-allowed bg-gray-400'
-                      : 'bg-teal-500 hover:bg-teal-600'
+                      ? 'cursor-not-allowed bg-navy opacity-40'
+                      : 'bg-navy hover:bg-navy-700'
                   }`}
                 >
                   {isSubmitting ? (
@@ -2560,16 +2561,14 @@ export default function FlightForm({
 
         {/* Mobile Info Modal */}
         {showMobileInfo && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-            <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-navy-900/40 p-4">
+            <div className="w-full max-w-sm animate-dialog-in rounded-lg bg-card p-6 shadow-overlay">
               <div className="mb-4 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  More Info
-                </h3>
+                <h3 className="text-base font-semibold text-navy">More Info</h3>
                 <button
                   type="button"
                   onClick={() => setShowMobileInfo(false)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-sunken text-stone transition-colors hover:bg-line"
                 >
                   <svg
                     className="h-4 w-4"
@@ -2586,14 +2585,12 @@ export default function FlightForm({
                   </svg>
                 </button>
               </div>
-              <p className="leading-relaxed text-gray-700">
-                {mobileInfoContent}
-              </p>
+              <p className="leading-relaxed text-ink">{mobileInfoContent}</p>
               <div className="mt-6 flex justify-end">
                 <button
                   type="button"
                   onClick={() => setShowMobileInfo(false)}
-                  className="rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
+                  className="rounded-md bg-navy px-4 py-2 font-medium text-white transition-colors hover:bg-navy-700"
                 >
                   Got it
                 </button>

@@ -60,14 +60,12 @@ export const getCapacityBarColor = (
   totalBagUnits: number,
   uberType?: string | null,
 ): string => {
-  if (uberType?.toLowerCase() === 'connect') return 'bg-green-500'
-  if (totalBagUnits === 0) return 'bg-green-500'
-  if (totalBagUnits <= 3) return 'bg-gradient-to-r from-green-500 to-yellow-500'
-  if (totalBagUnits <= 6) {
-    return 'bg-gradient-to-r from-yellow-500 to-orange-500'
-  }
-  if (totalBagUnits <= 9) return 'bg-gradient-to-r from-orange-500 to-red-500'
-  return 'bg-red-700'
+  if (uberType?.toLowerCase() === 'connect') return 'bg-sage'
+  if (totalBagUnits === 0) return 'bg-sage'
+  if (totalBagUnits <= 3) return 'bg-sage'
+  if (totalBagUnits <= 6) return 'bg-warning'
+  if (totalBagUnits <= 9) return 'bg-danger'
+  return 'bg-danger-strong'
 }
 
 export const getUberType = (riderCount: number): string => {
