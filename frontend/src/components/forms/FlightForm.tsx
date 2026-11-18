@@ -174,9 +174,10 @@ export default function FlightForm({
   const outboundSelectable = hasSubsidizedDirections ? outboundAllowed : true
   const inboundSelectable = hasSubsidizedDirections ? inboundAllowed : true
   const isAugust19RideDate = dateOfFlight.endsWith('-08-19')
+  const isInboundTrip = tripType === false
   const itineraryDetails = useMemo(
-    () => formatItineraryFlights(itineraryFlights),
-    [itineraryFlights],
+    () => (isInboundTrip ? formatItineraryFlights(itineraryFlights) : ''),
+    [isInboundTrip, itineraryFlights],
   )
 
   // Mobile info modal state
@@ -718,7 +719,7 @@ export default function FlightForm({
         latest_time: latestArrival,
         opt_in: optInUnmatched,
         terminal,
-        itinerary_details: itineraryDetails,
+        itinerary_details: isInboundTrip ? itineraryDetails : null,
         has_us_phone: hasUsPhone,
         phone_works_in_us: hasUsPhone === false ? phoneWorksInUs : null,
         us_phone_number:
@@ -1014,20 +1015,22 @@ export default function FlightForm({
         return true
       case 3: // Itinerary
         {
-          const incompleteItineraryIndex = itineraryFlights.findIndex(
-            (flight) => !isItineraryFlightComplete(flight),
-          )
-          if (incompleteItineraryIndex >= 0) {
-            setMessage(
-              `Please complete ${getItineraryFlightLabel(
-                incompleteItineraryIndex,
-              ).toLowerCase()} in your itinerary`,
+          if (isInboundTrip) {
+            const incompleteItineraryIndex = itineraryFlights.findIndex(
+              (flight) => !isItineraryFlightComplete(flight),
             )
-            setIsValidationError(true)
-            return false
+            if (incompleteItineraryIndex >= 0) {
+              setMessage(
+                `Please complete ${getItineraryFlightLabel(
+                  incompleteItineraryIndex,
+                ).toLowerCase()} in your itinerary`,
+              )
+              setIsValidationError(true)
+              return false
+            }
           }
         }
-        if (itineraryDetails.length > 4000) {
+        if (isInboundTrip && itineraryDetails.length > 4000) {
           setMessage('Please shorten your itinerary details')
           setIsValidationError(true)
           return false
@@ -1085,7 +1088,9 @@ export default function FlightForm({
       case 2:
         return 'Trip Direction & Flight Details'
       case 3:
-        return 'Connecting Flights'
+        return isInboundTrip
+          ? 'Connecting Flights'
+          : 'Connecting Flights (Optional for Departures)'
       case 4:
         return 'U.S. Phone Access'
       case 5:
@@ -1108,7 +1113,7 @@ export default function FlightForm({
   return (
     <div className="flex w-full flex-col items-center text-ink">
       <div className="mb-4 flex w-full max-w-3xl flex-col gap-1 text-sm text-stone sm:flex-row sm:items-center sm:justify-between">
-        <p>All fields are required.</p>
+        <p>All displayed fields are required.</p>
         {userSchool === 'Pomona' && (
           <a
             href="/aspc-info"
@@ -1584,144 +1589,161 @@ export default function FlightForm({
             {/* Step 3: Connecting Flights */}
             {currentStep === 3 && (
               <div className="space-y-6">
-                <div className="rounded-md border border-navy-100 bg-navy-50 p-4 text-sm leading-relaxed text-ink">
-                  <p className="mb-2">Add all flights in your itinerary.</p>
-                  <p>
-                    RideLink uses this information to determine if earlier
-                    delays will impact your final arrival time.
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  {itineraryFlights.map((flight, index) => (
-                    <div
-                      key={index}
-                      className="rounded-md border border-line bg-paper p-4"
-                    >
-                      <div className="mb-4 flex items-center justify-between gap-4">
-                        <h3 className="text-base font-semibold text-navy">
-                          {getItineraryFlightLabel(index)}
-                        </h3>
-                        {itineraryFlights.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => removeItineraryFlight(index)}
-                            className="rounded-md border border-danger/25 bg-card px-3 py-2 text-sm font-medium text-danger transition-colors hover:bg-danger-tint"
-                          >
-                            Remove
-                          </button>
-                        )}
-                      </div>
-
-                      <div className="grid gap-4 md:grid-cols-2">
-                        <label className="block">
-                          <span className="mb-2 block text-sm font-medium text-ink">
-                            Airline
-                          </span>
-                          <input
-                            type="text"
-                            value={flight.airline}
-                            onChange={(e) =>
-                              updateItineraryFlight(
-                                index,
-                                'airline',
-                                e.target.value,
-                              )
-                            }
-                            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
-                            placeholder="American Airlines or AA"
-                            maxLength={80}
-                            required
-                          />
-                        </label>
-
-                        <label className="block">
-                          <span className="mb-2 block text-sm font-medium text-ink">
-                            Flight Number
-                          </span>
-                          <input
-                            type="text"
-                            value={flight.flightNumber}
-                            onChange={(e) =>
-                              updateItineraryFlight(
-                                index,
-                                'flightNumber',
-                                e.target.value,
-                              )
-                            }
-                            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
-                            placeholder="123"
-                            maxLength={12}
-                            required
-                          />
-                        </label>
-
-                        <label className="block">
-                          <span className="mb-2 block text-sm font-medium text-ink">
-                            Departure Airport
-                          </span>
-                          <input
-                            type="text"
-                            value={flight.departureAirport}
-                            onChange={(e) =>
-                              updateItineraryFlight(
-                                index,
-                                'departureAirport',
-                                e.target.value.toUpperCase(),
-                              )
-                            }
-                            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
-                            placeholder="LAX"
-                            maxLength={8}
-                            required
-                          />
-                        </label>
-
-                        <label className="block">
-                          <span className="mb-2 block text-sm font-medium text-ink">
-                            Arrival Airport
-                          </span>
-                          <input
-                            type="text"
-                            value={flight.arrivalAirport}
-                            onChange={(e) =>
-                              updateItineraryFlight(
-                                index,
-                                'arrivalAirport',
-                                e.target.value.toUpperCase(),
-                              )
-                            }
-                            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
-                            placeholder="DFW"
-                            maxLength={8}
-                            required
-                          />
-                        </label>
-
-                        <label className="block md:col-span-2">
-                          <span className="mb-2 block text-sm font-medium text-ink">
-                            Date
-                          </span>
-                          <DatePicker
-                            value={flight.date}
-                            onChange={(e) =>
-                              updateItineraryFlight(index, 'date', e)
-                            }
-                            defaultMonth={flight.date || dateOfFlight}
-                          />
-                        </label>
-                      </div>
+                {isInboundTrip ? (
+                  <>
+                    <div className="rounded-md border border-navy-100 bg-navy-50 p-4 text-sm leading-relaxed text-ink">
+                      <p className="mb-2">Add all flights in your itinerary.</p>
+                      <p>
+                        RideLink uses this information to determine whether an
+                        earlier flight delay could affect your arrival at
+                        campus.
+                      </p>
                     </div>
-                  ))}
 
-                  <button
-                    type="button"
-                    onClick={addItineraryFlight}
-                    className="w-full rounded-md border border-dashed border-sage/50 bg-sage-tint/50 px-4 py-3 text-[15px] font-medium text-sage-strong transition-colors hover:bg-sage-tint"
-                  >
-                    Add another flight
-                  </button>
-                </div>
+                    <div className="space-y-4">
+                      {itineraryFlights.map((flight, index) => (
+                        <div
+                          key={index}
+                          className="rounded-md border border-line bg-paper p-4"
+                        >
+                          <div className="mb-4 flex items-center justify-between gap-4">
+                            <h3 className="text-base font-semibold text-navy">
+                              {getItineraryFlightLabel(index)}
+                            </h3>
+                            {itineraryFlights.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeItineraryFlight(index)}
+                                className="rounded-md border border-danger/25 bg-card px-3 py-2 text-sm font-medium text-danger transition-colors hover:bg-danger-tint"
+                              >
+                                Remove
+                              </button>
+                            )}
+                          </div>
+
+                          <div className="grid gap-4 md:grid-cols-2">
+                            <label className="block">
+                              <span className="mb-2 block text-sm font-medium text-ink">
+                                Airline
+                              </span>
+                              <input
+                                type="text"
+                                value={flight.airline}
+                                onChange={(e) =>
+                                  updateItineraryFlight(
+                                    index,
+                                    'airline',
+                                    e.target.value,
+                                  )
+                                }
+                                className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
+                                placeholder="American Airlines or AA"
+                                maxLength={80}
+                                required
+                              />
+                            </label>
+
+                            <label className="block">
+                              <span className="mb-2 block text-sm font-medium text-ink">
+                                Flight Number
+                              </span>
+                              <input
+                                type="text"
+                                value={flight.flightNumber}
+                                onChange={(e) =>
+                                  updateItineraryFlight(
+                                    index,
+                                    'flightNumber',
+                                    e.target.value,
+                                  )
+                                }
+                                className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
+                                placeholder="123"
+                                maxLength={12}
+                                required
+                              />
+                            </label>
+
+                            <label className="block">
+                              <span className="mb-2 block text-sm font-medium text-ink">
+                                Departure Airport
+                              </span>
+                              <input
+                                type="text"
+                                value={flight.departureAirport}
+                                onChange={(e) =>
+                                  updateItineraryFlight(
+                                    index,
+                                    'departureAirport',
+                                    e.target.value.toUpperCase(),
+                                  )
+                                }
+                                className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
+                                placeholder="LAX"
+                                maxLength={8}
+                                required
+                              />
+                            </label>
+
+                            <label className="block">
+                              <span className="mb-2 block text-sm font-medium text-ink">
+                                Arrival Airport
+                              </span>
+                              <input
+                                type="text"
+                                value={flight.arrivalAirport}
+                                onChange={(e) =>
+                                  updateItineraryFlight(
+                                    index,
+                                    'arrivalAirport',
+                                    e.target.value.toUpperCase(),
+                                  )
+                                }
+                                className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
+                                placeholder="DFW"
+                                maxLength={8}
+                                required
+                              />
+                            </label>
+
+                            <label className="block md:col-span-2">
+                              <span className="mb-2 block text-sm font-medium text-ink">
+                                Date
+                              </span>
+                              <DatePicker
+                                value={flight.date}
+                                onChange={(e) =>
+                                  updateItineraryFlight(index, 'date', e)
+                                }
+                                defaultMonth={flight.date || dateOfFlight}
+                              />
+                            </label>
+                          </div>
+                        </div>
+                      ))}
+
+                      <button
+                        type="button"
+                        onClick={addItineraryFlight}
+                        className="w-full rounded-md border border-dashed border-sage/50 bg-sage-tint/50 px-4 py-3 text-[15px] font-medium text-sage-strong transition-colors hover:bg-sage-tint"
+                      >
+                        Add another flight
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="rounded-md border border-navy-100 bg-navy-50 p-4 text-sm leading-relaxed text-ink">
+                    <p className="mb-2 font-medium">
+                      Connecting-flight details are not required for departures
+                      from campus.
+                    </p>
+                    <p>
+                      Your primary flight information and departure time are
+                      enough for this request. You can continue without adding
+                      the rest of your departure itinerary.
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
@@ -2138,12 +2160,16 @@ export default function FlightForm({
                         Itinerary
                       </p>
                       <div className="mt-1 space-y-1 text-base font-semibold text-ink">
-                        {itineraryFlights.map((flight, index) => (
-                          <p key={index} className="break-words">
-                            {getItineraryFlightLabel(index)}:{' '}
-                            {getItineraryFlightSummary(flight) || 'Not set'}
-                          </p>
-                        ))}
+                        {isInboundTrip ? (
+                          itineraryFlights.map((flight, index) => (
+                            <p key={index} className="break-words">
+                              {getItineraryFlightLabel(index)}:{' '}
+                              {getItineraryFlightSummary(flight) || 'Not set'}
+                            </p>
+                          ))
+                        ) : (
+                          <p>Not required for departures from campus</p>
+                        )}
                       </div>
                     </div>
                     <div>
