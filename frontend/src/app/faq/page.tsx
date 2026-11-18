@@ -104,9 +104,9 @@ const FAQ_ITEMS = [
         We are using a machine learning model to group all of our existing match
         requests by flight time, bag numbers, terminals, drop off points, and
         other important details. Our model’s performance improves as our user
-        base increases, so please spread the word about Pickup! Further, please
-        submit feedback on matches so that we can improve our model in the
-        future!
+        base increases, so please spread the word about RideLink! Further,
+        please submit feedback on matches so that we can improve our model in
+        the future!
       </>
     ),
   },
@@ -131,8 +131,8 @@ const FAQ_ITEMS = [
         but we cannot guarantee this. We assure you that our machine learning
         model will try to find the optimal match for you! Our model’s
         performance improves as our user base increases, so please spread the
-        word about Pickup! Also, submit feedback so we can train our model to be
-        better!
+        word about RideLink! Also, submit feedback so we can train our model to
+        be better!
       </>
     ),
   },

@@ -2189,10 +2189,10 @@ export default function FlightForm({
                         I would like to opt-in to the Unmatched page.
                       </strong>
                       <p className="mt-2 text-sm text-ink">
-                        If PICKUP is unable to match you through our algorithm,
-                        the Unmatched page will display your name, email, flight
-                        date, and time, so you can try to find others who you
-                        may be able to split a ride with.
+                        If RideLink is unable to match you through our
+                        algorithm, the Unmatched page will display your name,
+                        email, flight date, and time, so you can try to find
+                        others who you may be able to split a ride with.
                       </p>
                     </div>
                   </div>

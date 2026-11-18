@@ -28,7 +28,7 @@ if (is_subsidized && to_airport) {
 #### Variant 1: Subsidized TO Airport
 
 - **When**: `is_subsidized = true` AND `to_airport = true`
-- **Subject**: "PICKUP — Your ASPC-subsidized ride group!"
+- **Subject**: "RideLink - Your ASPC-subsidized ride group!"
 - **Content**:
   - Welcome message about upcoming trip
   - Meeting point: 647 N College Way (outside Lincoln Hall)
@@ -38,7 +38,7 @@ if (is_subsidized && to_airport) {
 #### Variant 2: Subsidized FROM Airport
 
 - **When**: `is_subsidized = true` AND `to_airport = false`
-- **Subject**: "PICKUP — Your ASPC-subsidized ride group!"
+- **Subject**: "RideLink - Your ASPC-subsidized ride group!"
 - **Content**:
   - Welcome back message
   - Different meeting point instructions (LAX-it for LAX, curbside for ONT)
@@ -48,7 +48,7 @@ if (is_subsidized && to_airport) {
 #### Variant 3: Unsubsidized
 
 - **When**: `is_subsidized = false`
-- **Subject**: "PICKUP — Your ride group!"
+- **Subject**: "RideLink - Your ride group!"
 - **Content**:
   - Message about not being subsidized
   - Links to unmatched page

@@ -103,7 +103,7 @@ export default function ASPCPolicy() {
         </div>
         <p className="mt-4 text-sm leading-relaxed text-stone">
           If a sufficient group cannot be formed, RideLink will be unable to
-          cover the ride. However, you may still use PICKUP to coordinate
+          cover the ride. However, you may still use RideLink to coordinate
           non-subsidized carpools.
         </p>
       </section>

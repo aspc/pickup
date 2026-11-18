@@ -1,6 +1,6 @@
 # Platform overview
 
-PICKUP helps students coordinate airport rides (often ASPC-subsidized). This repo is the **Next.js web app**, hosted on **Netlify**; application data and bulk email sending live in **Supabase** (Postgres + edge functions), while an external matching process writes grouping results to Supabase.
+RideLink helps students coordinate airport rides (often ASPC-subsidized). This repo is the **Next.js web app**, hosted on **Netlify**; application data and bulk email sending live in **Supabase** (Postgres + edge functions), while an external matching process writes grouping results to Supabase.
 
 ## High-level architecture
 

@@ -1,8 +1,8 @@
 import { Inter, Playfair_Display } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 import './globals.css'
-import PickupHeader from '@/components/PickupHeader'
-import PickupFooter from '@/components/PickupFooter'
+import RideLinkHeader from '@/components/RideLinkHeader'
+import RideLinkFooter from '@/components/RideLinkFooter'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { AuthProvider } from '@/providers/AuthProvider'
 
@@ -25,7 +25,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'PICKUP',
+  title: 'RideLink',
   description: 'Your AI powered RideShare App',
   icons: {
     icon: [{ url: '/favicon.ico?v=2', sizes: 'any' }],
@@ -49,9 +49,9 @@ export default function RootLayout({
         <AuthProvider>
           <TooltipProvider>
             <div className="flex min-h-screen flex-col">
-              <PickupHeader />
+              <RideLinkHeader />
               <div className="flex-1">{children}</div>
-              <PickupFooter />
+              <RideLinkFooter />
             </div>
           </TooltipProvider>
         </AuthProvider>

@@ -110,7 +110,7 @@ export default function FeedbackForm() {
       <PageHeader
         eyebrow="Your rides"
         title="Leave feedback"
-        description="We value your feedback. Help us improve PICKUP for everyone."
+        description="We value your feedback. Help us improve RideLink for everyone."
       />
 
       <Card as="form" onSubmit={handleSubmit}>

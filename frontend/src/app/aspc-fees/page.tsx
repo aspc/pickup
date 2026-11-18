@@ -103,7 +103,7 @@ export default function ASPCFees() {
               <strong className="font-semibold">no fee</strong>.
             </p>
             <p className="mt-2 text-sm text-ink/80">
-              Make changes freely through the PICKUP dashboard before the
+              Make changes freely through the RideLink dashboard before the
               deadline for your break period.
             </p>
           </div>

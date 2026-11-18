@@ -104,5 +104,5 @@ export const SERVICE_PERIODS: ServicePeriod[] = [
     },
     buffered: { start: '2026-11-23', end: '2026-11-30' },
     deadline: '2026-11-19T23:59:59-08:00',
-  }
+  },
 ]

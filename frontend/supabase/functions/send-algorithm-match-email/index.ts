@@ -187,7 +187,7 @@ serve(async (req) => {
 
           <p style="color:#666; font-size:14px;">
             Safe travels,<br>
-            The PICKUP Team<br>
+            The RideLink Team<br>
             In partnership with ASPC RideLink
           </p>
         </div>
@@ -239,7 +239,7 @@ serve(async (req) => {
 
           <p style="color:#666; font-size:14px;">
             We hope you had a safe trip, and welcome back to campus!<br>
-            The PICKUP Team<br>
+            The RideLink Team<br>
             In partnership with ASPC RideLink
           </p>
         </div>
@@ -291,12 +291,12 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'PICKUP <match@notify.p-ickup.com>',
+        from: 'ASPC RideLink <match@notify.p-ickup.com>',
         to: [userData.email],
         cc: ['ridelink@aspc.pomona.edu'],
         subject: myMatch?.is_subsidized
-          ? 'PICKUP — Your ASPC-subsidized ride group!'
-          : 'PICKUP — Your ride group!',
+          ? 'RideLink - Your ASPC-subsidized ride group!'
+          : 'RideLink - Your ride group!',
         html: emailHtml,
         reply_to: ['pickup.pai.47@gmail.com', 'ridelink@aspc.pomona.edu'],
       }),

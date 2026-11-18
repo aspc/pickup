@@ -1,6 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
-// PICKUP design tokens. Every color used in the app is named here; pages must
+// RideLink design tokens. Every color used in the app is named here; pages must
 // not reach for Tailwind's raw palettes (enforced by src/styles/noRawColors.test.ts).
 const palette = {
   navy: {

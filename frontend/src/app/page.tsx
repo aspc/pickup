@@ -108,7 +108,7 @@ export default function Index() {
             {primaryAction('lg')}
             {!user && (
               <p className="max-w-md text-[13px] leading-relaxed text-stone">
-                By signing in, you agree to PICKUP&apos;s{' '}
+                By signing in, you agree to RideLink&apos;s{' '}
                 <Link
                   href={TERMS_URL}
                   target="_blank"
@@ -172,7 +172,7 @@ export default function Index() {
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="max-w-2xl">
             <h2 className="font-display text-3xl font-semibold text-navy sm:text-4xl">
-              How PICKUP works
+              How RideLink works
             </h2>
             <p className="mt-3 text-[17px] leading-relaxed text-stone">
               Simple, safe and affordable airport transportation that connects

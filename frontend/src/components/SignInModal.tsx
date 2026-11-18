@@ -67,13 +67,13 @@ export default function SignInModal({
       open={isOpen}
       onClose={onClose}
       size="sm"
-      title="Sign in to PICKUP"
+      title="Sign in to RideLink"
       description="Use your college Google account."
     >
       <div className="space-y-4 pt-2">
         <GoogleSignInButton onSignIn={onSignIn} />
         <p className="text-[13px] leading-relaxed text-stone">
-          By signing in, you agree to PICKUP&apos;s{' '}
+          By signing in, you agree to RideLink&apos;s{' '}
           <Link
             href={TERMS_URL}
             target="_blank"

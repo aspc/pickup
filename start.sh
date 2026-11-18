@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PICKUP local launcher.
+# RideLink local launcher.
 #
 #   ./start.sh                 Start the local dev database (Docker) + Next.js on http://localhost:3000
 #   ./start.sh prod            Start Next.js against the PRODUCTION Supabase project in frontend/.env

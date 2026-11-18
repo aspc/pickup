@@ -62,7 +62,7 @@ export default function ASPCInfoPage() {
   const policyLinks = [
     {
       title: 'Subsidy policy',
-      description: 'PICKUP-specific subsidy information and guidelines',
+      description: 'Subsidy information and guidelines',
       href: '/aspc-policy',
     },
     {
@@ -202,8 +202,8 @@ export default function ASPCInfoPage() {
 
       <p className="mt-10 text-sm text-stone">
         This page provides quick access to ASPC&apos;s official RideLink
-        resources. External links open in new tabs. Questions about PICKUP
-        itself?{' '}
+        resources. External links open in new tabs. Questions about this
+        website? itself?{' '}
         <Link href="/contact" className={textLink}>
           Contact us
         </Link>

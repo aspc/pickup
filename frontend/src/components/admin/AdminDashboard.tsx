@@ -267,7 +267,7 @@ export default function AdminDashboard() {
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <h1 className="mb-8 font-display text-[32px] font-semibold text-navy sm:text-[40px]">
-          Pickup Dashboard
+          RideLink Dashboard
         </h1>
 
         {/* Stats Cards - 5 Column Grid */}

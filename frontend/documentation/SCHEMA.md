@@ -1,6 +1,6 @@
 # Supabase schema reference
 
-Human-readable catalog of the `public` schema used by PICKUP. Column types match [`src/lib/database.types.ts`](../src/lib/database.types.ts) (generated from Supabase). Regenerate types after schema changes — full steps in [OPERATIONS.md](./OPERATIONS.md):
+Human-readable catalog of the `public` schema used by RideLink. Column types match [`src/lib/database.types.ts`](../src/lib/database.types.ts) (generated from Supabase). Regenerate types after schema changes - full steps in [OPERATIONS.md](./OPERATIONS.md):
 
 ```bash
 pnpm exec supabase gen types typescript --linked --schema public > src/lib/database.types.ts

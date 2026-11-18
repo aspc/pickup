@@ -1,4 +1,4 @@
-# PICKUP documentation
+# RideLink documentation
 
 Engineering docs for the frontend repo. Start here when onboarding.
 
