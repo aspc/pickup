@@ -4,7 +4,8 @@ import { ButtonLink } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { PageContainer, PageHeader } from '@/components/ui/PageHeader'
 
-const SUPPORT_EMAIL = 'pickup.pai.47@gmail.com'
+const SUPPORT_EMAIL = 'ridelink@aspc.pomona.edu'
+const TECH_EMAIL = 'software@aspc.pomona.edu'
 
 export default function Contact() {
   return (
@@ -55,13 +56,22 @@ export default function Contact() {
         <div>
           <h3 className="font-semibold text-navy">Email support</h3>
           <p className="mt-1 text-sm text-stone">
-            For technical issues or general questions:
+            For general questions:
           </p>
           <a
             href={`mailto:${SUPPORT_EMAIL}`}
             className="mt-1 inline-block break-all text-[15px] font-medium text-navy underline underline-offset-2 hover:text-sage"
           >
             {SUPPORT_EMAIL}
+          </a>
+          <p className="mt-1 text-sm text-stone">
+            For technical questions:
+          </p>
+          <a
+            href={`mailto:${TECH_EMAIL}`}
+            className="mt-1 inline-block break-all text-[15px] font-medium text-navy underline underline-offset-2 hover:text-sage"
+          >
+            {TECH_EMAIL}
           </a>
         </div>
       </div>
