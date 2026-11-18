@@ -153,6 +153,13 @@ export default function FlightForm({
     () => Array.from({ length: totalSteps }, (_, index) => index + 1),
     [totalSteps],
   )
+  const visibleStepNumbers = useMemo(
+    () =>
+      tripType === true
+        ? stepNumbers.filter((step) => step !== 3)
+        : stepNumbers,
+    [stepNumbers, tripType],
+  )
 
   // Use ref for immediate submission lock (prevents race conditions)
   const isSubmittingRef = useRef(false)
@@ -932,7 +939,9 @@ export default function FlightForm({
     }
     setMessage('') // Clear any messages when moving forward
     if (currentStep < totalSteps) {
-      setCurrentStep(currentStep + 1)
+      setCurrentStep(
+        currentStep === 2 && tripType === true ? 4 : currentStep + 1,
+      )
       // Removed scroll to top for better UX
     }
   }
@@ -940,7 +949,9 @@ export default function FlightForm({
   const goToPreviousStep = () => {
     setMessage('') // Clear any messages when going back
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1)
+      setCurrentStep(
+        currentStep === 4 && tripType === true ? 2 : currentStep - 1,
+      )
       // Removed scroll to top for better UX
     }
   }
@@ -1140,7 +1151,7 @@ export default function FlightForm({
         {/* Progress indicator */}
         <div className="border-b border-line bg-card px-4 py-6 md:px-8">
           <div className="mb-4 flex items-center justify-between">
-            {stepNumbers.map((step) => (
+            {visibleStepNumbers.map((step, index) => (
               <div key={step} className="flex flex-1 items-center">
                 <div
                   className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border-2 text-sm font-semibold transition-colors sm:h-9 sm:w-9 ${
@@ -1166,10 +1177,10 @@ export default function FlightForm({
                       />
                     </svg>
                   ) : (
-                    step
+                    index + 1
                   )}
                 </div>
-                {step < totalSteps && (
+                {index < visibleStepNumbers.length - 1 && (
                   <div
                     className={`mx-1.5 h-0.5 flex-1 rounded-full transition-colors sm:mx-2 ${
                       step < currentStep ? 'bg-sage' : 'bg-line'
@@ -1183,7 +1194,8 @@ export default function FlightForm({
             {getStepTitle()}
           </h2>
           <p className="mt-1 text-center text-sm text-stone">
-            Step {currentStep} of {totalSteps}
+            Step {visibleStepNumbers.indexOf(currentStep) + 1} of{' '}
+            {visibleStepNumbers.length}
           </p>
         </div>
 
