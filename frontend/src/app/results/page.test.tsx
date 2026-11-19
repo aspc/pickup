@@ -9,11 +9,14 @@ jest.mock('@/utils/api', () => ({
   postJson: (...args: unknown[]) => postJsonMock(...args),
 }))
 
+let mockAuthState: Record<string, unknown> = {
+  user: authenticatedUser,
+  isAuthenticated: true,
+  isLoading: false,
+}
+
 jest.mock('@/hooks/useAuth', () => ({
-  useAuth: () => ({
-    user: authenticatedUser,
-    isAuthenticated: true,
-  }),
+  useAuth: () => mockAuthState,
 }))
 
 jest.mock(
@@ -39,22 +42,6 @@ jest.mock(
   () =>
     function MockCommentSection() {
       return <div>comments</div>
-    },
-)
-
-jest.mock(
-  '@/components/results/EmptyState',
-  () =>
-    function MockEmptyState() {
-      return <div>empty</div>
-    },
-)
-
-jest.mock(
-  '@/components/buttons/RedirectButton',
-  () =>
-    function MockRedirectButton() {
-      return <button>redirect</button>
     },
 )
 
@@ -100,7 +87,7 @@ describe('Results readiness persistence', () => {
     expect(await screen.findByTestId('match-77')).toHaveTextContent(
       'match 77 ready true',
     )
-    expect(screen.queryByText('Loading Matches...')).not.toBeInTheDocument()
+    expect(screen.queryByText('Loading matches...')).not.toBeInTheDocument()
     await waitFor(() =>
       expect(postJsonMock).toHaveBeenCalledWith(
         '/api/matches/mark-group-ready',
@@ -121,5 +108,22 @@ describe('Results readiness persistence', () => {
     expect(screen.getByTestId('match-77')).toBeInTheDocument()
 
     errorSpy.mockRestore()
+  })
+})
+
+describe('Results while auth is resolving', () => {
+  afterEach(() => {
+    mockAuthState = {
+      user: authenticatedUser,
+      isAuthenticated: true,
+      isLoading: false,
+    }
+  })
+
+  it('shows a loading state instead of the sign-in prompt', () => {
+    mockAuthState = { user: null, isAuthenticated: false, isLoading: true }
+    render(<Results />)
+    expect(screen.queryByText('Please log in')).not.toBeInTheDocument()
+    expect(screen.getByText('Loading matches...')).toBeInTheDocument()
   })
 })

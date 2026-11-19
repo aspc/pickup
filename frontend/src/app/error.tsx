@@ -1,6 +1,11 @@
 'use client'
 
+import { AlertTriangle } from 'lucide-react'
 import { useEffect } from 'react'
+
+import { Button } from '@/components/ui/Button'
+import { EmptyState } from '@/components/ui/EmptyState'
+import { PageContainer } from '@/components/ui/PageHeader'
 
 export default function AppError({
   error,
@@ -14,20 +19,13 @@ export default function AppError({
   }, [error])
 
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center gap-4 p-8 text-center">
-      <h1 className="text-xl font-semibold text-foreground">
-        Something went wrong
-      </h1>
-      <p className="text-sm text-foreground/80">
-        {error.message || 'An unexpected error occurred.'}
-      </p>
-      <button
-        type="button"
-        className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
-        onClick={() => reset()}
-      >
-        Try again
-      </button>
-    </div>
+    <PageContainer width="narrow">
+      <EmptyState
+        icon={AlertTriangle}
+        title="Something went wrong"
+        description={error.message || 'An unexpected error occurred.'}
+        action={<Button onClick={() => reset()}>Try again</Button>}
+      />
+    </PageContainer>
   )
 }

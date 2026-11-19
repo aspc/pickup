@@ -10,7 +10,7 @@ interface DelayFormNewFlight {
 }
 
 interface DelayInfoStepProps {
-  /** When true, user came from "No, it changed" — show new flight summary + Try to look for a new group */
+  /** When true, user came from "No, it changed" - show new flight summary + Try to look for a new group */
   flightChanged?: boolean
   newFlight?: DelayFormNewFlight | null
   newFlightTimeEarliest?: string
@@ -68,21 +68,19 @@ export default function DelayInfoStep({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
-        4. Delay information
-      </h2>
+      <h2 className="text-lg font-semibold text-navy">4. Delay information</h2>
 
       {flightChanged && newFlight ? (
         <>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-stone">
             Here are your new flight details. When you&apos;re ready, we&apos;ll
             remove you from your current group and try to find you a new one.
           </p>
-          <div className="rounded-xl border border-gray-200 bg-white/60 p-4 shadow-sm">
+          <div className="rounded-md border border-line bg-paper p-4">
             <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-teal-100">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sage-tint">
                 <svg
-                  className="h-6 w-6 text-teal-600"
+                  className="h-6 w-6 text-sage"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -96,10 +94,10 @@ export default function DelayInfoStep({
                 </svg>
               </div>
               <div className="min-w-0 flex-1">
-                <p className="font-medium text-gray-900">
+                <p className="font-medium text-ink">
                   {newFlight.airport} {newFlight.flight_no}
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-stone">
                   {new Date(newFlight.date + 'T00:00:00').toLocaleDateString(
                     'en-US',
                     {
@@ -110,7 +108,7 @@ export default function DelayInfoStep({
                     },
                   )}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-stone">
                   {newFlightTimeEarliest && newFlightTimeLatest
                     ? `${newFlightTimeEarliest} – ${newFlightTimeLatest}`
                     : newFlight.time}
@@ -123,7 +121,7 @@ export default function DelayInfoStep({
               type="button"
               onClick={handleOpenModal}
               disabled={isFindNewMatchLoading}
-              className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 px-4 py-3 font-semibold text-white shadow-md transition hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-navy px-4 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
             >
               {isFindNewMatchLoading
                 ? 'Processing…'
@@ -133,34 +131,34 @@ export default function DelayInfoStep({
         </>
       ) : (
         <>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-stone">
             When do you expect to arrive? We&apos;ll use this to find you a new
             match.
           </p>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <label className="block">
-              <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+              <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
                 New estimated date
               </span>
               <input
                 type="date"
                 value={newEtaDate || defaultDate}
                 onChange={(e) => onDateChange(e.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                 required
               />
             </label>
             {!showTimeRange ? (
               <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+                <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
                   New estimated time
                 </span>
                 <input
                   type="time"
                   value={newEtaTime}
                   onChange={(e) => onTimeChange(e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                  className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                   required
                 />
               </label>
@@ -170,26 +168,26 @@ export default function DelayInfoStep({
           {showTimeRange && (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+                <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
                   Earliest Pickup Time
                 </span>
                 <input
                   type="time"
                   value={newEtaTimeEarliest}
                   onChange={(e) => onEarliestChange(e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                  className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                   required
                 />
               </label>
               <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+                <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
                   Latest Pickup Time
                 </span>
                 <input
                   type="time"
                   value={newEtaTimeLatest}
                   onChange={(e) => onLatestChange(e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                  className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                   required
                 />
               </label>
@@ -201,7 +199,7 @@ export default function DelayInfoStep({
               type="button"
               onClick={handleOpenModal}
               disabled={!isFilled || isFindNewMatchLoading}
-              className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 px-4 py-3 font-semibold text-white shadow-md transition hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500/50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:from-teal-500 disabled:hover:to-teal-600"
+              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-navy px-4 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
             >
               {isFindNewMatchLoading ? 'Processing…' : 'Find a new Match'}
             </button>
@@ -211,19 +209,19 @@ export default function DelayInfoStep({
 
       {showModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          className="fixed inset-0 z-50 flex animate-overlay-in items-center justify-center bg-navy-900/40 p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="find-new-match-title"
         >
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
+          <div className="w-full max-w-sm animate-dialog-in rounded-lg bg-card p-6 shadow-overlay">
             <h3
               id="find-new-match-title"
-              className="mb-3 text-lg font-semibold text-gray-900"
+              className="mb-3 text-lg font-semibold text-navy"
             >
               Find a new match
             </h3>
-            <p className="mb-6 text-sm text-gray-600">
+            <p className="mb-6 text-sm text-stone">
               You will be unmatched from your current group and we will try to
               find you a new matching group.
             </p>
@@ -231,7 +229,7 @@ export default function DelayInfoStep({
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="flex-1 rounded-xl border-2 border-gray-300 bg-white px-4 py-2.5 font-semibold text-gray-700 transition hover:bg-gray-50"
+                className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-md border border-line-strong bg-card px-4 text-[15px] font-medium text-ink transition-[background-color,transform] duration-150 hover:bg-sunken active:scale-[0.97] disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -239,7 +237,7 @@ export default function DelayInfoStep({
                 type="button"
                 onClick={handleConfirmFindNewMatch}
                 disabled={isFindNewMatchLoading}
-                className="flex-1 rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 px-4 py-2.5 font-semibold text-white transition hover:from-teal-600 hover:to-teal-700 disabled:opacity-50"
+                className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-md bg-navy px-4 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
               >
                 {isFindNewMatchLoading ? 'Processing…' : 'Confirm'}
               </button>

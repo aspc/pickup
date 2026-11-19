@@ -137,7 +137,7 @@ async function notifyRideGroup(flight_id: number, update: FlightUpdate) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'PICKUP <match@notify.p-ickup.com>',
+          from: 'ASPC RideLink <match@notify.p-ickup.com>',
           to: toEmails,
           subject: `Flight Update: ${update.airline_iata} ${update.flight_no} - ${delayedUserName}'s Flight`,
           html,

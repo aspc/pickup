@@ -1,6 +1,7 @@
 'use client'
 
-import SimpleRedirectButton from '@/components/buttons/SimpleRedirectButton'
+import { Button, ButtonLink } from '@/components/ui/Button'
+import { Spinner } from '@/components/ui/Spinner'
 import { postJson, requestJson } from '@/utils/api'
 import { useEffect, useState } from 'react'
 
@@ -97,29 +98,6 @@ const formatTime = (value: string): string => {
   return `${hour12}:${m} ${period}`
 }
 
-const spinner = (
-  <svg
-    className="h-5 w-5 animate-spin"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-  >
-    <circle
-      className="opacity-25"
-      cx="12"
-      cy="12"
-      r="10"
-      stroke="currentColor"
-      strokeWidth="4"
-    />
-    <path
-      className="opacity-75"
-      fill="currentColor"
-      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-    />
-  </svg>
-)
-
 export default function MatchingAlgorithm() {
   const [status, setStatus] = useState<RideMatchServiceStatus | null>(null)
   const [statusLoading, setStatusLoading] = useState(true)
@@ -188,64 +166,61 @@ export default function MatchingAlgorithm() {
 
   if (statusLoading) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
-        <div className="relative flex min-h-screen items-center justify-center p-4">
-          <div
-            className="flex items-center space-x-4 rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm"
-            role="status"
-            aria-live="polite"
-          >
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-200 border-t-teal-500"></div>
-            <span className="text-lg font-medium text-gray-700">
-              Checking algorithm service...
-            </span>
-          </div>
+      <div className="flex min-h-screen items-center justify-center bg-paper p-4">
+        <div
+          className="flex items-center gap-4 rounded-lg border border-line bg-card p-8 shadow-card"
+          role="status"
+          aria-live="polite"
+        >
+          <Spinner label="Checking algorithm service" />
+          <span className="text-lg font-medium text-ink">
+            Checking algorithm service...
+          </span>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-paper p-6">
       <div className="mx-auto max-w-7xl">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-4">
-          <h1 className="text-3xl font-bold text-gray-900">Run Matching</h1>
-          <SimpleRedirectButton
-            label="Back to Dashboard"
-            route="/admin"
-            variant="cta"
-          />
+          <h1 className="text-3xl font-bold text-navy">Run Matching</h1>
+          <ButtonLink href="/admin" variant="secondary">
+            Back to dashboard
+          </ButtonLink>
         </div>
 
-        <p className="mb-8 text-sm text-gray-600">
+        <p className="mb-8 text-sm text-stone">
           Match all the riders from {fromDescription} to {daysAhead} days ago.
         </p>
 
         {status && !status.configured && (
-          <div className="mb-6 rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-800">
+          <div className="mb-6 rounded-lg border border-warning/30 bg-warning-tint p-4 text-sm text-warning">
             The algorithm service isn&apos;t configured on the server yet. Set{' '}
             <code>ALGORITHM_SERVICE_URL</code> and redeploy.
           </div>
         )}
         {status?.configured && !status.reachable && (
-          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+          <div className="mb-6 rounded-lg border border-danger/30 bg-danger-tint p-4 text-sm text-danger">
             {status.message || 'Could not reach the algorithm service.'}
           </div>
         )}
         {status?.configured &&
           status.reachable &&
           !status.supabaseConfigured && (
-            <div className="mb-6 rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-800">
+            <div className="mb-6 rounded-lg border border-warning/30 bg-warning-tint p-4 text-sm text-warning">
               Connected to the algorithm service, but it has no database
               credentials configured, so there are no riders to match.
             </div>
           )}
 
-        <div className="mb-8 rounded-lg bg-white shadow-md">
-          <div className="border-b border-cyan-300/90 bg-gradient-to-r from-teal-500 to-cyan-500 px-6 py-4">
-            <h2 className="text-xl font-bold text-white">Match &amp; commit</h2>
-            <p className="mt-1 text-sm text-teal-50">
+        <div className="mb-8 rounded-lg border border-line bg-card shadow-card">
+          <div className="border-b border-line px-6 py-4">
+            <h2 className="text-lg font-semibold text-navy">
+              Match &amp; commit
+            </h2>
+            <p className="mt-1 text-sm text-stone">
               Run matching algorithm for all users between these two dates.
             </p>
           </div>
@@ -253,7 +228,7 @@ export default function MatchingAlgorithm() {
           <div className="p-6">
             <div className="mb-6 flex flex-wrap items-end gap-4">
               <div className="min-w-[200px]">
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   From (days from today)
                 </label>
                 <input
@@ -262,11 +237,11 @@ export default function MatchingAlgorithm() {
                   value={daysAheadStart}
                   onChange={(e) => setDaysAheadStart(e.target.value)}
                   placeholder="tomorrow"
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-4 py-2 text-ink placeholder:text-stone-light focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 />
               </div>
               <div className="min-w-[200px]">
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-ink">
                   Through (days from today)
                 </label>
                 <input
@@ -274,45 +249,34 @@ export default function MatchingAlgorithm() {
                   min={0}
                   value={daysAhead}
                   onChange={(e) => setDaysAhead(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full rounded-lg border border-line-strong bg-card px-4 py-2 text-ink placeholder:text-stone-light focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30"
                 />
               </div>
             </div>
 
-            <button
-              type="button"
+            <Button
               onClick={handleRun}
-              disabled={isLoading || !canRun}
-              className={`flex items-center gap-2 rounded-lg px-6 py-3 font-medium text-white transition-all ${
-                isLoading || !canRun
-                  ? 'cursor-not-allowed bg-gray-400 opacity-50'
-                  : 'bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600'
-              }`}
+              disabled={!canRun}
+              loading={isLoading}
+              size="lg"
             >
-              {isLoading ? (
-                <>
-                  {spinner}
-                  Running...
-                </>
-              ) : (
-                'Run Matching'
-              )}
-            </button>
+              {isLoading ? 'Running...' : 'Run Matching'}
+            </Button>
 
-            {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+            {error && <p className="mt-4 text-sm text-danger">{error}</p>}
           </div>
         </div>
 
         {result && (
           <div>
             {!result.run_id ? (
-              <div className="mb-8 rounded-lg border border-gray-200 bg-white p-6 text-center text-gray-600 shadow-md">
+              <div className="mb-8 rounded-lg border border-line bg-card p-6 text-center text-stone shadow-card">
                 No unmatched riders found in this window — nothing to commit.
               </div>
             ) : (
-              <div className="mb-8 rounded-lg bg-white shadow-md">
-                <div className="to-emerald-500 border-b border-green-300/90 bg-gradient-to-r from-green-500 px-6 py-4">
-                  <h2 className="text-xl font-bold text-white">
+              <div className="mb-8 rounded-lg border border-line bg-card shadow-card">
+                <div className="border-b border-sage/30 bg-sage-tint px-6 py-4">
+                  <h2 className="text-lg font-semibold text-sage-strong">
                     Committed{' '}
                     {result.commit?.idempotent_replay &&
                       '(already committed — safe replay)'}
@@ -334,25 +298,25 @@ export default function MatchingAlgorithm() {
                     ],
                   ].map(([label, value]) => (
                     <div key={label} className="text-center">
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-2xl font-bold text-navy">
                         {value ?? 0}
                       </p>
-                      <p className="text-xs text-gray-500">{label}</p>
+                      <p className="text-xs text-stone">{label}</p>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            <div className="mb-8 rounded-lg bg-white shadow-md">
-              <div className="border-b border-gray-200 px-6 py-4">
-                <h2 className="text-xl font-bold text-gray-900">
+            <div className="mb-8 rounded-lg border border-line bg-card shadow-card">
+              <div className="border-b border-line px-6 py-4">
+                <h2 className="text-lg font-semibold text-navy">
                   Committed groups ({result.matches.length})
                 </h2>
               </div>
               <div className="overflow-x-auto p-6 pt-0">
                 <table className="w-full text-sm">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-paper">
                     <tr>
                       <th className="px-3 py-2 text-left">#</th>
                       <th className="px-3 py-2 text-left">Bucket</th>
@@ -364,7 +328,7 @@ export default function MatchingAlgorithm() {
                       <th className="px-3 py-2 text-left">Subsidized</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-line">
                     {result.matches.map((m) => (
                       <tr key={m.ride_id}>
                         <td className="px-3 py-2">{m.ride_id}</td>
@@ -386,7 +350,7 @@ export default function MatchingAlgorithm() {
                         </td>
                         <td className="px-3 py-2">
                           {m.subsidized ? (
-                            <span className="font-medium text-green-700">
+                            <span className="font-medium text-sage-strong">
                               Yes
                             </span>
                           ) : (
@@ -399,7 +363,7 @@ export default function MatchingAlgorithm() {
                       <tr>
                         <td
                           colSpan={8}
-                          className="px-3 py-6 text-center text-gray-500"
+                          className="px-3 py-6 text-center text-stone"
                         >
                           No groups formed.
                         </td>
@@ -410,15 +374,15 @@ export default function MatchingAlgorithm() {
               </div>
             </div>
 
-            <div className="rounded-lg bg-white shadow-md">
-              <div className="border-b border-gray-200 px-6 py-4">
-                <h2 className="text-xl font-bold text-gray-900">
+            <div className="rounded-lg border border-line bg-card shadow-card">
+              <div className="border-b border-line px-6 py-4">
+                <h2 className="text-lg font-semibold text-navy">
                   Left unmatched ({result.unmatched.length})
                 </h2>
               </div>
               <div className="overflow-x-auto p-6 pt-0">
                 <table className="w-full text-sm">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-paper">
                     <tr>
                       <th className="px-3 py-2 text-left">Rider</th>
                       <th className="px-3 py-2 text-left">Airport</th>
@@ -427,7 +391,7 @@ export default function MatchingAlgorithm() {
                       <th className="px-3 py-2 text-left">Why unmatched</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-line">
                     {result.unmatched.map((r) => (
                       <tr key={r.flight_id}>
                         <td className="px-3 py-2">{r.name || r.user_id}</td>
@@ -448,7 +412,7 @@ export default function MatchingAlgorithm() {
                       <tr>
                         <td
                           colSpan={5}
-                          className="px-3 py-6 text-center text-gray-500"
+                          className="px-3 py-6 text-center text-stone"
                         >
                           Everyone was matched.
                         </td>

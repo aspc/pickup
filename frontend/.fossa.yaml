@@ -2,4 +2,4 @@ version: 4
 
 project:
   name: pickup-frontend
-  license: "LicenseRef-Proprietary"
+  license: 'LicenseRef-Proprietary'

@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { requestJson } from '@/utils/api'
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import RedirectButton from '@/components/buttons/RedirectButton'
+import { ButtonLink } from '@/components/ui/Button'
 
 function AspcDelayListContent() {
   const { user, isAuthenticated, signInWithGoogle } = useAuth()
@@ -49,19 +49,19 @@ function AspcDelayListContent() {
 
   if (!isAuthenticated) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="relative flex min-h-screen flex-col items-center justify-center p-6">
-          <div className="mx-auto max-w-md rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm">
-            <h1 className="mb-4 text-2xl font-bold text-gray-800">
+      <div className="relative">
+        <div className="flex min-h-[60vh] flex-col items-center justify-center p-6">
+          <div className="mx-auto max-w-md rounded-lg border border-line bg-card p-8 text-center shadow-card">
+            <h1 className="mb-4 font-display text-3xl font-semibold text-navy">
               Report a Delay
             </h1>
-            <p className="mb-6 text-gray-600">
+            <p className="mb-6 text-stone">
               Sign in to report a flight delay and get rematched or a
               contingency voucher.
             </p>
             <button
               onClick={() => void signInWithGoogle()}
-              className="w-full rounded-lg bg-teal-500 px-4 py-3 font-semibold text-white transition hover:bg-teal-600"
+              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-navy px-4 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
             >
               Sign in with Google
             </button>
@@ -73,21 +73,20 @@ function AspcDelayListContent() {
 
   if (loading) {
     return (
-      <div className="from-slate-50 relative flex min-h-screen items-center justify-center bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-200 border-t-teal-500" />
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-[3px] border-sage border-r-transparent" />
       </div>
     )
   }
 
   if (userRides.length > 0) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="relative mx-auto max-w-2xl px-4 py-6 sm:py-12">
-          <h1 className="mb-6 text-2xl font-bold text-gray-800 sm:text-3xl">
+      <div className="relative">
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:pt-12">
+          <h1 className="mb-6 font-display text-[32px] font-semibold leading-tight text-navy sm:text-[40px]">
             Report a Delay
           </h1>
-          <p className="mb-6 text-gray-600">
+          <p className="mb-6 text-stone">
             Select a ride to report a flight delay:
           </p>
           <div className="space-y-3">
@@ -95,14 +94,16 @@ function AspcDelayListContent() {
               <Link
                 key={r.ride_id}
                 href={`/aspc-delay/${r.ride_id}`}
-                className="block min-h-[48px] rounded-xl border border-gray-200 bg-white p-4 shadow-md transition hover:border-orange-300 hover:shadow-lg"
+                className="block min-h-[48px] rounded-lg border border-line bg-card p-4 shadow-card transition-colors hover:border-navy-300"
               >
                 {r.label}
               </Link>
             ))}
           </div>
           <div className="mt-8">
-            <RedirectButton label="Back to Results" route="/results" />
+            <ButtonLink href="/results" variant="secondary">
+              Back to Results
+            </ButtonLink>
           </div>
         </div>
       </div>
@@ -111,29 +112,33 @@ function AspcDelayListContent() {
 
   if (error) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="relative mx-auto max-w-2xl px-4 py-12">
-          <h1 className="mb-6 text-3xl font-bold text-gray-800">
+      <div className="relative">
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:pt-12">
+          <h1 className="mb-6 font-display text-[32px] font-semibold leading-tight text-navy sm:text-[40px]">
             Report a Delay
           </h1>
-          <p className="mb-6 text-red-600">{error}</p>
-          <RedirectButton label="Back to Results" route="/results" />
+          <p className="mb-6 text-danger">{error}</p>
+          <ButtonLink href="/results" variant="secondary">
+            Back to Results
+          </ButtonLink>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-      <div className="relative mx-auto max-w-2xl px-4 py-12">
-        <h1 className="mb-6 text-3xl font-bold text-gray-800">
+    <div className="relative">
+      <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:pt-12">
+        <h1 className="mb-6 font-display text-[32px] font-semibold leading-tight text-navy sm:text-[40px]">
           Report a Delay
         </h1>
-        <p className="mb-6 text-gray-600">
+        <p className="mb-6 text-stone">
           You don&apos;t have any rides. Go to the results page to view your
           matches.
         </p>
-        <RedirectButton label="Back to Results" route="/results" />
+        <ButtonLink href="/results" variant="secondary">
+          Back to Results
+        </ButtonLink>
       </div>
     </div>
   )
@@ -143,8 +148,8 @@ export default function AspcDelayListPage() {
   return (
     <Suspense
       fallback={
-        <div className="from-slate-50 relative flex min-h-screen items-center justify-center bg-gradient-to-br via-blue-50 to-indigo-100">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-200 border-t-teal-500" />
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-[3px] border-sage border-r-transparent" />
         </div>
       }
     >

@@ -1,4 +1,4 @@
-# PICKUP Frontend Remediation Notice
+# RideLink Frontend Remediation Notice
 
 This document records frontend repository remediation work for the ASPC Required Remediation Items dated June 10, 2026. Issues #1-#3 apply to the separate ML repository and are not duplicated here. This frontend notice covers Issues #4-#12.
 

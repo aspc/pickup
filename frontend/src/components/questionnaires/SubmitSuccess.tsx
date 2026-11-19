@@ -3,6 +3,9 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 
+import { Button } from '@/components/ui/Button'
+import { Modal } from '@/components/ui/Modal'
+
 export type SubmitSuccessVariant = 'success' | 'legal_log_failed'
 
 interface SubmitSuccessProps {
@@ -41,7 +44,7 @@ const SubmitSuccess: React.FC<SubmitSuccessProps> = ({
     const mailHref =
       reportFlightId != null && Number.isFinite(reportFlightId)
         ? `mailto:${RIDELINK_EMAIL}?subject=${encodeURIComponent(
-            `RideLink: T&C log error — flight ${reportFlightId}`,
+            `RideLink: T&C log error - flight ${reportFlightId}`,
           )}&body=${encodeURIComponent(
             `Hello,\n\nMy ride request was saved, but the app reported an error logging my acceptance of the Terms & Conditions and Privacy Notice.\n\nFlight ID: ${reportFlightId}\n\n`,
           )}`
@@ -52,64 +55,47 @@ const SubmitSuccess: React.FC<SubmitSuccessProps> = ({
           )}`
 
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20 p-4">
-        <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
-          <h2 className="text-xl font-semibold text-gray-800">
-            Ride request saved — one more step
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-gray-700">
+      <Modal
+        open
+        onClose={handleOkay}
+        dismissible={false}
+        title="Ride request saved, one more step"
+        footer={<Button onClick={handleOkay}>Continue to my forms</Button>}
+      >
+        <div className="space-y-3 text-sm leading-relaxed">
+          <p>
             Your flight details were saved, but we hit an error while recording
             your acceptance of the Terms & Conditions and Privacy Notice in our
             system. That log is required for your records.
           </p>
-          <p className="mt-3 text-sm font-medium text-gray-900">{idLine}</p>
-          <p className="mt-3 text-sm leading-relaxed text-gray-700">
+          <p className="font-medium text-navy">{idLine}</p>
+          <p>
             Email{' '}
             <a
               href={mailHref}
-              className="font-semibold text-teal-700 underline hover:text-teal-900"
+              className="font-medium text-navy underline underline-offset-2 hover:text-sage"
             >
               {RIDELINK_EMAIL}
             </a>{' '}
             so we can complete the acceptance log for your account.
           </p>
-
-          <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-end">
-            <button
-              type="button"
-              onClick={handleOkay}
-              className="rounded-lg bg-teal-600 px-4 py-2 font-medium text-white hover:bg-teal-700"
-            >
-              Continue to my forms
-            </button>
-          </div>
         </div>
-      </div>
+      </Modal>
     )
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
-      <div className="w-96 rounded-lg bg-white p-6 shadow-lg">
-        <h2 className="text-xl font-semibold text-gray-800">
-          ✅ Flight details submitted successfully!
-        </h2>
-        <p className="mt-2 text-gray-600">
-          You may edit or delete this form up to 7 days before your requested
-          ride share. You will receive an email with your match details at least
-          3 days before your requested ride share date.
-        </p>
-
-        <div className="mt-4 flex justify-end space-x-4">
-          <button
-            onClick={handleOkay}
-            className="rounded-lg bg-gray-300 px-4 py-2 text-black hover:bg-gray-400"
-          >
-            Okay
-          </button>
-        </div>
-      </div>
-    </div>
+    <Modal
+      open
+      onClose={handleOkay}
+      size="sm"
+      title="Flight details submitted successfully!"
+      footer={<Button onClick={handleOkay}>Okay</Button>}
+    >
+      You may edit or delete this form up to 7 days before your requested ride
+      share. You will receive an email with your match details at least 3 days
+      before your requested ride share date.
+    </Modal>
   )
 }
 

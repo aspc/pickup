@@ -29,11 +29,11 @@ If the project is not linked, use `--project-id <ref>` instead of `--linked`. Se
 
 Run this checklist before each break (Thanksgiving, winter, spring, summer, etc.).
 
-| Step | File | What to change |
-| ---- | ---- | -------------- |
+| Step                                       | File                                                              | What to change                                                                                                                                                                                                                          |
+| ------------------------------------------ | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **All break dates, deadlines, directions** | [`src/config/servicePeriods.ts`](../src/config/servicePeriods.ts) | Add or edit period rows: `subsidized` outbound/inbound ranges, `buffered` window, `deadline` (ISO with correct PT offset), `allowedDirections`. Short breaks = one dual-direction row; long winter gap = separate outbound/return rows. |
-| Airport mins + school | [`src/config/subsidyConfig.ts`](../src/config/subsidyConfig.ts) | `AIRPORT_MIN_RIDERS`, `ALLOWED_SCHOOL` only — covered date lists are derived automatically. |
-| Optional deadline summary | [`FEATURE_STATUS.md`](./FEATURE_STATUS.md) | Any future banner should read buffered windows from `SERVICE_PERIODS` in `servicePeriods.ts`. |
+| Airport mins + school                      | [`src/config/subsidyConfig.ts`](../src/config/subsidyConfig.ts)   | `AIRPORT_MIN_RIDERS`, `ALLOWED_SCHOOL` only — covered date lists are derived automatically.                                                                                                                                             |
+| Optional deadline summary                  | [`FEATURE_STATUS.md`](./FEATURE_STATUS.md)                        | Any future banner should read buffered windows from `SERVICE_PERIODS` in `servicePeriods.ts`.                                                                                                                                           |
 
 **Auto-updated consumers** (no manual edits needed after `servicePeriods.ts` changes):
 

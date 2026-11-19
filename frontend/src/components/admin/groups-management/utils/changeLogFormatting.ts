@@ -319,13 +319,13 @@ export const formatChangeLogEntry = (
 
       if (metadata.outcome === 'kept_original_group_eta_earlier') {
         outcome =
-          'kept on original group (new pickup time is before original group — not treated as a delay)'
+          'kept on original group (new pickup time is before original group - not treated as a delay)'
       } else if (metadata.outcome === 'delay_no_group_unmatched') {
         outcome =
-          'removed from group — unmatched (no alternate group, no contingency voucher)'
+          'removed from group - unmatched (no alternate group, no contingency voucher)'
       } else if (metadata.outcome === 'solo_ride_created') {
         if (metadata.skipped_contingency_new_eta_before_original === true) {
-          outcome = `moved to new solo group #${metadata.new_ride_id ?? '?'} (contingency not applied — new ETA before original group)`
+          outcome = `moved to new solo group #${metadata.new_ride_id ?? '?'} (contingency not applied - new ETA before original group)`
         } else if (metadata.contingency_voucher_assigned === true) {
           outcome = `moved to new solo group #${metadata.new_ride_id ?? '?'} (contingency voucher applied)`
         } else if (metadata.contingency_voucher_assigned === false) {
@@ -340,7 +340,7 @@ export const formatChangeLogEntry = (
       if (metadata.new_flight_no) {
         actionText = `reported delay (${reason}): new flight ${metadata.new_flight_airport ?? ''} ${metadata.new_flight_no} on ${metadata.new_flight_date}; ${outcome}`
       } else {
-        actionText = `reported delay (${reason}): flight date ${oldFlightDate ?? '—'} → new ETA ${newDate} ${newTime}; ${outcome}`
+        actionText = `reported delay (${reason}): flight date ${oldFlightDate ?? '-'} → new ETA ${newDate} ${newTime}; ${outcome}`
       }
       break
     }

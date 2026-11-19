@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { requestJson } from '@/utils/api'
 import { useCallback, useEffect, useState } from 'react'
-import RedirectButton from '@/components/buttons/RedirectButton'
+import { ButtonLink } from '@/components/ui/Button'
 import FlightConfirmStep from '@/components/aspc-delay/FlightConfirmStep'
 import NewFlightStep, {
   type NewFlightTimeRange,
@@ -204,10 +204,9 @@ export default function AspcDelayPage() {
 
   if (loading) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="relative flex min-h-screen items-center justify-center p-4">
-          <p className="text-gray-600">Loading…</p>
+      <div className="relative">
+        <div className="flex min-h-[60vh] items-center justify-center p-4">
+          <p className="text-stone">Loading…</p>
         </div>
       </div>
     )
@@ -215,12 +214,13 @@ export default function AspcDelayPage() {
 
   if (error) {
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="relative mx-auto max-w-2xl px-4 py-6 sm:py-12">
-          <div className="rounded-2xl bg-white/80 p-4 shadow-xl backdrop-blur-sm sm:p-8">
-            <p className="mb-4 text-red-600">{error}</p>
-            <RedirectButton label="Back to Results" route="/results" />
+      <div className="relative">
+        <div className="mx-auto max-w-2xl px-4 pb-16 pt-8 sm:pt-12">
+          <div className="rounded-lg border border-line bg-card p-5 shadow-card sm:p-8">
+            <p className="mb-4 text-danger">{error}</p>
+            <ButtonLink href="/results" variant="secondary">
+              Back to Results
+            </ButtonLink>
           </div>
         </div>
       </div>
@@ -230,32 +230,29 @@ export default function AspcDelayPage() {
   if (findResult?.success) {
     if (findResult.keptOriginalGroupBecauseEarlierEta) {
       return (
-        <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-          <div className="relative flex min-h-screen w-full items-center justify-center p-4">
+        <div className="relative">
+          <div className="flex w-full justify-center px-4 pb-16 pt-8 sm:pt-12">
             <div className="w-full max-w-2xl">
-              <div className="rounded-2xl bg-white/80 p-4 shadow-xl backdrop-blur-sm sm:p-6 md:rounded-3xl md:p-8">
-                <h2 className="mb-3 text-lg font-semibold text-gray-900 sm:text-xl">
+              <div className="rounded-lg border border-line bg-card p-5 shadow-card sm:p-8">
+                <h2 className="mb-3 text-lg font-semibold text-navy">
                   This isn&apos;t a delay for your match
                 </h2>
-                <p className="mb-3 text-gray-800">
+                <p className="mb-3 text-ink">
                   The pickup time you entered is <strong>earlier</strong> than
                   your original group&apos;s time. You can still make that ride,
                   so you&apos;ve been{' '}
-                  <strong>kept on your original group</strong>—nothing was
+                  <strong>kept on your original group</strong> - nothing was
                   changed.
                 </p>
-                <p className="mb-6 text-sm text-gray-600">
+                <p className="mb-6 text-sm text-stone">
                   Wait for your original pickup time on Results. If your plans
                   change again and you&apos;ll be <em>later</em> than the group,
                   you can report a delay then.
                 </p>
-                <div className="border-t border-gray-200 pt-4">
-                  <RedirectButton
-                    label="Back to Results"
-                    route="/results"
-                    className="rounded-xl border-2 border-gray-300 bg-white px-4 py-2.5 text-base font-semibold text-gray-700 hover:bg-gray-50"
-                  />
+                <div className="border-t border-line pt-4">
+                  <ButtonLink href="/results" variant="secondary">
+                    Back to Results
+                  </ButtonLink>
                 </div>
               </div>
             </div>
@@ -274,28 +271,27 @@ export default function AspcDelayPage() {
       getContingencyVoucherDeclineReasons(findResult)
 
     return (
-      <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="relative flex min-h-screen w-full items-center justify-center p-4">
+      <div className="relative">
+        <div className="flex w-full justify-center px-4 pb-16 pt-8 sm:pt-12">
           <div className="w-full max-w-2xl">
-            <div className="rounded-2xl bg-white/80 p-4 shadow-xl backdrop-blur-sm sm:p-6 md:rounded-3xl md:p-8">
+            <div className="rounded-lg border border-line bg-card p-5 shadow-card sm:p-8">
               {joinedRideId != null ? (
                 <>
-                  <p className="mb-4 text-gray-800">
+                  <p className="mb-4 text-ink">
                     You&apos;ve been added to the group. Your Results page has
                     been updated.
                   </p>
                 </>
               ) : choseUnmatched ? (
                 <>
-                  <p className="mb-4 text-gray-800">
+                  <p className="mb-4 text-ink">
                     You&apos;ve been removed from your group. You can look for
                     other riders on the unmatched page.
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-stone">
                     <Link
                       href="/unmatched"
-                      className="font-medium text-teal-600 underline hover:text-teal-700"
+                      className="font-medium text-navy underline underline-offset-2 hover:text-sage"
                     >
                       Go to unmatched page
                     </Link>
@@ -303,23 +299,23 @@ export default function AspcDelayPage() {
                 </>
               ) : findResult.movedToUnmatched ? (
                 <>
-                  <p className="mb-3 text-gray-800">
+                  <p className="mb-3 text-ink">
                     We couldn&apos;t find another group for your new pickup
                     time. No contingency voucher was applied for these reasons:
                   </p>
-                  <ul className="mb-4 list-disc space-y-2 pl-5 text-sm text-gray-700">
+                  <ul className="mb-4 list-disc space-y-2 pl-5 text-sm text-ink">
                     {uniqueNoVoucherReasons.map((reason, i) => (
                       <li key={i}>{reason}</li>
                     ))}
                   </ul>
-                  <p className="mb-4 text-gray-800">
+                  <p className="mb-4 text-ink">
                     You&apos;ve been removed from your match so you can look for
                     other riders on the unmatched page.
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-stone">
                     <Link
                       href="/unmatched"
-                      className="font-medium text-teal-600 underline hover:text-teal-700"
+                      className="font-medium text-navy underline underline-offset-2 hover:text-sage"
                     >
                       Go to unmatched page
                     </Link>
@@ -327,20 +323,20 @@ export default function AspcDelayPage() {
                 </>
               ) : hasGroups ? (
                 <>
-                  <h2 className="mb-2 text-lg font-semibold text-gray-800 sm:text-xl">
+                  <h2 className="mb-2 text-lg font-semibold text-navy">
                     Available groups
                   </h2>
-                  <p className="mb-4 text-sm text-gray-600">
+                  <p className="mb-4 text-sm text-stone">
                     Groups on your date and route that can accommodate you.
                   </p>
                   <ul className="space-y-3">
                     {groups.map((g) => (
                       <li
                         key={g.rideId}
-                        className="flex flex-col gap-3 rounded-xl border border-gray-200 bg-white/60 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+                        className="flex flex-col gap-3 rounded-md border border-line bg-paper px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
                       >
                         <div className="flex flex-col gap-0.5">
-                          <span className="font-medium text-gray-900">
+                          <span className="font-medium text-ink">
                             {new Date(g.date + 'T00:00:00').toLocaleDateString(
                               'en-US',
                               {
@@ -351,7 +347,7 @@ export default function AspcDelayPage() {
                             )}{' '}
                             at {g.rideTime}
                           </span>
-                          <span className="text-sm text-gray-600">
+                          <span className="text-sm text-stone">
                             Uber {g.rideType} · {g.riderCount}{' '}
                             {g.riderCount === 1 ? 'person' : 'people'}
                           </span>
@@ -371,7 +367,7 @@ export default function AspcDelayPage() {
                             else setError(res?.error ?? 'Failed to join group')
                           }}
                           disabled={joiningRideId != null}
-                          className="shrink-0 rounded-xl border-2 border-teal-600 bg-teal-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-teal-700 disabled:opacity-50"
+                          className="inline-flex h-9 shrink-0 items-center justify-center rounded-md bg-navy px-3 text-sm font-medium text-white transition-colors hover:bg-navy-700 disabled:opacity-50"
                         >
                           {joiningRideId === g.rideId
                             ? 'Joining…'
@@ -395,11 +391,11 @@ export default function AspcDelayPage() {
                         else setError(res?.error ?? 'Failed to leave group')
                       }}
                       disabled={declining}
-                      className="text-sm font-medium text-gray-600 underline hover:text-gray-800 disabled:opacity-50"
+                      className="text-sm font-medium text-stone underline underline-offset-2 hover:text-navy disabled:opacity-50"
                     >
                       {declining
                         ? 'Leaving…'
-                        : "Don't join any group — I'll go to unmatched"}
+                        : "Don't join any group - I'll go to unmatched"}
                     </button>
                   </div>
                 </>
@@ -407,48 +403,48 @@ export default function AspcDelayPage() {
                 <>
                   {showVoucher ? (
                     <>
-                      <p className="mb-3 text-gray-800">
+                      <p className="mb-3 text-ink">
                         We couldn&apos;t find a new group, but you qualify for a
                         contingency voucher.
                       </p>
-                      <div className="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
-                        <p className="mb-2 text-sm font-semibold text-amber-900">
+                      <div className="mb-4 rounded-md border border-warning/20 bg-warning-tint p-4">
+                        <p className="mb-2 text-sm font-semibold text-warning">
                           Contingency voucher
                         </p>
                         <a
                           href={findResult.contingencyVoucher ?? '#'}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="break-all text-sm font-medium text-teal-600 underline hover:text-teal-700"
+                          className="break-all text-sm font-medium text-navy underline underline-offset-2 hover:text-sage"
                         >
                           {findResult.contingencyVoucher}
                         </a>
-                        <p className="mt-2 text-xs text-amber-800">
+                        <p className="mt-2 text-xs text-warning">
                           Take note of this voucher.
                         </p>
                       </div>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-stone">
                         This voucher is also saved on your Results page for
                         reference.
                       </p>
                     </>
                   ) : (
                     <>
-                      <p className="mb-3 text-gray-800">
+                      <p className="mb-3 text-ink">
                         We couldn&apos;t find another group for your new pickup
                         time. A contingency voucher was not applied for these
                         reasons:
                       </p>
-                      <ul className="mb-4 list-disc space-y-2 pl-5 text-sm text-gray-700">
+                      <ul className="mb-4 list-disc space-y-2 pl-5 text-sm text-ink">
                         {uniqueNoVoucherReasons.map((reason, i) => (
                           <li key={i}>{reason}</li>
                         ))}
                       </ul>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-stone">
                         Please keep an eye out on the{' '}
                         <Link
                           href="/unmatched"
-                          className="font-medium text-teal-600 underline hover:text-teal-700"
+                          className="font-medium text-navy underline underline-offset-2 hover:text-sage"
                         >
                           unmatched page
                         </Link>{' '}
@@ -458,12 +454,10 @@ export default function AspcDelayPage() {
                   )}
                 </>
               )}
-              <div className="mt-6 border-t border-gray-200 pt-4">
-                <RedirectButton
-                  label="Back to Results"
-                  route="/results"
-                  className="rounded-xl border-2 border-gray-300 bg-white px-4 py-2.5 text-base font-semibold text-gray-700 hover:bg-gray-50"
-                />
+              <div className="mt-6 border-t border-line pt-4">
+                <ButtonLink href="/results" variant="secondary">
+                  Back to Results
+                </ButtonLink>
               </div>
             </div>
           </div>
@@ -473,26 +467,13 @@ export default function AspcDelayPage() {
   }
 
   return (
-    <div className="from-slate-50 relative min-h-screen overflow-hidden bg-gradient-to-br via-blue-50 to-indigo-100">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        <div className="animate-float absolute left-1/4 top-20 h-16 w-16 rotate-12 rounded-2xl bg-gradient-to-br from-teal-400/20 to-teal-600/20" />
-        <div
-          className="animate-float absolute right-1/3 top-40 h-12 w-12 rounded-full bg-gradient-to-br from-blue-400/20 to-blue-600/20"
-          style={{ animationDelay: '1s' }}
-        />
-        <div
-          className="animate-float absolute bottom-40 left-1/3 h-20 w-20 rotate-45 rounded-3xl bg-gradient-to-br from-indigo-400/20 to-indigo-600/20"
-          style={{ animationDelay: '2s' }}
-        />
-      </div>
-
-      <div className="relative flex min-h-screen w-full items-center justify-center p-4">
+    <div className="relative">
+      <div className="flex w-full justify-center px-4 pb-16 pt-8 sm:pt-12">
         <div className="w-full max-w-2xl">
           <div className="mb-4 text-center md:mb-6">
-            <div className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-yellow-100 shadow-lg md:h-16 md:w-16">
+            <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-full bg-sage-tint">
               <svg
-                className="h-7 w-7 text-white md:h-8 md:w-8"
+                className="h-6 w-6 text-sage"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -505,21 +486,19 @@ export default function AspcDelayPage() {
                 />
               </svg>
             </div>
-            <h1 className="mb-1 text-xl font-bold text-gray-900 sm:text-2xl md:text-3xl">
+            <h1 className="mb-1 font-display text-2xl font-semibold text-navy sm:text-3xl">
               Report a delay
             </h1>
-            <p className="text-sm text-gray-600 sm:text-base">
-              Ride ID: {rideId}
-            </p>
+            <p className="text-sm text-stone sm:text-base">Ride ID: {rideId}</p>
           </div>
 
-          <div className="rounded-2xl bg-white/80 p-4 shadow-xl backdrop-blur-sm sm:p-6 md:rounded-3xl md:p-8">
+          <div className="rounded-lg border border-line bg-card p-5 shadow-card sm:p-8">
             {formState.step >= 1 && (
               <div className="mb-4">
                 <button
                   type="button"
                   onClick={goBack}
-                  className="flex items-center gap-2 rounded-xl border-2 border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                  className="inline-flex h-10 items-center gap-2 rounded-md border border-line-strong bg-card px-3.5 text-sm font-medium text-ink transition-[background-color,transform] duration-150 hover:bg-sunken active:scale-[0.97]"
                 >
                   <svg
                     className="h-5 w-5"
@@ -594,12 +573,10 @@ export default function AspcDelayPage() {
               />
             )}
 
-            <div className="mt-6 border-t border-gray-200 pt-4">
-              <RedirectButton
-                label="Back to Results"
-                route="/results"
-                className="rounded-xl border-2 border-gray-300 bg-white px-4 py-2.5 text-base font-semibold text-gray-700 hover:bg-gray-50"
-              />
+            <div className="mt-6 border-t border-line pt-4">
+              <ButtonLink href="/results" variant="secondary">
+                Back to Results
+              </ButtonLink>
             </div>
           </div>
         </div>

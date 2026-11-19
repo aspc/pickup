@@ -163,8 +163,8 @@ export default function MatchedGroupsPanel() {
 
   if (sortedGroups.length === 0) {
     return (
-      <div className="rounded-lg border-2 border-dashed border-gray-300 bg-white p-12 text-center">
-        <p className="text-gray-500">No groups found</p>
+      <div className="rounded-lg border-2 border-dashed border-line-strong bg-card p-12 text-center">
+        <p className="text-stone">No groups found</p>
       </div>
     )
   }
@@ -182,9 +182,9 @@ export default function MatchedGroupsPanel() {
         return (
           <div
             key={group.ride_id}
-            className={`overflow-hidden rounded-lg bg-white shadow-md transition-colors ${
+            className={`overflow-hidden rounded-lg bg-card shadow-card transition-colors ${
               dragOverGroupId === group.ride_id && draggedRider
-                ? 'bg-teal-50 ring-2 ring-teal-500'
+                ? 'bg-sage-tint ring-2 ring-sage/40'
                 : ''
             }`}
             onDragOver={(event) => {
@@ -204,17 +204,17 @@ export default function MatchedGroupsPanel() {
             }}
           >
             <div
-              className="flex cursor-pointer items-center justify-between border-b border-gray-200 bg-gray-50 p-4 hover:bg-gray-100"
+              className="flex cursor-pointer items-center justify-between border-b border-line bg-card p-4 transition-colors hover:bg-paper"
               onClick={() => toggleGroupExpanded(group.ride_id)}
             >
               <div className="flex min-w-0 flex-1 items-center gap-4">
                 <div className="min-w-0 flex-1">
                   <div className="mb-1 flex items-center gap-2">
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-ink">
                       Group #{group.ride_id}
                     </p>
                     {datePassed && (
-                      <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-800">
+                      <span className="rounded-full bg-danger-tint px-2 py-0.5 text-xs font-semibold text-danger">
                         Past Date
                       </span>
                     )}
@@ -236,7 +236,7 @@ export default function MatchedGroupsPanel() {
 
                       return (
                         <span
-                          className="bg-rose-50 text-rose-950 ring-rose-200 max-w-[20rem] rounded-full px-2.5 py-0.5 text-xs font-medium ring-1"
+                          className="max-w-[20rem] rounded-full bg-danger-tint px-2.5 py-0.5 text-xs font-medium text-danger ring-1 ring-danger/40"
                           title={`${flaggedCount} rider(s) in this group were reported missing on ASPC Ready. ${distinctReporterCount} distinct rider(s) filed those reports. Red/orange flags on names = delay log status.`}
                         >
                           {flaggedCount} rider{flaggedCount === 1 ? '' : 's'}{' '}
@@ -245,12 +245,12 @@ export default function MatchedGroupsPanel() {
                       )
                     })()}
                   </div>
-                  <p className="hidden text-sm text-gray-600 md:block">
+                  <p className="hidden text-sm text-stone md:block">
                     {group.date} •{' '}
                     {group.match_time ? (
                       <>
                         {formatTime(group.match_time)}
-                        <span className="ml-1 text-xs italic text-gray-500">
+                        <span className="ml-1 text-xs italic text-stone">
                           ({formatTimeRange(group.time_range)})
                         </span>
                       </>
@@ -258,13 +258,13 @@ export default function MatchedGroupsPanel() {
                       formatTimeRange(calculateGroupTimeRange(group.riders))
                     )}
                   </p>
-                  <div className="space-y-0.5 text-sm text-gray-600 md:hidden">
+                  <div className="space-y-0.5 text-sm text-stone md:hidden">
                     <p>{group.date}</p>
                     <p>
                       {group.match_time ? (
                         <>
                           {formatTime(group.match_time)}
-                          <span className="ml-1 text-xs italic text-gray-500">
+                          <span className="ml-1 text-xs italic text-stone">
                             ({formatTimeRange(group.time_range)})
                           </span>
                         </>
@@ -274,10 +274,10 @@ export default function MatchedGroupsPanel() {
                     </p>
                   </div>
                   <div className="mt-1 flex items-center gap-1.5">
-                    <p className="text-xs text-gray-600">
+                    <p className="text-xs text-stone">
                       Uber Voucher:{' '}
                       {group.group_voucher ? (
-                        <span className="font-bold text-gray-900">
+                        <span className="font-bold text-ink">
                           {formatVoucher(group.group_voucher)}
                         </span>
                       ) : (
@@ -289,7 +289,7 @@ export default function MatchedGroupsPanel() {
                         event.stopPropagation()
                         openEditVoucher(group)
                       }}
-                      className="flex items-center text-gray-500 transition-colors hover:text-teal-600"
+                      className="flex items-center text-stone transition-colors hover:text-sage"
                       title="Edit voucher"
                     >
                       <Pencil className="h-3 w-3" />
@@ -300,14 +300,14 @@ export default function MatchedGroupsPanel() {
 
               <div className="flex flex-shrink-0 items-center gap-2">
                 <div className="hidden items-center gap-2 md:flex">
-                  <span className="rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-800">
+                  <span className="rounded-full bg-sage-tint px-3 py-1 text-xs font-semibold text-sage-strong">
                     {riderCount} {riderCount === 1 ? 'rider' : 'riders'}
                   </span>
                   <span
                     className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${
                       group.to_airport
-                        ? 'bg-teal-100 text-teal-800'
-                        : 'bg-orange-100 text-orange-800'
+                        ? 'bg-navy-50 text-navy'
+                        : 'bg-navy-50 text-navy'
                     }`}
                   >
                     {group.to_airport ? (
@@ -326,8 +326,8 @@ export default function MatchedGroupsPanel() {
                     className={`rounded-full px-3 py-1 text-xs font-semibold ${
                       (group.is_subsidized ??
                       isGroupSubsidized(group.airport, riderCount))
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-gray-100 text-gray-800'
+                        ? 'bg-sage-tint text-sage-strong'
+                        : 'bg-sunken text-ink'
                     }`}
                   >
                     {(group.is_subsidized ??
@@ -335,7 +335,7 @@ export default function MatchedGroupsPanel() {
                       ? 'Subsidized'
                       : 'Not Subsidized'}
                   </span>
-                  <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
+                  <span className="rounded-full bg-navy-100 px-3 py-1 text-xs font-semibold text-navy">
                     {formatUberTypeDisplay(
                       group.uber_type,
                       getUberType(riderCount),
@@ -345,14 +345,14 @@ export default function MatchedGroupsPanel() {
 
                 <div className="flex flex-col gap-1 md:hidden">
                   <div className="flex flex-col gap-1">
-                    <span className="w-fit rounded-full bg-teal-100 px-2 py-0.5 text-xs font-semibold text-teal-800">
+                    <span className="w-fit rounded-full bg-sage-tint px-2 py-0.5 text-xs font-semibold text-sage-strong">
                       {riderCount} {riderCount === 1 ? 'rider' : 'riders'}
                     </span>
                     <span
                       className={`flex w-fit items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
                         group.to_airport
-                          ? 'bg-teal-100 text-teal-800'
-                          : 'bg-orange-100 text-orange-800'
+                          ? 'bg-navy-50 text-navy'
+                          : 'bg-navy-50 text-navy'
                       }`}
                     >
                       {group.to_airport ? (
@@ -373,8 +373,8 @@ export default function MatchedGroupsPanel() {
                       className={`w-fit rounded-full px-2 py-0.5 text-xs font-semibold ${
                         (group.is_subsidized ??
                         isGroupSubsidized(group.airport, riderCount))
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
+                          ? 'bg-sage-tint text-sage-strong'
+                          : 'bg-sunken text-ink'
                       }`}
                     >
                       {(group.is_subsidized ??
@@ -382,7 +382,7 @@ export default function MatchedGroupsPanel() {
                         ? 'Subsidized'
                         : 'Not Subsidized'}
                     </span>
-                    <span className="w-fit rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800">
+                    <span className="w-fit rounded-full bg-navy-100 px-2 py-0.5 text-xs font-semibold text-navy">
                       {formatUberTypeDisplay(
                         group.uber_type,
                         getUberType(riderCount),
@@ -398,7 +398,7 @@ export default function MatchedGroupsPanel() {
                       openEditTime(group)
                     }
                   }}
-                  className="rounded p-1.5 text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                  className="rounded p-1.5 text-stone hover:bg-line hover:text-ink"
                   title="Edit group time"
                 >
                   <Clock className="h-5 w-5" />
@@ -411,8 +411,8 @@ export default function MatchedGroupsPanel() {
                   }}
                   className={`rounded p-1.5 transition-colors ${
                     hasManualOverrides
-                      ? 'text-amber-600 hover:bg-amber-50 hover:text-amber-800'
-                      : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+                      ? 'text-warning hover:bg-warning-tint hover:text-warning'
+                      : 'text-stone hover:bg-line hover:text-ink'
                   }`}
                   title={
                     hasManualOverrides
@@ -428,7 +428,7 @@ export default function MatchedGroupsPanel() {
                 </button>
 
                 <svg
-                  className={`h-5 w-5 flex-shrink-0 text-gray-500 transition-transform ${
+                  className={`h-5 w-5 flex-shrink-0 text-stone transition-transform ${
                     isExpanded ? 'rotate-180' : ''
                   }`}
                   fill="none"
@@ -445,16 +445,16 @@ export default function MatchedGroupsPanel() {
               </div>
             </div>
 
-            <div className="border-b border-gray-200 bg-white px-4 py-2">
+            <div className="border-b border-line bg-card px-4 py-2">
               <div className="mb-1 flex items-center justify-between">
-                <span className="text-xs text-gray-600">
+                <span className="text-xs text-stone">
                   Bag Units: {totalBagUnits}/
                   {group.uber_type?.toLowerCase() === 'connect'
                     ? 'unlimited'
                     : getMaxBagUnits(riderCount)}
                 </span>
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+              <div className="h-2 w-full overflow-hidden rounded-full bg-line">
                 <div
                   className={`h-full ${getCapacityBarColor(totalBagUnits, group.uber_type)} transition-all`}
                   style={{
@@ -471,7 +471,7 @@ export default function MatchedGroupsPanel() {
               <div
                 className={`p-4 transition-colors ${
                   dragOverGroupId === group.ride_id && draggedRider
-                    ? 'bg-teal-50'
+                    ? 'bg-sage-tint'
                     : ''
                 }`}
                 onDragOver={(event) => {
@@ -498,8 +498,8 @@ export default function MatchedGroupsPanel() {
                   disabled={corralRiders.length === 0}
                   className={`mb-3 text-sm ${
                     corralRiders.length === 0
-                      ? 'cursor-not-allowed text-gray-400'
-                      : 'text-teal-600 underline hover:text-teal-800'
+                      ? 'cursor-not-allowed text-stone-light'
+                      : 'text-sage underline hover:text-sage-strong'
                   }`}
                 >
                   Add from corral
@@ -515,8 +515,8 @@ export default function MatchedGroupsPanel() {
 
                   if (allRiders.length === 0) {
                     return (
-                      <div className="rounded-lg border-2 border-dashed border-gray-300 p-8 text-center">
-                        <p className="text-gray-500">Drop riders here</p>
+                      <div className="rounded-lg border-2 border-dashed border-line-strong p-8 text-center">
+                        <p className="text-stone">Drop riders here</p>
                       </div>
                     )
                   }
@@ -545,17 +545,17 @@ export default function MatchedGroupsPanel() {
                             key={`${rider.user_id}-${rider.flight_id}`}
                             className={`flex items-center justify-between rounded-lg border p-3 transition-all ${
                               riderDatePassed
-                                ? 'border border-red-300 bg-gray-200 hover:bg-gray-300'
-                                : 'border-gray-200 bg-white'
+                                ? 'border border-danger/30 bg-line hover:bg-line'
+                                : 'border-line bg-card'
                             } ${
                               isBeingDragged
-                                ? 'bg-gray-100 opacity-30'
+                                ? 'bg-sunken opacity-30'
                                 : isInCorral ||
                                     isSelectedForNewGroup ||
                                     isRecentlyAdded
-                                  ? 'cursor-not-allowed bg-gray-100 opacity-40'
+                                  ? 'cursor-not-allowed bg-sunken opacity-40'
                                   : !riderDatePassed
-                                    ? 'hover:bg-gray-50'
+                                    ? 'hover:bg-paper'
                                     : ''
                             }`}
                             draggable={!isInCorral}
@@ -573,11 +573,11 @@ export default function MatchedGroupsPanel() {
                             <div className="flex items-center gap-4">
                               <div className="flex-1">
                                 <div className="flex items-center gap-3">
-                                  <p className="flex items-center gap-1.5 font-medium text-gray-900">
+                                  <p className="flex items-center gap-1.5 font-medium text-ink">
                                     {rider.name}
                                     {rider.original_unmatched && (
                                       <span title="Originally unmatched">
-                                        <Flag className="h-3.5 w-3.5 flex-shrink-0 text-amber-500" />
+                                        <Flag className="h-3.5 w-3.5 flex-shrink-0 text-warning" />
                                       </span>
                                     )}
                                     {rider.no_show && (
@@ -588,8 +588,8 @@ export default function MatchedGroupsPanel() {
                                         <Flag
                                           className={`h-3.5 w-3.5 flex-shrink-0 ${
                                             rider.no_show.flag === 'orange'
-                                              ? 'text-orange-500'
-                                              : 'text-red-600'
+                                              ? 'text-warning'
+                                              : 'text-danger'
                                           }`}
                                         />
                                       </span>
@@ -597,49 +597,49 @@ export default function MatchedGroupsPanel() {
                                   </p>
                                   <div className="flex items-center gap-2">
                                     <div className="group relative flex items-center gap-1">
-                                      <Luggage className="h-4 w-4 text-gray-600" />
-                                      <span className="text-sm text-gray-600">
+                                      <Luggage className="h-4 w-4 text-stone" />
+                                      <span className="text-sm text-stone">
                                         {rider.checked_bags}
                                       </span>
-                                      <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white group-hover:block">
+                                      <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-navy px-2 py-1 text-xs text-white group-hover:block">
                                         Checked Bags (2 Units Each)
-                                        <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                                        <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-navy"></div>
                                       </div>
                                     </div>
                                     <div className="group relative flex items-center gap-1">
-                                      <Briefcase className="h-4 w-4 text-gray-600" />
-                                      <span className="text-sm text-gray-600">
+                                      <Briefcase className="h-4 w-4 text-stone" />
+                                      <span className="text-sm text-stone">
                                         {rider.carry_on_bags}
                                       </span>
-                                      <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white group-hover:block">
+                                      <div className="absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 transform whitespace-nowrap rounded bg-navy px-2 py-1 text-xs text-white group-hover:block">
                                         Carry-On Bags (1 Unit Each)
-                                        <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                                        <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-4 border-transparent border-t-navy"></div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                                <p className="text-sm text-gray-600">
+                                <p className="text-sm text-stone">
                                   {rider.phone}
                                   {rider.phone !== '[Hidden]' &&
                                     rider.sms_opt_in !== true && (
-                                      <span className="text-red-600">
+                                      <span className="text-danger">
                                         {' '}
                                         (SMS opt-out)
                                       </span>
                                     )}
                                 </p>
-                                <div className="mt-1 flex items-center gap-3 text-sm text-gray-600">
+                                <div className="mt-1 flex items-center gap-3 text-sm text-stone">
                                   {rider.airline_iata && rider.flight_no && (
-                                    <span className="flex items-center gap-1 text-xs font-medium text-gray-700">
-                                      <Plane className="h-3 w-3 text-gray-600" />
+                                    <span className="flex items-center gap-1 text-xs font-medium text-ink">
+                                      <Plane className="h-3 w-3 text-stone" />
                                       {rider.airline_iata} {rider.flight_no}
                                     </span>
                                   )}
                                   <span
                                     className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
                                       rider.to_airport
-                                        ? 'bg-teal-100 text-teal-800'
-                                        : 'bg-orange-100 text-orange-800'
+                                        ? 'bg-navy-50 text-navy'
+                                        : 'bg-navy-50 text-navy'
                                     }`}
                                   >
                                     {rider.to_airport ? (
@@ -655,7 +655,7 @@ export default function MatchedGroupsPanel() {
                                     )}
                                   </span>
                                 </div>
-                                <p className="mt-1 text-xs text-gray-500">
+                                <p className="mt-1 text-xs text-stone">
                                   {rider.date} •{' '}
                                   {formatTimeRange(rider.time_range)}
                                 </p>
@@ -672,8 +672,8 @@ export default function MatchedGroupsPanel() {
                                 disabled={datePassed}
                                 className={`rounded p-1 ${
                                   datePassed
-                                    ? 'cursor-not-allowed text-gray-400'
-                                    : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+                                    ? 'cursor-not-allowed text-stone-light'
+                                    : 'text-stone hover:bg-line hover:text-ink'
                                 }`}
                                 title={
                                   datePassed
@@ -687,7 +687,7 @@ export default function MatchedGroupsPanel() {
                                 onClick={() => {
                                   handleAddToCorral(rider, group.ride_id)
                                 }}
-                                className="rounded p-1 text-teal-500 hover:bg-teal-50"
+                                className="rounded p-1 text-sage hover:bg-sage-tint"
                                 title="Move to corral"
                               >
                                 <svg
@@ -711,7 +711,7 @@ export default function MatchedGroupsPanel() {
                                     group.ride_id,
                                   )
                                 }}
-                                className="rounded p-1 text-red-500 hover:bg-red-50"
+                                className="rounded p-1 text-danger hover:bg-danger-tint"
                                 title="Remove from group and make unmatched"
                               >
                                 <svg

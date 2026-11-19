@@ -88,17 +88,17 @@ export default function NewFlightStep({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
+      <h2 className="text-lg font-semibold text-navy">
         2. Your new flight details
       </h2>
 
-      <p className="text-sm text-gray-600">
-        Your flight changed — enter the updated flight information below.
+      <p className="text-sm text-stone">
+        Your flight changed - enter the updated flight information below.
       </p>
 
       <div className="space-y-4">
         <label className="block">
-          <span className="mb-1 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+          <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
             Airline code (IATA)
           </span>
           <input
@@ -109,12 +109,12 @@ export default function NewFlightStep({
             }
             placeholder="e.g. AA"
             maxLength={3}
-            className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 placeholder:text-stone-light hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
             required
           />
         </label>
         <label className="block">
-          <span className="mb-1 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+          <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
             Flight number
           </span>
           <input
@@ -122,33 +122,33 @@ export default function NewFlightStep({
             value={flightNo}
             onChange={(e) => setFlightNo(e.target.value)}
             placeholder="e.g. 123"
-            className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 placeholder-gray-500 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+            className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 placeholder:text-stone-light hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
             required
           />
         </label>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <label className="block">
-            <span className="mb-1 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+            <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
               Date
             </span>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+              className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
               required
             />
           </label>
           {!dateChanged ? (
             <label className="block">
-              <span className="mb-1 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+              <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
                 Time
               </span>
               <input
                 type="time"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                 required
               />
             </label>
@@ -158,26 +158,26 @@ export default function NewFlightStep({
         {dateChanged && (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <label className="block">
-              <span className="mb-1 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+              <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
                 Earliest Pickup Time
               </span>
               <input
                 type="time"
                 value={timeEarliest}
                 onChange={(e) => setTimeEarliest(e.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                 required
               />
             </label>
             <label className="block">
-              <span className="mb-1 block text-sm font-semibold text-gray-700 after:ml-1 after:text-red-500 after:content-['*']">
+              <span className="mb-1.5 block text-sm font-medium text-ink after:ml-0.5 after:text-danger after:content-['*']">
                 Latest Pickup Time
               </span>
               <input
                 type="time"
                 value={timeLatest}
                 onChange={(e) => setTimeLatest(e.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white/50 p-3 text-gray-900 transition focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                className="w-full rounded-md border border-line-strong bg-card px-3.5 py-2.5 text-[15px] text-ink transition-[border-color,box-shadow] duration-150 hover:border-navy-300 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/25 focus-visible:ring-offset-0"
                 required
               />
             </label>
@@ -187,7 +187,7 @@ export default function NewFlightStep({
           type="button"
           onClick={handleContinue}
           disabled={!isFilled}
-          className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 px-4 py-3 font-semibold text-white shadow-md transition hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-navy px-4 text-[15px] font-medium text-white transition-[background-color,transform] duration-150 hover:bg-navy-700 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
         >
           Continue
         </button>

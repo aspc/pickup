@@ -1,14 +1,14 @@
 <div align="center">
 
-<img src="frontend/public/favicon.png" alt="PICKUP" width="72" />
+<img src="frontend/public/favicon.png" alt="RideLink" width="72" />
 
-# PICKUP - Local Development
+# RideLink - Local Development
 
-Run the PICKUP web app and matching pipeline on your machine against a **local dev database**, without touching production.
+Run the RideLink web app and matching pipeline on your machine against a **local dev database**, without touching production.
 
 </div>
 
-PICKUP groups students into shared airport rides. This repo has two parts:
+RideLink groups students into shared airport rides. This repo has two parts:
 
 | Folder      | What it is                                         |
 | ----------- | -------------------------------------------------- |
@@ -25,7 +25,7 @@ Both talk to **Supabase** (auth + Postgres). Locally, `start.sh` runs a full Sup
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (running)
 - Node.js 20+ and [pnpm](https://pnpm.io/installation) (the repo pins pnpm 9.15.2; pnpm switches to it automatically)
 - Python 3.11+
-- A Supabase account that is a member of the PICKUP organization (ask a maintainer)
+- A Supabase account that is a member of the RideLink organization (ask a maintainer)
 
 ## Setup
 

@@ -122,7 +122,7 @@ async function fetchReporterNames(
     const id = String((u as { user_id: string }).user_id)
     const fn = (u as { firstname?: string | null }).firstname?.trim() || ''
     const ln = (u as { lastname?: string | null }).lastname?.trim() || ''
-    const full = `${fn} ${ln}`.trim() || '—'
+    const full = `${fn} ${ln}`.trim() || '-'
     map.set(id, full)
   }
   return map
@@ -196,7 +196,7 @@ export async function buildNoShowLookup(
     const reporterUserIds = Array.from(reporters)
     const reporterCount = reporterUserIds.length
     const reporterNames = reporterUserIds
-      .map((id) => reporterNameByUserId.get(id) || '—')
+      .map((id) => reporterNameByUserId.get(id) || '-')
       .sort((a, b) => a.localeCompare(b))
 
     let submittedDelayForRide = false
@@ -248,7 +248,7 @@ export function noShowTooltip(info: NoShowRiderInfo): string {
 
   const lines = [line1, line2]
 
-  // Line 3: only when they have NOT submitted ready — delay / flight change
+  // Line 3: only when they have NOT submitted ready - delay / flight change
   if (!info.missingRiderSubmittedReady) {
     if (info.hadNewFlightOnDelay) {
       lines.push(

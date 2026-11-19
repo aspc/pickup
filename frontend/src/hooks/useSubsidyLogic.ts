@@ -27,7 +27,7 @@ export interface ComputeSubsidyInput {
 export interface ComputeSubsidyResult {
   subsidized: boolean
   covered: boolean
-  /** True when subsidized and covered and not Connect — voucher can be assigned */
+  /** True when subsidized and covered and not Connect - voucher can be assigned */
   assignVoucher: boolean
   /**
    * When assignVoucher is false, human-readable reasons (e.g. delay flow).
