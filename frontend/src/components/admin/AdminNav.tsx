@@ -8,6 +8,7 @@ import { cn } from '@/utils/tailwind'
 const TABS = [
   { href: '/admin', label: 'Dashboard' },
   { href: '/admin/groups', label: 'Groups' },
+  { href: '/admin/matching', label: 'Matching' },
 ]
 
 export function AdminNav() {

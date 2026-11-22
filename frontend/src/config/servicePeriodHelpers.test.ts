@@ -10,6 +10,7 @@ import {
   formatSubsidizedWindowsForDisplay,
   getAllowedDirectionsForDate,
   getDerivedCoveredDates,
+  getSubsidizedPeriodRanges,
   isDateCovered,
   isDirectionAllowedForDate,
   isFlightPastDeadline,
@@ -368,5 +369,33 @@ describe('formatSubsidizedWindowsForDisplay', () => {
       'Departures: November 21-26',
       'Returns: November 29-December 1',
     ])
+  })
+})
+
+describe('getSubsidizedPeriodRanges', () => {
+  it('lists every allowed subsidized range with its direction', () => {
+    const expected = SERVICE_PERIODS.flatMap((period) =>
+      (['outbound', 'inbound'] as const)
+        .filter(
+          (direction) =>
+            period.subsidized[direction] &&
+            period.allowedDirections.includes(direction),
+        )
+        .map((direction) => ({
+          direction,
+          start: period.subsidized[direction]!.start,
+          end: period.subsidized[direction]!.end,
+        })),
+    )
+
+    expect(getSubsidizedPeriodRanges()).toEqual(expected)
+  })
+
+  it('agrees with isDateCovered on every range boundary', () => {
+    for (const range of getSubsidizedPeriodRanges()) {
+      const toAirport = range.direction === 'outbound'
+      expect(isDateCovered(range.start, toAirport)).toBe(true)
+      expect(isDateCovered(range.end, toAirport)).toBe(true)
+    }
   })
 })

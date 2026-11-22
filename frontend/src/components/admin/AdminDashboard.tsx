@@ -374,6 +374,9 @@ export default function AdminDashboard() {
           <ButtonLink href="/admin/groups" size="lg">
             View & manage groups
           </ButtonLink>
+          <ButtonLink href="/admin/matching" size="lg">
+            Run matching algorithm
+          </ButtonLink>
         </div>
 
         {/* Match no-shows */}
